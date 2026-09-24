@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0f13">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Triple Threat Base Offensive System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand-wrap">
+      <div class="brand">Triple Threat Base Offensive System</div>
+      <div class="subbrand">Player Edition · Base Motion + Pressure Release</div>
+    </div>
+    <nav class="mode-tabs" aria-label="Playbook sections">
+      <button id="tabWatch" class="tab active" type="button">WATCH IT</button>
+      <button id="tabJobs" class="tab" type="button">LEARN MY JOB</button>
+      <button id="tabQuiz" class="tab" type="button">TEST ME</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="watch" class="panel active">
+      <div class="watch-controls">
+        <button id="prevBtn" type="button">◀ Prev</button>
+        <button id="playBtn" type="button" class="primary">▶ Play</button>
+        <button id="pauseBtn" type="button">⏸ Pause</button>
+        <button id="restartBtn" type="button">↺ Restart</button>
+        <select id="speedSelect" aria-label="Playback speed">
+          <option value="20000" selected>Teaching · 20 sec</option>
+          <option value="1500">Normal</option>
+          <option value="900">Fast</option>
+        </select>
+        <button id="nextBtn" type="button">Next ▶</button>
+      </div>
+
+      <div class="slide-shell" id="slideShell">
+        <div class="slide-heading">
+          <div class="eyebrow"><span id="sectionName"></span><span id="stepCount"></span></div>
+          <h1 id="stepTitle"></h1>
+        </div>
+
+        <div class="slide-body">
+          <div class="court-wrap">
+            <svg id="court" class="court" viewBox="0 0 500 470" role="img" aria-label="Basketball teaching diagram">
+              <defs>
+                <pattern id="wood" width="125" height="470" patternUnits="userSpaceOnUse">
+                  <rect width="125" height="470" fill="#c79a62"></rect>
+                  <rect width="124" height="470" fill="#d1a871" opacity=".7"></rect>
+                  <path d="M124 0V470" stroke="#a97c4b" stroke-width="1" opacity=".45"></path>
+                  <path d="M0 88H124M0 177H124M0 266H124M0 355H124M0 444H124" stroke="#b48756" stroke-width=".65" opacity=".28"></path>
+                </pattern>
+                <marker id="arrowMove" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto" viewBox="0 0 8 8">
+                  <path d="M0 0L8 4L0 8Z" fill="#17212b"></path>
+                </marker>
+                <marker id="arrowPass" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto" viewBox="0 0 8 8">
+                  <path d="M0 0L8 4L0 8Z" fill="#ffffff"></path>
+                </marker>
+                <marker id="arrowDribble" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto" viewBox="0 0 8 8">
+                  <path d="M0 0L8 4L0 8Z" fill="#d97706"></path>
+                </marker>
+              </defs>
+
+              <rect x="4" y="4" width="492" height="462" rx="8" fill="url(#wood)" stroke="#805b37" stroke-width="5"></rect>
+              <g class="court-lines" fill="none" stroke="#fff" stroke-width="3">
+                <path d="M20 20H480V450H20Z"></path>
+                <path d="M170 20V170H330V20"></path>
+                <path d="M170 170A80 80 0 0 0 330 170"></path>
+                <path d="M170 170A80 80 0 0 1 330 170" stroke-dasharray="7 7" opacity=".75"></path>
+                <path d="M42 20V105 M458 20V105 M42 105A215 215 0 0 0 458 105"></path>
+                <path d="M220 53H280"></path>
+                <circle cx="250" cy="72" r="8"></circle>
+                <path d="M235 72A15 15 0 0 0 265 72"></path>
+                <path d="M170 450A80 80 0 0 1 330 450"></path>
+              </g>
+
+              <g id="annotationLayer"></g>
+              <g id="defenderLayer"></g>
+              <g id="playerLayer"></g>
+              <g id="ballLayer"></g>
+            </svg>
+            <div class="legend">
+              <span><i class="pass-key"></i>Pass</span>
+              <span><i class="move-key"></i>Cut / Move</span>
+              <span><i class="dribble-key"></i>Dribble</span>
+              <span><b class="x-key">X</b>Defender</span>
+            </div>
+          </div>
+
+          <aside class="teaching-panel">
+            <div id="noteCards" class="note-cards"></div>
+            <div id="lessonText" class="lesson"></div>
+            <div id="ruleText" class="rule-box"></div>
+          </aside>
+        </div>
+
+        <div class="slide-footer">
+          <div id="webStatus">Step 1 of 29</div>
+          <div class="swipe-hint">Swipe left/right or use the arrows</div>
+        </div>
+      </div>
+
+      <noscript>
+        <div class="noscript">JavaScript must be enabled to move through the interactive playbook.</div>
+      </noscript>
+    </section>
+
+    <section id="jobs" class="panel">
+      <div class="info-card jobs-card">
+        <div class="section-kicker">LEARN MY JOB</div>
+        <h2>Know every spot</h2>
+        <p class="muted">All five players are interchangeable. Select a number to review that player's jobs in the Base Motion and Pressure Release.</p>
+        <div class="player-picker" id="playerPicker"></div>
+        <div id="jobContent" class="job-content"></div>
+      </div>
+    </section>
+
+    <section id="quiz" class="panel">
+      <div class="info-card quiz-card">
+        <div class="quiz-top">
+          <div>
+            <div class="section-kicker">TEST ME</div>
+            <h2 id="quizHeading">Question 1 of 18</h2>
+          </div>
+          <div id="quizScore" class="score-pill">Score: 0</div>
+        </div>
+        <div id="quizQuestion" class="quiz-question"></div>
+        <div id="quizChoices" class="quiz-choices"></div>
+        <div id="quizFeedback" class="quiz-feedback" aria-live="polite"></div>
+        <div class="quiz-actions">
+          <button id="quizPrev" type="button">◀ Previous</button>
+          <button id="quizNext" type="button" class="primary">Next ▶</button>
+          <button id="quizRestart" type="button">Restart Quiz</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
