@@ -1053,4 +1053,103 @@ function nextQuizQuestion(){
 }
 render();
 </script>
+
+<!-- WEB VIEWPORT FIT START -->
+<style id="webViewportFitStyles">
+/*
+  Keep the Version 60 layout visually unchanged, but allow the web-hosted
+  copy to shrink slightly when browser chrome leaves less vertical room.
+*/
+html.web-fit-lock { overflow: hidden; }
+body.web-fit-active { transform-origin: top left; }
+</style>
+<script id="webViewportFitScript">
+(function(){
+  let fitQueued = false;
+  let lastViewportW = 0;
+  let lastViewportH = 0;
+
+  function measureAndFit(resetScale){
+    const body = document.body;
+    const root = document.documentElement;
+    if (!body || !root) return;
+
+    if (resetScale) {
+      body.style.zoom = "1";
+      body.style.width = "100%";
+      root.classList.remove("web-fit-lock");
+      body.classList.remove("web-fit-active");
+    }
+
+    // Let the normal Version 60 layout calculate first.
+    requestAnimationFrame(function(){
+      const vw = window.innerWidth || root.clientWidth;
+      const vh = window.innerHeight || root.clientHeight;
+
+      body.style.zoom = "1";
+      body.style.width = "100%";
+
+      const naturalW = Math.max(root.scrollWidth, body.scrollWidth);
+      const naturalH = Math.max(root.scrollHeight, body.scrollHeight);
+
+      // Leave a few pixels of breathing room so browser rounding never
+      // creates a tiny vertical scrollbar.
+      let scale = Math.min(1, (vw - 4) / naturalW, (vh - 4) / naturalH);
+
+      /*
+        On normal laptop/desktop/tablet-sized screens the required adjustment
+        is usually only a few percent. Apply the fit there so the entire
+        Version 60 interface stays on one screen.
+        On very small phone screens, do not crush the whole desktop interface
+        into unreadably tiny text; the existing responsive behavior remains.
+      */
+      if (scale >= 0.68 && scale < 0.998) {
+        body.style.width = (100 / scale) + "%";
+        body.style.zoom = String(scale);
+        root.classList.add("web-fit-lock");
+        body.classList.add("web-fit-active");
+      } else if (scale >= 0.998) {
+        root.classList.add("web-fit-lock");
+        body.classList.add("web-fit-active");
+      } else {
+        body.style.zoom = "1";
+        body.style.width = "100%";
+        root.classList.remove("web-fit-lock");
+        body.classList.remove("web-fit-active");
+      }
+
+      lastViewportW = vw;
+      lastViewportH = vh;
+    });
+  }
+
+  function queueFit(resetScale){
+    if (fitQueued) return;
+    fitQueued = true;
+    requestAnimationFrame(function(){
+      fitQueued = false;
+      measureAndFit(!!resetScale);
+    });
+  }
+
+  window.addEventListener("load", function(){ queueFit(true); });
+  window.addEventListener("resize", function(){
+    const w = window.innerWidth || 0;
+    const h = window.innerHeight || 0;
+    const significant = Math.abs(w-lastViewportW) > 8 || Math.abs(h-lastViewportH) > 8;
+    queueFit(significant);
+  }, {passive:true});
+
+  // Re-check after Next/Previous, tab changes, quiz updates, etc.
+  const observer = new MutationObserver(function(){ queueFit(false); });
+  if (document.body) {
+    observer.observe(document.body, {subtree:true, childList:true, characterData:true});
+  }
+
+  // Initial pass for cached/very-fast loads.
+  queueFit(true);
+})();
+</script>
+<!-- WEB VIEWPORT FIT END -->
+
 </body></html>
