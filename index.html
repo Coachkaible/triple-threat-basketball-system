@@ -38,6 +38,192 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 #speedSelect{cursor:pointer}
 @media(max-width:820px){.wrap{grid-template-columns:1fr}}
 </style>
+
+<!-- WEB WIDESCREEN FIT START -->
+<style id="webWidescreenFitStyles">
+@media (min-width: 1050px) {
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  header {
+    padding: 10px 18px;
+  }
+
+  header h1 {
+    font-size: 20px;
+  }
+
+  header p {
+    margin-top: 3px;
+    font-size: 13px;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: none;
+    height: calc(100vh - 61px);
+    margin: 0;
+    padding: 10px 14px;
+    gap: 12px;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: stretch;
+  }
+
+  .wrap > section.card {
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    padding: 10px 12px;
+    display: grid;
+    grid-template-rows: auto 8px minmax(0, 1fr) auto auto;
+    overflow: hidden;
+  }
+
+  .wrap > aside.card {
+    width: 340px;
+    min-width: 340px;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    padding: 12px;
+  }
+
+  .tabs,
+  .controls {
+    flex-wrap: nowrap;
+  }
+
+  .tabs button,
+  .controls button,
+  .controls select {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .stage {
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    grid-template-columns: 225px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+  }
+
+  .slide-notes {
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .note-bubble {
+    padding: 8px 9px;
+  }
+
+  .note-title {
+    margin-bottom: 4px;
+    font-size: 11px;
+  }
+
+  .note-line {
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  #court {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    max-height: calc(100vh - 208px);
+    aspect-ratio: 50 / 47;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .controls {
+    margin-top: 7px !important;
+    gap: 6px;
+  }
+
+  #autoStatus {
+    margin-top: 4px !important;
+    font-size: 11px;
+  }
+
+  .wrap > aside.card h2 {
+    margin-bottom: 7px;
+    font-size: 17px;
+  }
+
+  .wrap > aside.card .status {
+    margin: 7px 0;
+    font-size: 14px;
+  }
+
+  .wrap > aside.card .lesson {
+    min-height: 0;
+    line-height: 1.32;
+    font-size: 13px;
+  }
+
+  .wrap > aside.card .rule {
+    margin: 8px 0;
+    padding: 8px;
+    font-size: 12px;
+    line-height: 1.28;
+  }
+
+  .wrap > aside.card .legend {
+    margin-top: 8px;
+    padding: 8px;
+  }
+
+  .wrap > aside.card .legend h3 {
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+
+  .wrap > aside.card .legend-row {
+    margin: 4px 0;
+    font-size: 11px;
+  }
+
+  .wrap > aside.card .legend-row svg {
+    width: 54px;
+  }
+
+  .wrap > aside.card > .small:last-child {
+    display: none;
+  }
+}
+
+@media (min-width: 1450px) {
+  .wrap {
+    grid-template-columns: minmax(0, 1fr) 380px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .wrap > aside.card {
+    width: 380px;
+    min-width: 380px;
+  }
+
+  .stage {
+    grid-template-columns: 255px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  #court {
+    max-height: calc(100vh - 198px);
+  }
+}
+</style>
+<!-- WEB WIDESCREEN FIT END -->
+
 </head>
 <body>
 <header><h1>Interactive Basketball Offense</h1><p id="sectionName">SECTION 1 · BASE MOTION</p></header>
@@ -1054,102 +1240,5 @@ function nextQuizQuestion(){
 render();
 </script>
 
-<!-- WEB VIEWPORT FIT START -->
-<style id="webViewportFitStyles">
-/*
-  Keep the Version 60 layout visually unchanged, but allow the web-hosted
-  copy to shrink slightly when browser chrome leaves less vertical room.
-*/
-html.web-fit-lock { overflow: hidden; }
-body.web-fit-active { transform-origin: top left; }
-</style>
-<script id="webViewportFitScript">
-(function(){
-  let fitQueued = false;
-  let lastViewportW = 0;
-  let lastViewportH = 0;
-
-  function measureAndFit(resetScale){
-    const body = document.body;
-    const root = document.documentElement;
-    if (!body || !root) return;
-
-    if (resetScale) {
-      body.style.zoom = "1";
-      body.style.width = "100%";
-      root.classList.remove("web-fit-lock");
-      body.classList.remove("web-fit-active");
-    }
-
-    // Let the normal Version 60 layout calculate first.
-    requestAnimationFrame(function(){
-      const vw = window.innerWidth || root.clientWidth;
-      const vh = window.innerHeight || root.clientHeight;
-
-      body.style.zoom = "1";
-      body.style.width = "100%";
-
-      const naturalW = Math.max(root.scrollWidth, body.scrollWidth);
-      const naturalH = Math.max(root.scrollHeight, body.scrollHeight);
-
-      // Leave a few pixels of breathing room so browser rounding never
-      // creates a tiny vertical scrollbar.
-      let scale = Math.min(1, (vw - 4) / naturalW, (vh - 4) / naturalH);
-
-      /*
-        On normal laptop/desktop/tablet-sized screens the required adjustment
-        is usually only a few percent. Apply the fit there so the entire
-        Version 60 interface stays on one screen.
-        On very small phone screens, do not crush the whole desktop interface
-        into unreadably tiny text; the existing responsive behavior remains.
-      */
-      if (scale >= 0.68 && scale < 0.998) {
-        body.style.width = (100 / scale) + "%";
-        body.style.zoom = String(scale);
-        root.classList.add("web-fit-lock");
-        body.classList.add("web-fit-active");
-      } else if (scale >= 0.998) {
-        root.classList.add("web-fit-lock");
-        body.classList.add("web-fit-active");
-      } else {
-        body.style.zoom = "1";
-        body.style.width = "100%";
-        root.classList.remove("web-fit-lock");
-        body.classList.remove("web-fit-active");
-      }
-
-      lastViewportW = vw;
-      lastViewportH = vh;
-    });
-  }
-
-  function queueFit(resetScale){
-    if (fitQueued) return;
-    fitQueued = true;
-    requestAnimationFrame(function(){
-      fitQueued = false;
-      measureAndFit(!!resetScale);
-    });
-  }
-
-  window.addEventListener("load", function(){ queueFit(true); });
-  window.addEventListener("resize", function(){
-    const w = window.innerWidth || 0;
-    const h = window.innerHeight || 0;
-    const significant = Math.abs(w-lastViewportW) > 8 || Math.abs(h-lastViewportH) > 8;
-    queueFit(significant);
-  }, {passive:true});
-
-  // Re-check after Next/Previous, tab changes, quiz updates, etc.
-  const observer = new MutationObserver(function(){ queueFit(false); });
-  if (document.body) {
-    observer.observe(document.body, {subtree:true, childList:true, characterData:true});
-  }
-
-  // Initial pass for cached/very-fast loads.
-  queueFit(true);
-})();
-</script>
-<!-- WEB VIEWPORT FIT END -->
 
 </body></html>
