@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Interactive Basketball Offense — Base Motion</title>
+<title>Triple Threat Basketball System — Offense + Defense</title>
 <style>
 :root{--bg:#101419;--panel:#182029;--ink:#f7f7f4;--muted:#aeb8c2;--accent:#f2b134;--court:#d7a86e;--line:#fff;--good:#55c97a;--bad:#ef6b67}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
@@ -36,365 +36,104 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 .legend svg{flex:0 0 auto}
 #playBtn,#pauseBtn,#restartPlayBtn{white-space:nowrap}
 #speedSelect{cursor:pointer}
+#pass2v2Btn{background:var(--accent);color:#151515;font-weight:900}
+#attackDriveBtn{background:#d97706;color:#fff;font-weight:900}
+@media (min-width:1050px){#pass2v2Btn,#attackDriveBtn{grid-column:1/-1}}
+
 @media(max-width:820px){.wrap{grid-template-columns:1fr}}
 </style>
 
 
-
 <!-- WEB WIDESCREEN FIT START -->
 <style id="webWidescreenFitStyles">
-/*
-  Desktop website layout:
-  - preserves the Version 60 visual style
-  - uses the empty space beside the court
-  - keeps WATCH IT entirely inside the browser viewport
-  - moves the play controls into the left column instead of below the court
-*/
 @media (min-width: 1050px) {
-  html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden !important;
-  }
-
-  body {
-    min-height: 100dvh;
-  }
-
-  header {
-    height: 58px;
-    padding: 9px 18px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  header h1 {
-    font-size: 20px;
-    line-height: 1.05;
-  }
-
-  header p {
-    margin: 3px 0 0;
-    font-size: 12px;
-    line-height: 1.05;
-  }
-
-  .wrap {
-    width: 100%;
-    max-width: none;
-    height: calc(100dvh - 58px);
-    margin: 0;
-    padding: 9px 12px 10px;
-    gap: 12px;
-    grid-template-columns: minmax(0, 1fr) 330px;
-    align-items: stretch;
-    overflow: hidden;
-  }
-
-  .wrap > section.card {
-    position: relative;
-    min-width: 0;
-    min-height: 0;
-    height: 100%;
-    padding: 10px 11px;
-    overflow: hidden;
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-  }
-
-  .wrap > section.card > .tabs {
-    grid-row: 1;
-    min-height: 36px;
-    flex-wrap: nowrap;
-    gap: 6px;
-  }
-
-  .wrap > section.card > .tabs button {
-    padding: 7px 10px;
-    font-size: 12px;
-  }
-
-  /* Hide the old spacer between tabs and the court. */
-  .wrap > section.card > .tabs + div[style*="height:12px"] {
-    display: none !important;
-  }
-
-  .stage {
-    grid-row: 2;
-    min-width: 0;
-    min-height: 0;
-    height: 100%;
-    margin-top: 7px;
-    padding-left: 232px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  /* Use the previously empty space to the LEFT of the court. */
-  .slide-notes {
-    position: absolute;
-    left: 11px;
-    top: 55px;
-    bottom: 218px;
-    width: 218px;
-    min-height: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 7px;
-  }
-
-  .note-bubble {
-    padding: 7px 8px;
-    border-radius: 10px;
-  }
-
-  .note-title {
-    margin-bottom: 4px;
-    font-size: 10px;
-  }
-
-  .note-line {
-    font-size: 10.5px;
-    line-height: 1.2;
-  }
-
-  /* Court consumes the center instead of forcing controls underneath it. */
-  #court {
-    width: auto !important;
-    height: 100% !important;
-    max-width: 100% !important;
-    max-height: 100% !important;
-    aspect-ratio: 50 / 47;
-    margin: 0 auto;
-    flex: 0 1 auto;
-  }
-
-  /*
-    Move all play controls into the lower-left column.
-    This is the key change that removes the need to scroll below the court.
-  */
-  .wrap > section.card > .controls {
-    position: absolute;
-    left: 11px;
-    bottom: 43px;
-    width: 218px;
-    margin: 0 !important;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5px;
-    z-index: 3;
-  }
-
-  .wrap > section.card > .controls button,
-  .wrap > section.card > .controls select {
-    min-width: 0;
-    width: 100%;
-    padding: 6px 5px !important;
-    min-height: 32px;
-    border-radius: 8px;
-    font-size: 10px !important;
-    line-height: 1.05;
-  }
-
-  .wrap > section.card > .controls #speedSelect {
-    grid-column: 1 / -1;
-  }
-
-  #autoStatus {
-    position: absolute;
-    left: 11px;
-    bottom: 10px;
-    width: 218px;
-    margin: 0 !important;
-    font-size: 9.5px;
-    line-height: 1.15;
-  }
-
-  /* Right-hand teaching panel uses the other side of the screen. */
-  .wrap > aside.card {
-    width: 330px;
-    min-width: 330px;
-    height: 100%;
-    min-height: 0;
-    padding: 11px;
-    overflow: hidden;
-  }
-
-  .wrap > aside.card h2 {
-    margin: 0 0 5px;
-    font-size: 17px;
-    line-height: 1.08;
-  }
-
-  .wrap > aside.card .status {
-    margin: 5px 0;
-    font-size: 13px;
-  }
-
-  .wrap > aside.card .lesson {
-    min-height: 0;
-    margin: 0;
-    font-size: 12px;
-    line-height: 1.28;
-  }
-
-  .wrap > aside.card .rule {
-    margin: 7px 0;
-    padding: 7px 8px;
-    font-size: 11px;
-    line-height: 1.2;
-  }
-
-  .wrap > aside.card .legend {
-    margin-top: 7px;
-    padding: 7px 8px;
-    border-radius: 8px;
-  }
-
-  .wrap > aside.card .legend h3 {
-    margin: 0 0 4px;
-    font-size: 11px;
-  }
-
-  .wrap > aside.card .legend > .small {
-    margin-bottom: 4px !important;
-    font-size: 9px;
-    line-height: 1.15;
-  }
-
-  .wrap > aside.card .legend-row {
-    margin: 3px 0;
-    gap: 6px;
-    font-size: 10px;
-    line-height: 1.05;
-  }
-
-  .wrap > aside.card .legend-row svg {
-    width: 46px;
-    height: 13px;
-  }
-
-  /* The prototype footnote is not teaching content and costs vertical space. */
-  .wrap > aside.card > p.small:last-child {
-    display: none;
-  }
+  html, body { width:100%; height:100%; overflow:hidden !important; }
+  body { min-height:100dvh; }
+  header { height:58px; padding:9px 18px; display:flex; flex-direction:column; justify-content:center; position:relative; }
+  header h1 { font-size:20px; line-height:1.05; }
+  header p { margin:3px 0 0; font-size:12px; line-height:1.05; }
+  .wrap { width:100%; max-width:none; height:calc(100dvh - 58px); margin:0; padding:9px 12px 10px; gap:12px; grid-template-columns:minmax(0,1fr) 330px; align-items:stretch; overflow:hidden; }
+  .wrap > section.card { position:relative; min-width:0; min-height:0; height:100%; padding:10px 11px; overflow:hidden; display:grid; grid-template-rows:auto minmax(0,1fr); }
+  .wrap > section.card > .tabs { grid-row:1; min-height:36px; flex-wrap:nowrap; gap:6px; }
+  .wrap > section.card > .tabs button { padding:7px 10px; font-size:12px; }
+  .wrap > section.card > .tabs + div[style*="height:12px"] { display:none !important; }
+  .stage { grid-row:2; min-width:0; min-height:0; height:100%; margin-top:7px; padding-left:232px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .slide-notes { position:absolute; left:11px; top:55px; bottom:218px; width:218px; min-height:0; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-start; gap:7px; }
+  .note-bubble { padding:7px 8px; border-radius:10px; }
+  .note-title { margin-bottom:4px; font-size:10px; }
+  .note-line { font-size:10.5px; line-height:1.2; }
+  #court { width:auto !important; height:100% !important; max-width:100% !important; max-height:100% !important; aspect-ratio:50/47; margin:0 auto; flex:0 1 auto; }
+  .wrap > section.card > .controls { position:absolute; left:11px; bottom:43px; width:218px; margin:0 !important; display:grid; grid-template-columns:1fr 1fr; gap:5px; z-index:3; }
+  .wrap > section.card > .controls button, .wrap > section.card > .controls select { min-width:0; width:100%; padding:6px 5px !important; min-height:32px; border-radius:8px; font-size:10px !important; line-height:1.05; }
+  .wrap > section.card > .controls #speedSelect { grid-column:1/-1; }
+  #autoStatus { position:absolute; left:11px; bottom:10px; width:218px; margin:0 !important; font-size:9.5px; line-height:1.15; }
+  .wrap > aside.card { width:330px; min-width:330px; height:100%; min-height:0; padding:11px; overflow:hidden; }
+  .wrap > aside.card h2 { margin:0 0 5px; font-size:17px; line-height:1.08; }
+  .wrap > aside.card .status { margin:5px 0; font-size:13px; }
+  .wrap > aside.card .lesson { min-height:0; margin:0; font-size:12px; line-height:1.28; }
+  .wrap > aside.card .rule { margin:7px 0; padding:7px 8px; font-size:11px; line-height:1.2; }
+  .wrap > aside.card .legend { margin-top:7px; padding:7px 8px; border-radius:8px; }
+  .wrap > aside.card .legend h3 { margin:0 0 4px; font-size:11px; }
+  .wrap > aside.card .legend > .small { margin-bottom:4px !important; font-size:9px; line-height:1.15; }
+  .wrap > aside.card .legend-row { margin:3px 0; gap:6px; font-size:10px; line-height:1.05; }
+  .wrap > aside.card .legend-row svg { width:46px; height:13px; }
+  .wrap > aside.card > p.small:last-child { display:none; }
 }
-
-/* Short laptop screens get an even tighter left/right treatment. */
-@media (min-width: 1050px) and (max-height: 760px) {
-  header {
-    height: 50px;
-    padding: 6px 16px;
-  }
-
-  header h1 { font-size: 18px; }
-  header p { font-size: 10px; }
-
-  .wrap {
-    height: calc(100dvh - 50px);
-    padding-top: 7px;
-    padding-bottom: 7px;
-  }
-
-  .wrap > section.card {
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-
-  .wrap > section.card > .tabs button {
-    min-height: 31px;
-    padding: 5px 8px;
-    font-size: 11px;
-  }
-
-  .stage {
-    margin-top: 5px;
-    padding-left: 220px;
-  }
-
-  .slide-notes {
-    left: 9px;
-    top: 47px;
-    bottom: 190px;
-    width: 208px;
-    gap: 5px;
-  }
-
-  .note-bubble { padding: 5px 6px; }
-  .note-title { font-size: 9px; margin-bottom: 2px; }
-  .note-line { font-size: 9.5px; line-height: 1.15; }
-
-  .wrap > section.card > .controls {
-    left: 9px;
-    bottom: 35px;
-    width: 208px;
-    gap: 4px;
-  }
-
-  .wrap > section.card > .controls button,
-  .wrap > section.card > .controls select {
-    min-height: 28px;
-    padding: 4px 3px !important;
-    font-size: 9px !important;
-  }
-
-  #autoStatus {
-    left: 9px;
-    bottom: 7px;
-    width: 208px;
-    font-size: 8.5px;
-  }
-
-  .wrap {
-    grid-template-columns: minmax(0, 1fr) 305px;
-  }
-
-  .wrap > aside.card {
-    width: 305px;
-    min-width: 305px;
-    padding: 9px;
-  }
-
-  .wrap > aside.card h2 { font-size: 15px; }
-  .wrap > aside.card .status { font-size: 11px; margin: 4px 0; }
-  .wrap > aside.card .lesson { font-size: 10.5px; line-height: 1.2; }
-  .wrap > aside.card .rule { font-size: 9.5px; line-height: 1.15; padding: 5px 6px; margin: 5px 0; }
-  .wrap > aside.card .legend { margin-top: 5px; padding: 5px 6px; }
-  .wrap > aside.card .legend h3 { font-size: 10px; }
-  .wrap > aside.card .legend > .small { font-size: 8px; }
-  .wrap > aside.card .legend-row { font-size: 8.5px; margin: 2px 0; }
-  .wrap > aside.card .legend-row svg { width: 38px; height: 11px; }
+@media (min-width:1050px) and (max-height:760px) {
+  header { height:50px; padding:6px 16px; }
+  header h1 { font-size:18px; } header p { font-size:10px; }
+  .wrap { height:calc(100dvh - 50px); padding-top:7px; padding-bottom:7px; grid-template-columns:minmax(0,1fr) 305px; }
+  .wrap > section.card { padding-top:8px; padding-bottom:8px; }
+  .wrap > section.card > .tabs button { min-height:31px; padding:5px 8px; font-size:11px; }
+  .stage { margin-top:5px; padding-left:220px; }
+  .slide-notes { left:9px; top:47px; bottom:190px; width:208px; gap:5px; }
+  .note-bubble { padding:5px 6px; } .note-title { font-size:9px; margin-bottom:2px; } .note-line { font-size:9.5px; line-height:1.15; }
+  .wrap > section.card > .controls { left:9px; bottom:35px; width:208px; gap:4px; }
+  .wrap > section.card > .controls button, .wrap > section.card > .controls select { min-height:28px; padding:4px 3px !important; font-size:9px !important; }
+  #autoStatus { left:9px; bottom:7px; width:208px; font-size:8.5px; }
+  .wrap > aside.card { width:305px; min-width:305px; padding:9px; }
+  .wrap > aside.card h2 { font-size:15px; } .wrap > aside.card .status { font-size:11px; margin:4px 0; }
+  .wrap > aside.card .lesson { font-size:10.5px; line-height:1.2; }
+  .wrap > aside.card .rule { font-size:9.5px; line-height:1.15; padding:5px 6px; margin:5px 0; }
+  .wrap > aside.card .legend { margin-top:5px; padding:5px 6px; }
+  .wrap > aside.card .legend h3 { font-size:10px; } .wrap > aside.card .legend > .small { font-size:8px; }
+  .wrap > aside.card .legend-row { font-size:8.5px; margin:2px 0; } .wrap > aside.card .legend-row svg { width:38px; height:11px; }
 }
-
-@media (min-width: 1450px) {
-  .wrap {
-    grid-template-columns: minmax(0, 1fr) 370px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .wrap > aside.card {
-    width: 370px;
-    min-width: 370px;
-  }
-
-  .stage {
-    padding-left: 260px;
-  }
-
-  .slide-notes,
-  .wrap > section.card > .controls,
-  #autoStatus {
-    width: 246px;
-  }
+@media (min-width:1450px) {
+  .wrap { grid-template-columns:minmax(0,1fr) 370px; padding-left:16px; padding-right:16px; }
+  .wrap > aside.card { width:370px; min-width:370px; }
+  .stage { padding-left:260px; }
+  .slide-notes, .wrap > section.card > .controls, #autoStatus { width:246px; }
 }
 </style>
 <!-- WEB WIDESCREEN FIT END -->
+
+
+<!-- DEFENSE V61 STYLES START -->
+<style id="defenseV61Styles">
+.system-switch{position:absolute;right:18px;top:11px;display:flex;gap:6px;z-index:10}
+.system-switch button{padding:7px 12px;border-radius:9px;font-size:11px;background:#2a3540;color:#fff;border:1px solid #394754}
+.system-switch button.active{background:var(--accent);color:#151515;border-color:var(--accent)}
+.defense-job-card{padding:11px;border-left:4px solid var(--accent);background:#111820;border-radius:8px;margin:10px 0;font-size:13px;line-height:1.35}
+.defense-job-card b{color:#fff}
+.defense-core{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.defense-core div{background:#111820;border:1px solid #2b3641;border-radius:8px;padding:7px;font-size:11px;font-weight:700;color:#cfd8e1}
+
+.defense-level-switch{display:none;gap:5px;margin-left:auto}
+.defense-level-switch button{padding:7px 10px!important;font-size:10px!important;border:1px solid #45515d;background:#202a34}
+.defense-level-switch button.active{background:#f7f7f4;color:#151515;border-color:#f7f7f4}
+@media(max-width:1049px){.defense-level-switch{width:100%;margin-top:4px;margin-left:0}.defense-level-switch button{flex:1}}
+@media(min-width:1050px) and (max-height:760px){.defense-level-switch button{padding:5px 7px!important;font-size:8.5px!important}}
+@media(max-width:1049px){
+  header{position:relative;padding-right:16px}
+  .system-switch{position:static;margin-top:8px}
+  header{height:auto}
+}
+@media(min-width:1050px) and (max-height:760px){
+  .system-switch{right:14px;top:8px}.system-switch button{padding:5px 9px;font-size:9px}
+}
+</style>
+<!-- DEFENSE V61 STYLES END -->
 
 </head>
 <body>
@@ -454,6 +193,8 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 <button onclick="prev()">◀ Previous</button>
 <button class="primary" onclick="next()">NEXT STEP ▶</button>
 <button onclick="resetAll()">Reset</button>
+<button id="pass2v2Btn" onclick="passBall2v2()" style="display:none">PASS BALL → 2</button>
+<button id="attackDriveBtn" onclick="attackBasket2v2()" style="display:none">ATTACK BASKET</button>
 <button id="playBtn" onclick="playSlides()">▶ Play Sequence</button>
 <button id="pauseBtn" onclick="pauseSlides()" disabled>⏸ Pause</button>
 <button id="restartPlayBtn" onclick="restartAndPlay()">↺ Restart + Play</button>
@@ -727,6 +468,12 @@ function addDHO(g,x,y){
   g.appendChild(t);
 }
 
+function bringBallToFront(){
+  const court=document.getElementById('court');
+  const ball=document.getElementById('ball');
+  if(court && ball) court.appendChild(ball);
+}
+
 function setSlideNotes(items){
   const el=document.getElementById("slideNotes");
   if(!el) return;
@@ -740,6 +487,101 @@ function setSlideNotes(items){
     return `<div class="${klass}"><div class="note-title">${item.title}</div>${lines}</div>`;
   }).join("");
 }
+const COURT_W=500, COURT_H=470;
+function parseTranslate(el){
+  if(!el) return null;
+  const tr=el.getAttribute('transform')||'';
+  const m=tr.match(/translate\(([-\d.]+)\s+([-\d.]+)\)/);
+  if(!m) return null;
+  return [parseFloat(m[1]), parseFloat(m[2])];
+}
+function getVisibleActorBounds(){
+  const ids=['p1','p2','p3','p4','p5','defOffense','defDefender','defOffense2','defDefender2','defOffense3','defDefender3'];
+  const bounds=[];
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    const st=el.style && el.style.display;
+    if(st==='none') return;
+    const pt=parseTranslate(el);
+    if(!pt) return;
+    const [x,y]=pt;
+    if(id.startsWith('p')) bounds.push({x:x-24,y:y-24,w:48,h:48});
+    else if(id.startsWith('def')) bounds.push({x:x-30,y:y-42,w:60,h:92});
+  });
+  return bounds;
+}
+function rectsOverlap(a,b,pad=6){
+  return !(a.x+a.w+pad<=b.x || b.x+b.w+pad<=a.x || a.y+a.h+pad<=b.y || b.y+b.h+pad<=a.y);
+}
+function clampRectToCourt(r){
+  return {
+    x:Math.max(4, Math.min(COURT_W-r.w-4, r.x)),
+    y:Math.max(4, Math.min(COURT_H-r.h-4, r.y)),
+    w:r.w,h:r.h
+  };
+}
+function scoreRectForActors(r,targetX,targetY){
+  const cx=r.x+r.w/2, cy=r.y+r.h/2;
+  return Math.hypot(cx-targetX,cy-targetY);
+}
+function avoidPlayersRect(x,y,w,h,targetX,targetY){
+  const actors=getVisibleActorBounds();
+  const offsets=[[0,0],[0,-46],[0,46],[-46,0],[46,0],[-70,-20],[70,-20],[-70,20],[70,20],[0,-78],[0,78],[-90,0],[90,0],[-120,-30],[120,-30],[-120,30],[120,30]];
+  let best=null, bestScore=1e9;
+  for(const [dx,dy] of offsets){
+    let r=clampRectToCourt({x:x+dx,y:y+dy,w,h});
+    let overlaps=actors.some(a=>rectsOverlap(r,a,6));
+    let score=scoreRectForActors(r,targetX,targetY)+(overlaps?10000:0);
+    if(score<bestScore){ bestScore=score; best=r; }
+    if(!overlaps) return r;
+  }
+  return best || {x,y,w,h};
+}
+
+function wrapCalloutLines(lines,maxChars=20){
+  const out=[];
+  (lines||[]).forEach(line=>{
+    const words=String(line||'').split(/\s+/).filter(Boolean);
+    if(!words.length){ out.push(''); return; }
+    let current='';
+    words.forEach(word=>{
+      const candidate=current ? current+' '+word : word;
+      if(candidate.length<=maxChars || !current){
+        current=candidate;
+      }else{
+        out.push(current);
+        current=word;
+      }
+    });
+    if(current) out.push(current);
+  });
+  return out;
+}
+function addCalloutBox(g,x,y,title,lines,targetX,targetY,accent='#f2b134'){
+  const titleSize=11, lineSize=10, lineGap=13, pad=8, titleGap=15;
+  const wrappedLines=wrapCalloutLines(lines||[],20);
+  const content=[title].concat(wrappedLines);
+  const approxWidth=Math.max(104,...content.map(s => (s||'').length*5.8))+pad*2;
+  const width=Math.min(182, approxWidth);
+  const height=pad*2 + titleGap + (wrappedLines.length*lineGap) + 2;
+  const placed=avoidPlayersRect(x,y,width,height,targetX,targetY);
+  x=placed.x; y=placed.y;
+  const rect=makeSvg('rect',{x:x,y:y,width:width,height:height,rx:10,ry:10,fill:'rgba(17,24,32,0.96)',stroke:accent,'stroke-width':2});
+  g.appendChild(rect);
+  const titleText=makeSvg('text',{x:x+pad,y:y+pad+3,fill:accent,'font-size':String(titleSize),'font-weight':'800'});
+  titleText.textContent=title; g.appendChild(titleText);
+  wrappedLines.forEach((line,idx)=>{
+    const t=makeSvg('text',{x:x+pad,y:y+pad+titleGap+(idx*lineGap),fill:'#f7f7f4','font-size':String(lineSize),'font-weight':'700'});
+    t.textContent=line; g.appendChild(t);
+  });
+  const sx = targetX < x ? x : (targetX > x+width ? x+width : targetX);
+  const sy = targetY < y ? y : (targetY > y+height ? y+height : targetY);
+  const ex = targetX, ey = targetY;
+  g.appendChild(makeSvg('line',{x1:sx,y1:sy,x2:ex,y2:ey,stroke:accent,'stroke-width':2.5,'stroke-linecap':'round'}));
+  g.appendChild(makeSvg('circle',{cx:ex,cy:ey,r:3.5,fill:accent}));
+}
+
 function drawAnnotations(){
   const g=document.getElementById("annotations");
   g.innerHTML="";
@@ -1007,6 +849,7 @@ function render(){
  const b=P[ballOwner];
  document.getElementById("ball").setAttribute("cx",b[0]+18);
  document.getElementById("ball").setAttribute("cy",b[1]-14);
+ bringBallToFront();
  document.getElementById("title").textContent=s[0];
  document.getElementById("sectionName").textContent = step <= 19 ? "SECTION 1 · BASE MOTION" : "SECTION 2 · PRESSURE RELEASE";
  document.getElementById("lesson").innerHTML=s[1]+
@@ -1355,7 +1198,8 @@ function makeQuiz(reset=true){
     quizScore=0;
     quizAnswered=false;
   }
-  renderQuizQuestion();}
+  renderQuizQuestion();
+}
 
 function renderQuizQuestion(){
   const quiz=document.getElementById("quiz");
@@ -1409,8 +1253,1599 @@ function nextQuizQuestion(){
   quizIndex++;
   renderQuizQuestion();
 }
+
+/* ================= DEFENSE V61 EXTENSION START ================= */
+let systemMode = "offense";
+let defenseLevel = "1v1";
+let defenseStep = 0;
+let defensePlayTimer = null;
+let defensePlayDelay = 1500;
+let defenseQuizOrder = [];
+let defenseQuizIndex = 0;
+let defenseQuizScore = 0;
+let defenseQuizAnswered = false;
+
+const offenseRender = render;
+const offenseNext = next;
+const offensePrev = prev;
+const offenseResetAll = resetAll;
+const offensePlaySlides = playSlides;
+const offensePauseSlides = pauseSlides;
+const offenseRestartAndPlay = restartAndPlay;
+const offenseSetPlaySpeed = setPlaySpeed;
+const offenseSetMode = setMode;
+const offenseLegendHTML = document.querySelector('.legend').innerHTML;
+const offenseJobPickerHTML = document.getElementById('jobPicker').innerHTML;
+
+const defenseSteps = [
+  {
+    title:"Our Defensive Identity",
+    lesson:"We want the ballhandler uncomfortable from the moment they cross half court. We pressure the ball, influence a right-handed player left, protect against the right-hand drive, and stay disciplined enough to defend without fouling.",
+    rule:"PICK UP · PRESSURE · INFLUENCE LEFT · NO RIGHT · NO FOUL",
+    o:[250,392], d:[278,330],
+    notes:[
+      {title:"Pick Up",lines:["Engage as soon as the ball crosses half court."]},
+      {title:"Our Goal",lines:["Make the offense play faster than it wants to play."],accent:true},
+      {title:"Discipline",lines:["Pressure does not mean gamble or foul."]}
+    ]
+  },
+  {
+    title:"Pick Up at Half Court",
+    lesson:"Defense starts as soon as the ballhandler crosses half court. We do not wait at the three-point line and allow the offense to comfortably survey the floor.",
+    rule:"CROSS HALF COURT = WE ARE ON YOU.",
+    o:[250,414], d:[276,356],
+    notes:[
+      {title:"Pickup Point",lines:["Meet the ball immediately after it crosses half court."],accent:true},
+      {title:"Why",lines:["Do not give the ballhandler a free look at the whole floor."]}
+    ], ann:"pickup"
+  },
+  {
+    title:"Arm's-Length Pressure",
+    lesson:"Stay about one arm's length away. Close enough to bother the ballhandler, but not so close that one move beats you or forces you to reach.",
+    rule:"CLOSE ENOUGH TO BOTHER THEM. FAR ENOUGH TO MOVE YOUR FEET.",
+    o:[250,330], d:[274,276],
+    notes:[
+      {title:"Distance",lines:["About one arm's length away."],accent:true},
+      {title:"Too Far",lines:["They become comfortable and can survey the court."]},
+      {title:"Too Close",lines:["One move can beat you and reaching becomes tempting."]}
+    ], ann:"distance"
+  },
+  {
+    title:"Stay Square",
+    lesson:"We are not opening or closing our stance to force a direction. Stay square to the ballhandler and move your center slightly toward the strong-hand side.",
+    rule:"STAY SQUARE. DO NOT TURN AND GIVE AWAY A STRAIGHT-LINE DRIVE.",
+    o:[250,330], d:[274,276],
+    notes:[
+      {title:"Square",lines:["Chest and feet stay square to the ballhandler."],accent:true},
+      {title:"No Open Gate",lines:["Do not turn sideways and create an obvious lane."]}
+    ], ann:"square"
+  },
+  {
+    title:"Chest on the Right Shoulder",
+    lesson:"Against a right-handed player, line the center of your chest up with the offensive player's right shoulder. This shifts you toward the strong hand while keeping you square.",
+    rule:"CHEST → RIGHT SHOULDER. ENCOURAGE THE LEFT HAND WITHOUT GIVING A DIRECT LINE TO THE BASKET.",
+    o:[250,330], d:[280,275],
+    notes:[
+      {title:"Alignment",lines:["Center your chest on their RIGHT shoulder."],accent:true},
+      {title:"Purpose",lines:["Take away the comfortable strong-hand attack."],accent:true},
+      {title:"Still Square",lines:["Influence left without opening your stance."]}
+    ], ann:"shoulder"
+  },
+  {
+    title:"Rule #1 — Do Not Get Beat Right",
+    lesson:"For now we assume the ballhandler is right-handed. Our biggest directional rule is to take away the right-hand drive and make the player operate at speed with the left hand.",
+    rule:"NO RIGHT-HAND DRIVE.",
+    o:[250,330], d:[280,275],
+    notes:[
+      {title:"Strong Hand",lines:["Do NOT get beat to the player's right."],accent:true},
+      {title:"Weak Hand",lines:["Make them dribble, pass and decide going left."]},
+      {title:"Important",lines:["Influence left — do not simply give away the rim."]}
+    ], ann:"forceLeft"
+  },
+  {
+    title:"What Good Pressure Looks Like",
+    lesson:"Pressure is measured by the behavior of the offensive player. If they can stand comfortably and calmly survey the floor, we are not applying enough pressure.",
+    rule:"MAKE THEM PLAY FASTER THAN THEY WANT TO PLAY.",
+    o:[250,330], d:[280,275],
+    notes:[
+      {title:"Good Pressure",lines:["They protect the ball.","They have to dribble.","They make quicker decisions."],accent:true},
+      {title:"Bad Sign",lines:["They are relaxed and surveying the entire court."]}
+    ], ann:"pressure"
+  },
+  {
+    title:"We Are NOT Hunting Steals",
+    lesson:"We are not gambling for the basketball. A steal is great when the offense gives us one, but our job is to pressure, move our feet, stay square and avoid unnecessary fouls.",
+    rule:"THE GOAL IS THE BAD DECISION CREATED BY OUR PRESSURE — NOT THE REACH.",
+    o:[250,330], d:[280,275],
+    notes:[
+      {title:"Feet First",lines:["Move your feet. Stay square. Keep pressure."],accent:true},
+      {title:"Hands Disciplined",lines:["No reaching. No gambling. No cheap fouls."]}
+    ], ann:"noReach"
+  },
+  {
+    title:"If They Gain an Edge Going Left",
+    lesson:"If a right-handed player gains a small advantage going left, do not panic or overreact. Stay connected to the play. Many right-handed players eventually try to get back to the right hand to pass, shoot or finish.",
+    rule:"STAY PATIENT. STAY IN THE PLAY.",
+    o:[188,242], d:[230,270],
+    notes:[
+      {title:"Do Not Panic",lines:["A small advantage going left is not the end of the possession."],accent:true},
+      {title:"Expect",lines:["Many righties want to return to the right hand to finish or pass."]},
+      {title:"Avoid",lines:["Do not lunge, reach or foul trying to instantly recover."]}
+    ], ann:"leftEdge"
+  },
+  {
+    title:"If You Get Beat RIGHT",
+    lesson:"Getting beat to the strong hand is the direction we were trying hardest to prevent, but the possession is not over. Your job immediately changes from contain to recover.",
+    rule:"BEAT RIGHT? SPRINT BACK INTO THE PLAY.",
+    o:[313,232], d:[276,276],
+    notes:[
+      {title:"Immediate Response",lines:["SPRINT. Do not jog and do not give up."],accent:true},
+      {title:"New Job",lines:["Contain becomes RECOVER."],accent:true},
+      {title:"Do Not",lines:["Do not reach from behind just because you were beaten."]}
+    ], ann:"beatRight"
+  },
+  {
+    title:"Recover Without Fouling",
+    lesson:"Young defenders often turn one mistake into two: first they get beat, then they foul trying to erase it. Sprint back into the play, get between the ball and basket if you can, and arrive under control.",
+    rule:"GETTING BEAT DOES NOT GIVE US PERMISSION TO FOUL.",
+    o:[322,175], d:[289,209],
+    notes:[
+      {title:"Sprint",lines:["Run back into the play at full speed."],accent:true},
+      {title:"Arrive Under Control",lines:["No grabbing. No pushing. No swipe-down from behind."]},
+      {title:"One Mistake",lines:["Do not compound getting beat with a foul."],accent:true}
+    ], ann:"recover"
+  },
+  {
+    title:"WALL UP",
+    lesson:"Even after the ballhandler gets an advantage, they still have to finish. Recover under control, make yourself tall and long, keep your hands vertical and force the player to score over your size without fouling.",
+    rule:"TALL + LONG · HANDS VERTICAL · NO SWIPE DOWN.",
+    o:[275,136], d:[252,94],
+    notes:[
+      {title:"Wall Up",lines:["Get tall and long between the ball and the rim."],accent:true},
+      {title:"Hands",lines:["Vertical — do not swipe down."],accent:true},
+      {title:"Why It Works",lines:["The offense is already moving full speed and still has to finish over you."]}
+    ], ann:"wall"
+  },
+  {
+    title:"A Bad Situation Can Still Become a Miss",
+    lesson:"Getting beat does not mean giving up. If you sprint, recover, stay disciplined and wall up, the offensive player is still trying to finish at full speed under pressure over a long defender.",
+    rule:"MAKE THEM EARN THE BASKET.",
+    o:[278,128], d:[254,91],
+    notes:[
+      {title:"Stay in the Play",lines:["The possession is not over because the first move worked."],accent:true},
+      {title:"Finish the Possession",lines:["Sprint → Recover → Wall Up → No Foul."],accent:true}
+    ], ann:"contest"
+  },
+  {
+    title:"1-on-1 Defensive Checklist",
+    lesson:"Every on-ball defender should be able to repeat and execute this sequence before we build into 2-on-2 team defense.",
+    rule:"PRESSURE → INFLUENCE → CONTAIN → RECOVER → WALL UP",
+    o:[250,326], d:[280,272],
+    notes:[
+      {title:"Pickup",lines:["Half court · arm's length · pressure the ball."]},
+      {title:"Position",lines:["Stay square · chest on right shoulder · no right-hand drive."],accent:true},
+      {title:"Discipline",lines:["No reaching · no foul · sprint to recover · wall up."]}
+    ], ann:"checklist"
+  }
+];
+
+
+const defense2v2Steps = [
+  {
+    title:"Man-to-Man — BALL First, MAN Second",
+    lesson:"We are still playing man-to-man defense, but your position is never dictated by your man alone. Every defender's position is determined by two things: most importantly WHERE THE BALL IS, because the ball is the only thing that can score, and then where your player is.",
+    rule:"BALL FIRST. MAN SECOND.",
+    o1:[150,315], o2:[350,285], d1:[179,260], d2:[255,220], ball:"o1", ann:"identity",
+    notes:[
+      {title:"#1 — Ball",lines:["The ball matters most because it is the only thing that can score."],accent:true},
+      {title:"#2 — Your Man",lines:["Your player matters second and helps determine the exact help position."]},
+      {title:"Man-to-Man",lines:["We guard people, but all five defenders react to the ball."]}
+    ]
+  },
+  {
+    title:"Two Things Dictate Your Position",
+    lesson:"Ask yourself two questions every second: Where is the ball? Where is my player? The answer to those two questions tells you where your body belongs. The ball always gets priority.",
+    rule:"WHERE IS THE BALL? → WHERE IS MY MAN? → FIND MY SPOT.",
+    o1:[145,305], o2:[355,285], d1:[175,250], d2:[250,215], ball:"o1", ann:"twoThings",
+    notes:[
+      {title:"Question 1",lines:["Where is the BALL?"],accent:true},
+      {title:"Question 2",lines:["Where is MY MAN?"]},
+      {title:"Then",lines:["Use both to find your defensive position."]}
+    ]
+  },
+  {
+    title:"Guarding the Ball = BALL",
+    lesson:"If your player has the basketball, you are the on-ball defender. Use our 1-on-1 rules: pressure at about an arm's length, stay square, influence a right-handed player left, do not get beat right and do not foul.",
+    rule:"ON THE BALL? COMMUNICATE: BALL!",
+    o1:[145,305], o2:[355,285], d1:[175,250], d2:[250,215], ball:"o1", ann:"ballRole",
+    notes:[
+      {title:"Your Job",lines:["Pressure and contain using our 1-on-1 rules."],accent:true},
+      {title:"Talk",lines:["Say BALL so everyone knows who has the basketball."]},
+      {title:"Teammate",lines:["The other defender is now in HELP."]}
+    ]
+  },
+  {
+    title:"Not Guarding the Ball = HELP",
+    lesson:"If your player does not have the basketball, you are not simply standing next to your player. You are in HELP. Your positioning must allow you to help on the ball while still seeing and recovering to your man.",
+    rule:"OFF THE BALL? YOU ARE IN HELP.",
+    o1:[145,305], o2:[355,285], d1:[175,250], d2:[250,215], ball:"o1", ann:"helpRole",
+    notes:[
+      {title:"Your Job",lines:["Protect the ball first while staying connected to your man."],accent:true},
+      {title:"Talk",lines:["Say HELP so your teammate knows you are there."]},
+      {title:"Do Not",lines:["Do not stand glued to your man and remove yourself from the play."]}
+    ]
+  },
+  {
+    title:"Find Help — Make a Shallow Triangle",
+    lesson:"A good help position creates a shallow triangle between YOU, the BALL and YOUR MAN. This gives you a useful angle to see both and puts you in position to affect a drive without losing your assignment.",
+    rule:"BALL + YOU + MAN = SHALLOW TRIANGLE.",
+    o1:[145,305], o2:[355,285], d1:[175,250], d2:[250,215], ball:"o1", ann:"triangle",
+    notes:[
+      {title:"Triangle",lines:["You should be able to connect yourself to both the ball and your man."],accent:true},
+      {title:"Shallow",lines:["Do not flatten yourself on the same line as the offensive players."]},
+      {title:"Purpose",lines:["See both. Help on the ball. Recover to your man."]}
+    ]
+  },
+  {
+    title:"Always Be LOWER Than the Lowest Thing",
+    lesson:"Your help position must always be LOWER — closer to the basket — than whichever is lower: the ball or your man. We never want the ball or an offensive player between us and the basket.",
+    rule:"LOWER = CLOSER TO THE BASKET THAN THE LOWEST THING.",
+    o1:[150,315], o2:[350,285], d1:[180,260], d2:[255,215], ball:"o1", ann:"lower",
+    notes:[
+      {title:"Find the Lowest",lines:["Look at the ball and your man."],accent:true},
+      {title:"Then Get Lower",lines:["Your body belongs closer to the basket than whichever one is lowest."]},
+      {title:"Why",lines:["This protects the basket and improves your help angle."]}
+    ]
+  },
+  {
+    title:"See BOTH the Ball and Your Man",
+    lesson:"Help defense only works if you maintain vision of both things that dictate your position. A simple teaching tool is to point one hand at the ball and the other hand at your man. If you cannot do that, your vision or positioning needs to change.",
+    rule:"ONE HAND → BALL. ONE HAND → MAN.",
+    o1:[145,305], o2:[355,285], d1:[175,250], d2:[250,215], ball:"o1", ann:"pointBoth",
+    notes:[
+      {title:"Vision Check",lines:["Point one hand at the BALL and one hand at YOUR MAN."],accent:true},
+      {title:"If You Can't",lines:["Move your feet or turn your head until both are in your vision."]}
+    ]
+  },
+  {
+    title:"HEAD ON A SWIVEL",
+    lesson:"Do not lock your eyes onto the ball and do not lock your eyes onto your man. Keep your head active and continually scan between both. Losing vision of either one limits how effective you can be as a defender.",
+    rule:"SEE BALL. SEE MAN. KEEP YOUR HEAD MOVING.",
+    o1:[145,305], o2:[355,285], d1:[175,250], d2:[250,215], ball:"o1", ann:"swivel",
+    notes:[
+      {title:"Ball Watching",lines:["If you only watch the ball, your man can move behind you."]},
+      {title:"Man Watching",lines:["If you only watch your man, you cannot react to the ball."],accent:true},
+      {title:"Solution",lines:["Head on a swivel. Maintain vision of BOTH."]}
+    ]
+  },
+  {
+    title:"Move ON THE FLIGHT of the Pass",
+    lesson:"The instant the pass leaves the passer's hands, BOTH defenders should already be moving. The defender receiving the new ball assignment closes to the catch while the old on-ball defender drops into the new help position.",
+    rule:"PASS LEAVES THE HAND → BOTH DEFENDERS MOVE.",
+    o1:[145,305], o2:[355,285], d1:[175,250], d2:[250,215], ball:"o1", ann:"flight",
+    notes:[
+      {title:"Do Not Wait",lines:["Movement begins while the basketball is in the air."],accent:true},
+      {title:"New Ball Defender",lines:["Arrive at the receiver as the ball arrives."]},
+      {title:"New Help Defender",lines:["Drop into the new shallow triangle immediately."]}
+    ]
+  },
+  {
+    title:"Closing Out — Be There WHEN They Catch It",
+    lesson:"When you go from HELP to guarding the BALL, that movement is called a CLOSEOUT. Our goal is to start the closeout on the flight of the pass so we arrive as the catch is made. In this example, X2 is initially on the wrong side — to the LEFT of the receiver — and must close out to the RIGHT side to take away the strong hand.",
+    rule:"HELP → BALL = CLOSEOUT. ARRIVE ON THE CATCH, ON THE CORRECT SIDE.",
+    o1:[145,305], o2:[355,285], d1:[250,215], d2:[325,230], ball:"o2", ann:"onCatch",
+    notes:[
+      {title:"Closing Out",lines:["Going from HELP to the BALL is called CLOSING OUT."],accent:true},
+      {title:"Correct Side",lines:["Here X2 starts on the WRONG side (left side) and closes out to the RIGHT side to influence left."]},
+      {title:"Under Control",lines:["Do not get too close on the closeout. A contested jumper is better than giving up a strong-hand drive for a layup."]}
+    ]
+  },
+  {
+    title:"Late Closeout = Open Shot",
+    lesson:"If we begin the closeout after the catch instead of on the flight of the pass, the receiver catches with space. That leads to an open or lightly contested shot before the defender ever gets there.",
+    rule:"LATE CLOSEOUTS CREATE OPEN SHOTS.",
+    o1:[145,305], o2:[355,285], d1:[250,215], d2:[260,220], ball:"o2", ann:"lateShot",
+    notes:[
+      {title:"Problem",lines:["The ball arrives before the closeout defender."],accent:true},
+      {title:"Result",lines:["The receiver can catch and shoot before the closeout gets there."]},
+      {title:"Fix",lines:["Start the closeout on the flight of the pass — not after the catch."]}
+    ]
+  },
+  {
+    title:"Bad Closeout = Driving Advantage",
+    lesson:"A bad closeout gives up a drive. If you are too late OR too close, the offense can attack you before you are balanced. We want an under-control closeout that takes away the shot without giving a direct line drive — especially to the offensive player's strong hand.",
+    rule:"CLOSE OUT UNDER CONTROL. A JUMPER IS BETTER THAN A STRONG-HAND LAYUP.",
+    o1:[145,305], o2:[335,250], d1:[250,210], d2:[285,235], ball:"o2", ann:"lateDrive",
+    notes:[
+      {title:"Too Tight",lines:["If you crowd the closeout, the ballhandler can drive by you."],accent:true},
+      {title:"What We Want",lines:["Get there on balance, chop your feet, and make them shoot over you or drive into help."]},
+      {title:"Priority",lines:["Do not give up a strong-hand layup trying to erase every jumper."]}
+    ]
+  },
+  {
+    title:"Every Pass Changes BOTH Jobs",
+    lesson:"When the ball moves, the defensive jobs switch immediately. X2 becomes BALL and must arrive in our proper on-ball position — on the offensive player's RIGHT / strong-hand side. X1 becomes HELP and is positioned toward the middle of the court. This matters because the ballhandler can see help waiting toward the middle, but there is NO help sitting on the strong-hand/right side. That is why X2 cannot allow an easy right-hand drive.",
+    rule:"TAKE AWAY RIGHT. HELP IS TOWARD THE MIDDLE — THERE IS NO HELP TO THE STRONG HAND.",
+    o1:[145,305], o2:[355,285], d1:[250,215], d2:[385,230], ball:"o2", ann:"switchJobs",
+    notes:[
+      {title:"X2 = BALL",lines:["Get to the receiver's RIGHT / strong-hand side and apply our 1-on-1 pressure."],accent:true},
+      {title:"X1 = HELP",lines:["The help defender is waiting toward the MIDDLE of the court."]},
+      {title:"Know Your Help",lines:["Middle/left = HELP. Right/strong-hand side = NO HELP. Do not get beat right."],accent:true}
+    ]
+  },
+  {
+    title:"Communicate: BALL and HELP",
+    lesson:"Communication makes our positioning clear to everyone. The defender guarding the basketball calls BALL. Every defender not guarding the basketball calls HELP. Those words should be heard throughout the possession.",
+    rule:"ON BALL = BALL! · OFF BALL = HELP!",
+    o1:[145,305], o2:[355,285], d1:[250,215], d2:[385,230], ball:"o2", ann:"communicate",
+    notes:[
+      {title:"BALL",lines:["The on-ball defender owns the basketball."],accent:true},
+      {title:"HELP",lines:["The off-ball defender announces that help is available."],accent:true},
+      {title:"Talk Early",lines:["Communicate as the jobs change — not after the play develops."]}
+    ]
+  },
+  {
+    title:"Ball to the Left Corner = Help Drops to Ball Level",
+    lesson:"When the ballhandler dribbles all the way down to the LEFT CORNER, the help defender cannot stay high. X2 must drop LOWER all the way to the level of the ball so help is available if the on-ball defender gets beat. Click PASS BALL to watch the defenders react together if the ball is passed back out.",
+    rule:"BALL TO THE CORNER → HELP DROPS TO BALL LEVEL.",
+    o1:[48,112], o2:[352,265], d1:[82,112], d2:[206,112], ball:"o1", ann:"passShift",
+    passVariant:"cornerHelp",
+    passStates:{
+      o1:{d1:[82,112], d2:[206,112]},
+      o2:{d1:[214,124], d2:[386,230]}
+    },
+    passButtonForward:"PASS BALL → 2",
+    passButtonBackward:"PASS BALL ← CORNER",
+    notes:[
+      {title:"Adjustment",lines:["As the ball moves to the LEFT CORNER, X2 drops down to the level of the ball."],accent:true},
+      {title:"Click PASS BALL",lines:["Pass it out and back to watch one defender close out while the other drops into help."]},
+      {title:"Vision",lines:["Still see BOTH: the ball and your man."]}
+    ]
+  },
+  {
+    title:"Glued to Your Man = Open Lane",
+    lesson:"If the off-ball defender stays glued to their player on the perimeter, the lane opens up. Click ATTACK BASKET and watch 1 get all the way to the rim because X2 started too close to his own man and cannot get to the middle in time.",
+    rule:"DO NOT BE GLUED TO YOUR MAN OFF THE BALL.",
+    o1:[108,262], o2:[352,265], d1:[132,232], d2:[336,232], ball:"o1", ann:"gluedOpen",
+    notes:[
+      {title:"Mistake",lines:["X2 stays attached to the offensive player instead of sitting in help."],accent:true},
+      {title:"Result",lines:["Click ATTACK BASKET: 1 gets all the way to the rim while X2 stays glued to his man and cannot reach the middle."]},
+      {title:"Reminder",lines:["We are man-to-man, but off the ball we are still in HELP."]}
+    ]
+  },
+  {
+    title:"Proper Help Position Lets You Help the Drive",
+    lesson:"When X2 is in the correct help position — lower than the ball and the man, in the shallow triangle — X2 can step in and help if X1 gets beat on the drive.",
+    rule:"GOOD HELP POSITION ALLOWS YOU TO HELP THE BALL.",
+    o1:[108,262], o2:[352,265], d1:[132,232], d2:[265,214], ball:"o1", ann:"driveStop",
+    notes:[
+      {title:"Correct Help",lines:["X2 is low enough and inside enough to help on the drive."],accent:true},
+      {title:"If Teammate Gets Beat",lines:["Click ATTACK BASKET to watch X1 drive and X2 step in to stop the ball."]},
+      {title:"Why It Matters",lines:["Help position protects the basket while still allowing recovery back to your man."]}
+    ]
+  },
+  {
+    title:"PASS & SHIFT — Move on the Flight",
+    lesson:"Now watch the connection. When 1 passes to 2, X2 does not wait for the catch — X2 CLOSES OUT while the ball is in the air. At the exact same time, X1 is pulled off the ball and DROPS INTO HELP. Click the PASS BALL button over and over to watch the defenders move together.",
+    rule:"THE PASS PULLS BOTH DEFENDERS: ONE CLOSES OUT — ONE DROPS TO HELP.",
+    o1:[145,305], o2:[355,285], d1:[175,250], d2:[250,215], ball:"o1", ann:"passShift",
+    notes:[
+      {title:"Click PASS BALL",lines:["Pass the ball back and forth and watch BOTH defenders move on the flight."],accent:true},
+      {title:"New Ball Defender",lines:["CLOSE OUT while the pass is traveling — arrive when the ball arrives."]},
+      {title:"Old Ball Defender",lines:["Immediately DROP INTO HELP. Do not stay attached to the player who just passed."]}
+    ]
+  },
+  {
+    title:"CONNECTED DEFENSE — One Goes Up, One Gets Pulled In",
+    lesson:"The two defenders are connected to the basketball. Every pass creates two simultaneous movements: the new on-ball defender goes UP into the closeout, while the old on-ball defender gets PULLED IN toward help. Neither defender waits for the catch.",
+    rule:"BALL MOVES → BOTH DEFENDERS MOVE TOGETHER.",
+    o1:[145,305], o2:[355,285], d1:[250,215], d2:[385,230], ball:"o2", ann:"passShift",
+    notes:[
+      {title:"Watch the Pair",lines:["As one defender closes out, the other slides into the shallow help triangle."],accent:true},
+      {title:"Do Not Chase",lines:["We are already moving before the receiver catches the pass."]},
+      {title:"Goal",lines:["At the catch: one defender is BALL and the other is already HELP."]}
+    ]
+  },
+  {
+    title:"2-on-2 Defensive Checklist",
+    lesson:"This is the bridge from individual defense to team defense. We still guard our man, but we now understand that our exact position changes with the basketball on every pass.",
+    rule:"BALL FIRST → MAN SECOND → HELP → SEE BOTH → MOVE ON FLIGHT → TALK.",
+    o1:[145,305], o2:[355,285], d1:[175,250], d2:[250,215], ball:"o1", ann:"2v2check",
+    notes:[
+      {title:"Position",lines:["Ball first. Man second. Off ball means HELP."],accent:true},
+      {title:"Vision",lines:["Shallow triangle · lower than lowest · see ball and man."]},
+      {title:"Pass",lines:["Move on the flight and be there on the catch."]},
+      {title:"Voice",lines:["BALL when on-ball. HELP when off-ball."]}
+    ]
+  }
+];
+
+const defense2v2QuizQuestions = [
+ {q:"In our man-to-man defense, what dictates a defender's position MOST importantly?",choices:["Where the ball is","Where the coach is standing","Which side the bench is on","How tall the offensive player is"],answer:0,explain:"The ball dictates our position first because the ball is the only thing that can score."},
+ {q:"After locating the ball, what is the second thing that determines your defensive position?",choices:["The nearest referee","The three-point line","The shot clock","Where your player is"],answer:3,explain:"We locate the ball first and our own player second. Together those two locations determine our spot."},
+ {q:"If your player does NOT have the basketball, what is your defensive role?",choices:["Deny only","HELP","Stand directly behind your man","Double-team automatically"],answer:1,explain:"Every defender not guarding the basketball is in help."},
+ {q:"What shape should you create between yourself, the ball and your man while in help?",choices:["A straight line","A deep square","A shallow triangle","A circle around the paint"],answer:2,explain:"A shallow triangle helps you maintain vision of both the ball and your man while remaining useful as help."},
+ {q:"What does being LOWER than the lowest thing mean?",choices:["Be closer to the basket than whichever is lower: the ball or your man","Stand farther from the basket than both offensive players","Always stand below the free-throw line regardless of spacing","Crouch lower than the offensive player's shoulders"],answer:0,explain:"Lower refers to court position: you should be closer to the basket than the lower of the ball or your man."},
+ {q:"What is a simple way to check that you can see both the ball and your man?",choices:["Keep both hands behind your back","Look only at the basketball","Face your man with your back to the ball","Point one hand at the ball and the other at your man"],answer:3,explain:"Pointing one hand at each is a simple vision check that encourages awareness of both responsibilities."},
+ {q:"Why do we teach HEAD ON A SWIVEL?",choices:["So we can watch the bench","So we maintain vision of both the ball and our man","So we never have to move our feet","So we can turn our back on the ball"],answer:1,explain:"Locking onto only the ball or only your man removes important information. We need vision of both."},
+ {q:"When should defenders begin adjusting their positions after a pass is thrown?",choices:["After the receiver takes a dribble","After the receiver catches and squares up","On the flight of the pass","Only after a teammate calls for help"],answer:2,explain:"Both defenders should move while the ball is traveling through the air."},
+ {q:"What is our goal when the receiver catches a pass?",choices:["Already be on the receiver when the ball arrives","Begin running toward the receiver after the catch","Stay in the old help position until the next dribble","Wait to see whether the receiver shoots"],answer:0,explain:"The goal is for the defender and the basketball to arrive at the receiver together."},
+ {q:"Besides an open shot, what other advantage can a late closeout give the offense?",choices:["An automatic foul call","A guaranteed three points","A free substitution","A chance to attack a defender who is still closing out"],answer:3,explain:"A moving closeout can be attacked off the bounce more easily than a defender who was already set on the catch."},
+ {q:"What should the defender guarding the basketball communicate?",choices:["Mine","BALL","Switch","Stay"],answer:1,explain:"The on-ball defender communicates BALL."},
+ {q:"What should an off-ball defender communicate?",choices:["Shot","Deny","HELP","Right"],answer:2,explain:"Every defender not guarding the ball communicates HELP."},
+ {q:"Which statement best describes our man-to-man philosophy?",choices:["We guard our player, but our exact position changes according to the ball first and our man second","We stand directly next to our player no matter where the ball goes","Only the on-ball defender needs to react to passes","Help defense is only used in zone defense"],answer:0,explain:"It is man-to-man defense, but all defenders position themselves according to the ball first and their assignment second."},
+ {q:"Why is the ball our first positioning priority?",choices:["Because it is always closest to half court","Because the loudest player usually has it","Because it tells us which offense is being run","Because the ball is the only thing that can score"],answer:3,explain:"Players cannot score without the basketball, so the ball is the first thing every defender must locate and react to."}
+];
+
+
+const defense3v3Steps = [
+  {
+    title:"3-on-3 — Same Rules, More Connection",
+    lesson:"3-on-3 team defense is just a continuation of the same rules. We are still man-to-man, but every defender's spot is dictated by two things: first WHERE THE BALL IS, then WHERE THEIR PLAYER IS. If you are not guarding the ball, you are in HELP.",
+    rule:"BALL FIRST. MAN SECOND. OFF THE BALL = HELP.",
+    o1:[220,338], o2:[430,270], o3:[50,270], d1:[248,308], d2:[320,220], d3:[140,220], ball:"o1", ann:"3v3identity",
+    notes:[
+      {title:"Same Foundation",lines:["Nothing changes: ball first, man second."],accent:true},
+      {title:"One BALL, Two HELPS",lines:["The defender on the ball pressures. The other two defenders are in HELP."]},
+      {title:"Spacing",lines:["All three offensive players stay outside the three-point line."]}
+    ]
+  },
+  {
+    title:"On-Ball Defender — Apply Our 1-on-1 Rules",
+    lesson:"The defender guarding the basketball still uses all of our 1-on-1 rules: pressure the ball, stay square, take away the right hand, do not foul, and make the ballhandler uncomfortable.",
+    rule:"ON BALL = PRESSURE · TAKE AWAY RIGHT · NO FOUL.",
+    o1:[220,338], o2:[430,270], o3:[50,270], d1:[248,308], d2:[320,220], d3:[140,220], ball:"o1", ann:"3v3onball",
+    notes:[
+      {title:"X1 = BALL",lines:["Pressure 1 and take away the strong hand."],accent:true},
+      {title:"X2 and X3",lines:["Both are already in HELP behind the play."]},
+      {title:"Still Man-to-Man",lines:["Each defender knows who they are responsible for."]}
+    ]
+  },
+  {
+    title:"Two Off-Ball Defenders = Two HELPS",
+    lesson:"Both off-ball defenders sit in shallow triangles between the basketball and their own player. Each help defender should be roughly equidistant from the ball and their player, while staying lower toward the basket and keeping vision of both.",
+    rule:"HELP = SHALLOW TRIANGLE · SEE BALL + MAN · LOWER THAN THE LOWEST.",
+    o1:[220,338], o2:[430,270], o3:[50,270], d1:[248,308], d2:[320,220], d3:[140,220], ball:"o1", ann:"twoHelps3",
+    notes:[
+      {title:"X2 Help",lines:["Between 1 and 2 — shallow triangle, balanced distance."],accent:true},
+      {title:"X3 Help",lines:["Between 1 and 3 — shallow triangle, balanced distance."]},
+      {title:"Vision",lines:["Head on a swivel. See the ball and your player."]}
+    ]
+  },
+  {
+    title:"PASS & SHIFT — All 3 Defenders Move on the Flight",
+    lesson:"Click PASS BALL and watch all three defenders move together. When the ball goes from 1 to 2, X2 closes out to the catch. X1 immediately becomes HELP between the new ball and player 1. X3 also shifts its help position to stay in a shallow triangle with the new ball location.",
+    rule:"BALL MOVES → ALL 3 DEFENDERS MOVE ON THE FLIGHT.",
+    o1:[220,338], o2:[430,270], o3:[50,270], d1:[248,308], d2:[320,220], d3:[140,220], ball:"o1", ann:"passShift3",
+    passStates3:{
+      o1:{d1:[248,308], d2:[320,220], d3:[120,220]},
+      o2:{d1:[305,255], d2:[458,240], d3:[220,205]}
+    },
+    passButtonForward:"PASS BALL → 2",
+    passButtonBackward:"PASS BALL ← 1",
+    notes:[
+      {title:"Click PASS BALL",lines:["Watch the new defender close out while the other two find HELP."],accent:true},
+      {title:"Move on Flight",lines:["Do not wait for the catch to move."]},
+      {title:"New Help Positions",lines:["Both off-ball defenders form new shallow triangles."]}
+    ]
+  },
+  {
+    title:"Ball on the Wing — One BALL, Two HELPS",
+    lesson:"When the ball is on the wing, the defender on the ball applies pressure. The other two defenders are both in HELP. Their exact spots change because the ball moved, but the rule does not change: shallow triangle, see ball and man, and stay lower than the lowest thing.",
+    rule:"NEW BALL LOCATION = NEW HELP POSITIONS.",
+    o1:[220,338], o2:[430,270], o3:[50,270], d1:[305,255], d2:[458,240], d3:[220,205], ball:"o2", ann:"wingHelp3",
+    notes:[
+      {title:"X2 = BALL",lines:["Pressure the wing with our 1-on-1 rules."],accent:true},
+      {title:"X1 = HELP",lines:["Now helps between 2 and player 1."]},
+      {title:"X3 = HELP",lines:["Slides toward the ball while still seeing player 3."]}
+    ]
+  },
+  {
+    title:"3-on-3 Defensive Checklist",
+    lesson:"3-on-3 should look simple and connected. One defender is always BALL. The other two are always HELP. Every pass changes all three positions, and everyone moves on the flight of the ball.",
+    rule:"BALL FIRST → MAN SECOND → ONE BALL → TWO HELPS → MOVE ON FLIGHT.",
+    o1:[220,338], o2:[430,270], o3:[50,270], d1:[248,308], d2:[320,220], d3:[140,220], ball:"o1", ann:"3v3check",
+    notes:[
+      {title:"BALL",lines:["Pressure with our 1-on-1 rules."],accent:true},
+      {title:"HELP",lines:["Shallow triangle · balanced between ball and man · see both."]},
+      {title:"PASS",lines:["Move on the flight and be in the new spot by the catch."]}
+    ]
+  }
+];
+
+const defense3v3QuizQuestions = [
+ {q:"In 3-on-3, what dictates every defender's position first?",choices:["Where the ball is","Where the coach is standing","Where the bench is","Who is the tallest player"],answer:0,explain:"The ball is always our first positioning priority."},
+ {q:"If you are not guarding the basketball, what is your role?",choices:["Deny only","HELP","Stand next to your man","Double-team automatically"],answer:1,explain:"Every defender not guarding the ball is in HELP."},
+ {q:"What shape should a help defender create between the ball, themselves, and their player?",choices:["Straight line","Deep square","Shallow triangle","Circle"],answer:2,explain:"A shallow triangle lets the defender see and react to both the ball and their player."},
+ {q:"Where should a help defender be relative to the ball and their player?",choices:["Roughly balanced between them while staying lower toward the basket","Directly beside their player","Directly beside the ball","At half court"],answer:0,explain:"The help defender should be roughly equidistant from the ball and their player while remaining lower toward the basket."},
+ {q:"When should all three defenders move after a pass is thrown?",choices:["After the catch","On the flight of the pass","After one dribble","Only after a teammate calls HELP"],answer:1,explain:"All three defenders should move while the ball is in the air."},
+ {q:"When the ball is passed to a wing, what happens?",choices:["Only the new ball defender moves","The new ball defender closes out and both other defenders find new help spots","Everyone stays where they were","The defense automatically switches"],answer:1,explain:"The pass changes all three jobs: one closes out and the other two shift into new help positions."}
+];
+
+function currentDefenseSteps(){
+  if(defenseLevel==='3v3') return defense3v3Steps;
+  return defenseLevel==='2v2' ? defense2v2Steps : defenseSteps;
+}
+function currentDefenseQuizQuestions(){
+  if(defenseLevel==='3v3') return defense3v3QuizQuestions;
+  return defenseLevel==='2v2' ? defense2v2QuizQuestions : defenseQuizQuestions;
+}
+
+
+const defenseQuizQuestions = [
+ {q:"Where do we pick up the ballhandler?",choices:["As soon as they cross half court","At the three-point line","Inside the paint","Only after the first pass"],answer:0,explain:"Our on-ball pressure begins as soon as the ballhandler crosses half court."},
+ {q:"About how far away should the on-ball defender be?",choices:["Three full steps","One arm's length","Chest-to-chest","Inside the lane"],answer:1,explain:"About one arm's length keeps pressure on the ball without getting unnecessarily close."},
+ {q:"Do we open our stance to force the ballhandler left?",choices:["Yes, turn completely sideways","Yes, point both feet toward the sideline","No — stay square and shift your center","No — back away instead"],answer:2,explain:"We stay square. We influence the direction by shifting our body alignment, not by opening a gate."},
+ {q:"Against a right-handed player, where do we line up the center of our chest?",choices:["Their left hip","Directly behind them","The basketball only","Their right shoulder"],answer:3,explain:"Our chest aligns with the ballhandler's right shoulder to take away the comfortable strong-hand attack."},
+ {q:"What direction are we trying to influence a right-handed ballhandler?",choices:["Toward the left / weak hand","Toward the right hand","Straight down the middle","Toward either side equally"],answer:0,explain:"We want a right-handed player making full-speed decisions going left."},
+ {q:"What is our biggest directional rule?",choices:["Never allow a pass","Do not get beat right","Force every player baseline","Always go for the steal"],answer:1,explain:"Against a right-handed player, the biggest directional rule is do not get beat to the right hand."},
+ {q:"How do we know whether our ball pressure is good?",choices:["By how many steals we have","By how loudly we call out","By how uncomfortable and rushed the ballhandler looks","By standing as close as possible"],answer:2,explain:"Good pressure changes the offensive player's behavior — they protect the ball, dribble and make faster decisions."},
+ {q:"Are we actively hunting steals?",choices:["Yes, reach on every dribble","Only at half court","Yes, especially from behind","No — pressure and discipline come first"],answer:3,explain:"We are not gambling. We want the bad decision created by pressure, not a reckless reach."},
+ {q:"If a right-handed player gains a small advantage going left, what should we do?",choices:["Stay patient and remain in the play","Panic and lunge across their body","Immediately foul","Stop and call for help"],answer:0,explain:"Do not overreact. Many right-handed players will still try to get back to their right hand."},
+ {q:"If we get beat to the RIGHT, what is our first response?",choices:["Reach from behind","Sprint back into the play","Give up the layup","Slow down to avoid contact"],answer:1,explain:"The job changes from contain to recover. Sprint back into the play."},
+ {q:"What must we avoid while recovering?",choices:["Running","Getting between the ball and basket","Grabbing, pushing and swiping down","Making ourselves tall"],answer:2,explain:"Do not turn one mistake into two. Recover without grabbing, pushing or swiping down."},
+ {q:"What does WALL UP mean?",choices:["Jump into the offensive player","Turn your back to the ball","Swipe down at the ball","Stand tall and long with vertical hands"],answer:3,explain:"Wall up means get tall and long, keep your hands vertical and make the player finish over you without fouling."},
+ {q:"Why can walling up still work after the offense gains an advantage?",choices:["The offensive player is moving at full speed and still has to finish over a long defender","The shot automatically does not count","It guarantees a block","It allows us to use our hands on the shooter"],answer:0,explain:"A full-speed finish under pressure over a vertical defender is still difficult. We make the offense earn the basket."},
+ {q:"Which sequence best summarizes our 1-on-1 defense?",choices:["Reach → Gamble → Steal → Celebrate","Back up → Wait → Help → Foul","Force right → Reach → Block","Pressure → Influence → Contain → Recover → Wall Up"],answer:3,explain:"Pressure, influence, contain, recover and wall up is the foundation we will build on as we move toward 5-on-5 defense."}
+];
+
+function setupSystemSwitcher(){
+  document.title = "Triple Threat Basketball System";
+  const h = document.querySelector('header');
+  const h1 = h.querySelector('h1');
+  h1.textContent = "Triple Threat Basketball System";
+  if(!document.getElementById('systemSwitch')){
+    const nav=document.createElement('div');
+    nav.id='systemSwitch'; nav.className='system-switch';
+    nav.innerHTML='<button id="offenseSystemBtn" class="active" onclick="switchSystem(\'offense\')">OFFENSE</button><button id="defenseSystemBtn" onclick="switchSystem(\'defense\')">DEFENSE</button>';
+    h.appendChild(nav);
+  }
+  if(!document.getElementById('defenseLevelSwitch')){
+    const levels=document.createElement('div');
+    levels.id='defenseLevelSwitch'; levels.className='defense-level-switch';
+    levels.innerHTML='<button id="defense1v1Btn" class="active" onclick="switchDefenseLevel(\'1v1\')">1 ON 1</button><button id="defense2v2Btn" onclick="switchDefenseLevel(\'2v2\')">2 ON 2</button><button id="defense3v3Btn" onclick="switchDefenseLevel(\'3v3\')">3 ON 3</button>';
+    document.querySelector('.wrap > section.card > .tabs').appendChild(levels);
+  }
+  ensureDefenseActors();
+  const aside=document.querySelector('.wrap > aside.card');
+  if(!document.getElementById('defenseJobPanel')){
+    const p=document.createElement('div');
+    p.id='defenseJobPanel'; p.style.display='none';
+    document.getElementById('jobPicker').insertAdjacentElement('afterend',p);
+  }
+  updateDefenseJobPanel();
+}
+
+function updateDefenseJobPanel(){
+  const p=document.getElementById('defenseJobPanel'); if(!p) return;
+  if(defenseLevel==='3v3'){
+    p.innerHTML=`<div class="defense-job-card"><b>3-ON-3 DEFENDER</b><br><br><b>Same rules, more connection.</b> Ball first. Man second. If your player has the ball, you are <b>BALL</b> and apply our 1-on-1 rules. If not, you are in <b>HELP</b>. Help defenders form shallow triangles between the ball and their player, stay lower toward the basket, keep vision of both, and move on the flight of every pass.</div><div class="defense-core"><div>BALL FIRST</div><div>MAN SECOND</div><div>ONE BALL</div><div>TWO HELPS</div><div>SHALLOW TRIANGLE</div><div>SEE BOTH</div><div>MOVE ON FLIGHT</div></div>`;
+  }else if(defenseLevel==='2v2'){
+    p.innerHTML=`<div class="defense-job-card"><b>2-ON-2 DEFENDER</b><br><br><b>Ball first. Man second.</b> If your player has the ball, say <b>BALL</b> and apply our 1-on-1 rules. If your player does not have the ball, say <b>HELP</b> and find a shallow triangle between the ball and your man. Always be lower — closer to the basket — than the lowest thing. Keep vision of both with your head on a swivel. Move <b>on the flight of the pass</b> so you are already there when the catch is made.</div><div class="defense-core"><div>BALL FIRST</div><div>MAN SECOND</div><div>SHALLOW TRIANGLE</div><div>LOWER THAN LOWEST</div><div>SEE BOTH</div><div>MOVE ON FLIGHT</div><div>BALL / HELP</div><div>ARRIVE ON CATCH</div></div>`;
+  }else{
+    p.innerHTML=`<div class="defense-job-card"><b>ON-BALL DEFENDER</b><br><br>Pick up at half court. Stay about an arm's length away. Stay square. Put your chest on the ballhandler's right shoulder. Influence a right-handed player left without giving a straight line to the basket. Do not get beat right. Do not reach. Do not foul. If beaten right, sprint back into the play and recover under control. At the rim, WALL UP — tall, long and vertical.</div><div class="defense-core"><div>PRESSURE</div><div>INFLUENCE LEFT</div><div>CONTAIN</div><div>NO FOUL</div><div>RECOVER</div><div>WALL UP</div></div>`;
+  }
+}
+
+function addDefensePlayerFigure(g, fill, label){
+  g.appendChild(makeSvg('circle',{cx:0,cy:-28,r:9,fill:'#f4c7a1',stroke:'#ffffff','stroke-width':2}));
+  g.appendChild(makeSvg('line',{x1:-10,y1:-4,x2:-28,y2:8,stroke:'#ffffff','stroke-width':4,'stroke-linecap':'round'}));
+  g.appendChild(makeSvg('line',{x1:10,y1:-4,x2:28,y2:8,stroke:'#ffffff','stroke-width':4,'stroke-linecap':'round'}));
+  g.appendChild(makeSvg('line',{x1:-7,y1:28,x2:-16,y2:46,stroke:'#ffffff','stroke-width':4,'stroke-linecap':'round'}));
+  g.appendChild(makeSvg('line',{x1:7,y1:28,x2:16,y2:46,stroke:'#ffffff','stroke-width':4,'stroke-linecap':'round'}));
+  g.appendChild(makeSvg('rect',{x:-18,y:-12,width:36,height:40,rx:12,ry:12,fill:fill,stroke:'white','stroke-width':3}));
+  const t=makeSvg('text',{'text-anchor':'middle',y:12,fill:'white','font-size':label.length>1?13:20,'font-weight':900});
+  t.textContent=label;
+  g.appendChild(t);
+}
+
+function ensureDefenseActors(){
+  const court=document.getElementById('court');
+  if(document.getElementById('defOffense')) return;
+  const o=makeSvg('g',{id:'defOffense',style:'display:none'});
+  addDefensePlayerFigure(o,'#1d4ed8','1');
+  const d=makeSvg('g',{id:'defDefender',style:'display:none'});
+  addDefensePlayerFigure(d,'#7f1d1d','X1');
+  const o2=makeSvg('g',{id:'defOffense2',style:'display:none'});
+  addDefensePlayerFigure(o2,'#1d4ed8','2');
+  const d2=makeSvg('g',{id:'defDefender2',style:'display:none'});
+  addDefensePlayerFigure(d2,'#7f1d1d','X2');
+  const o3=makeSvg('g',{id:'defOffense3',style:'display:none'});
+  addDefensePlayerFigure(o3,'#1d4ed8','3');
+  const d3=makeSvg('g',{id:'defDefender3',style:'display:none'});
+  addDefensePlayerFigure(d3,'#7f1d1d','X3');
+  court.appendChild(o); court.appendChild(d); court.appendChild(o2); court.appendChild(d2); court.appendChild(o3); court.appendChild(d3);
+}
+
+function showOffenseActors(show){
+  for(let i=1;i<=5;i++) document.getElementById('p'+i).style.display=show?'':'none';
+}
+function showDefenseActors(show,showSecond=false,showThird=false){
+  document.getElementById('defOffense').style.display=show?'':'none';
+  document.getElementById('defDefender').style.display=show?'':'none';
+  document.getElementById('defOffense2').style.display=(show&&showSecond)?'':'none';
+  document.getElementById('defDefender2').style.display=(show&&showSecond)?'':'none';
+  document.getElementById('defOffense3').style.display=(show&&showThird)?'':'none';
+  document.getElementById('defDefender3').style.display=(show&&showThird)?'':'none';
+}
+function moveDefenseActor(id,xy){ document.getElementById(id).setAttribute('transform',`translate(${xy[0]} ${xy[1]})`); }
+
+function addDefenseArrow(g,x1,y1,cx,cy,x2,y2,color='#7f1d1d',width=5,dashed=false){
+  const attrs={d:`M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`,fill:'none',stroke:color,'stroke-width':width,'stroke-linecap':'round'};
+  if(dashed) attrs['stroke-dasharray']='7 6';
+  const p=makeSvg('path',attrs); g.appendChild(p);
+  const ang=Math.atan2(y2-cy,x2-cx), size=9;
+  const a1=ang+Math.PI*0.82, a2=ang-Math.PI*0.82;
+  const pts=[[x2,y2],[x2+Math.cos(a1)*size,y2+Math.sin(a1)*size],[x2+Math.cos(a2)*size,y2+Math.sin(a2)*size]].map(p=>p.join(',')).join(' ');
+  g.appendChild(makeSvg('polygon',{points:pts,fill:color}));
+}
+function addDefenseLine(g,x1,y1,x2,y2,color='#7f1d1d',width=4,dashed=false){
+  const a={x1,y1,x2,y2,stroke:color,'stroke-width':width,'stroke-linecap':'round'};
+  if(dashed) a['stroke-dasharray']='6 5';
+  g.appendChild(makeSvg('line',a));
+}
+function addNoSymbol(g,x,y,r=14){
+  g.appendChild(makeSvg('circle',{cx:x,cy:y,r,fill:'none',stroke:'#b91c1c','stroke-width':4}));
+  g.appendChild(makeSvg('line',{x1:x-r+3,y1:y+r-3,x2:x+r-3,y2:y-r+3,stroke:'#b91c1c','stroke-width':4,'stroke-linecap':'round'}));
+}
+function drawDefenseAnnotations(stepObj){
+  const g=document.getElementById('annotations'); g.innerHTML='';
+  setSlideNotes(stepObj.notes||[]);
+  const a=stepObj.ann;
+  if(a==='pickup'){
+    addDefenseArrow(g,250,452,250,430,250,407,'#d97706',4);
+    addDefenseArrow(g,276,397,276,376,276,359,'#7f1d1d',4,true);
+  } else if(a==='distance'){
+    addDefenseLine(g,254,303,270,303,'#ffffff',3,true);
+    addDefenseLine(g,254,297,254,309,'#ffffff',3);
+    addDefenseLine(g,270,297,270,309,'#ffffff',3);
+  } else if(a==='square'){
+    addDefenseLine(g,246,276,302,276,'#7f1d1d',5);
+    addDefenseLine(g,250,287,264,287,'#7f1d1d',4);
+    addDefenseLine(g,284,287,298,287,'#7f1d1d',4);
+  } else if(a==='shoulder'){
+    addDefenseLine(g,280,275,271,317,'#ffffff',3,true);
+    g.appendChild(makeSvg('circle',{cx:271,cy:317,r:5,fill:'#f2b134',stroke:'#ffffff','stroke-width':2}));
+  } else if(a==='forceLeft'){
+    addDefenseArrow(g,256,315,305,278,323,222,'#b91c1c',5);
+    addNoSymbol(g,306,252,13);
+    addDefenseArrow(g,238,315,193,278,173,224,'#d97706',5);
+  } else if(a==='pressure'){
+    addDefenseArrow(g,250,331,230,330,210,330,'#d97706',3,true);
+    addDefenseArrow(g,250,331,270,330,290,330,'#d97706',3,true);
+  } else if(a==='noReach'){
+    addNoSymbol(g,197,304,15);
+    addDefenseLine(g,214,286,236,310,'#7f1d1d',3,true);
+  } else if(a==='leftEdge'){
+    addDefenseArrow(g,250,330,208,294,188,242,'#d97706',5);
+    addDefenseArrow(g,280,275,252,264,229,250,'#7f1d1d',4,true);
+  } else if(a==='beatRight'){
+    addDefenseArrow(g,250,330,292,289,313,232,'#d97706',5);
+    addDefenseArrow(g,280,276,295,257,302,239,'#7f1d1d',5,true);
+  } else if(a==='recover'){
+    addDefenseArrow(g,276,276,295,240,289,209,'#7f1d1d',5,true);
+    addNoSymbol(g,305,235,12);
+  } else if(a==='wall' || a==='contest'){
+    addDefenseLine(g,274,96,274,58,'#7f1d1d',5);
+    addDefenseLine(g,230,96,230,58,'#7f1d1d',5);
+    addDefenseLine(g,274,60,282,72,'#7f1d1d',4);
+    addDefenseLine(g,274,60,266,72,'#7f1d1d',4);
+    addDefenseLine(g,230,60,238,72,'#7f1d1d',4);
+    addDefenseLine(g,230,60,222,72,'#7f1d1d',4);
+    if(a==='contest') addDefenseArrow(g,275,136,266,110,256,96,'#d97706',4);
+  } else if(a==='checklist'){
+    addDefenseLine(g,280,272,271,313,'#ffffff',3,true);
+    g.appendChild(makeSvg('circle',{cx:271,cy:313,r:5,fill:'#f2b134',stroke:'#ffffff','stroke-width':2}));
+  }
+}
+
+
+function addDefenseText(g,x,y,txt,color='#f7f7f4',size=12){
+  const padX=6, padY=4;
+  const approxW=Math.max(34, String(txt).length*(size*0.64)+padX*2);
+  const h=size+padY*2+4;
+  const placed=avoidPlayersRect(x-approxW/2,y-h/2,approxW,h,x,y);
+  const cx=placed.x+approxW/2, cy=placed.y+h/2;
+  const rect=makeSvg('rect',{x:placed.x,y:placed.y,width:approxW,height:h,rx:8,ry:8,fill:'rgba(16,20,25,0.92)',stroke:color,'stroke-width':1.5});
+  g.appendChild(rect);
+  const t=makeSvg('text',{x:cx,y:cy+0.5,fill:color,'font-size':size,'font-weight':900,'text-anchor':'middle','dominant-baseline':'middle'});
+  t.textContent=txt; g.appendChild(t); return t;
+}
+function addSightLine(g,x1,y1,x2,y2,color='#ffffff',width=2){ addDefenseLine(g,x1,y1,x2,y2,color,width,true); }
+function addPassLine2(g,x1,y1,x2,y2){
+  addDefenseLine(g,x1,y1,x2,y2,'#ffffff',4,true);
+  const ang=Math.atan2(y2-y1,x2-x1), size=10;
+  const a1=ang+Math.PI*0.82,a2=ang-Math.PI*0.82;
+  const pts=[[x2,y2],[x2+Math.cos(a1)*size,y2+Math.sin(a1)*size],[x2+Math.cos(a2)*size,y2+Math.sin(a2)*size]].map(p=>p.join(',')).join(' ');
+  g.appendChild(makeSvg('polygon',{points:pts,fill:'#ffffff'}));
+}
+function drawDefense2Annotations(s){
+  const g=document.getElementById('annotations'); g.innerHTML=''; setSlideNotes(s.notes||[]);
+  const a=s.ann;
+  if(a==='identity' || a==='twoThings'){
+    addSightLine(g,s.d2[0],s.d2[1],s.o1[0],s.o1[1],'#f2b134',3);
+    addSightLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#ffffff',2);
+    if(a==='twoThings'){
+      g.appendChild(makeSvg('circle',{cx:s.o1[0],cy:s.o1[1],r:34,fill:'none',stroke:'#f2b134','stroke-width':4,'stroke-dasharray':'7 5'}));
+    }
+  } else if(a==='ballRole'){
+    addDefenseLine(g,s.d1[0],s.d1[1],s.o1[0],s.o1[1],'#7f1d1d',4,true);
+    addSightLine(g,s.d2[0],s.d2[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#ffffff',2);
+  } else if(a==='helpRole' || a==='triangle' || a==='2v2check'){
+    addSightLine(g,s.o1[0],s.o1[1],s.d2[0],s.d2[1],'#f2b134',3);
+    addSightLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#ffffff',3);
+    if(a==='triangle') addSightLine(g,s.o1[0],s.o1[1],s.o2[0],s.o2[1],'#aeb8c2',2);
+  } else if(a==='lower'){
+    const ref=Math.min(s.o1[1],s.o2[1]);
+    addDefenseLine(g,100,ref,400,ref,'#ffffff',2,true);
+    addDefenseArrow(g,s.d2[0],ref-5,s.d2[0],ref-28,s.d2[0],s.d2[1]+28,'#f2b134',4);
+    addDefenseText(g,250,ref+20,'LOWEST THING', '#f7f7f4',11);
+    addDefenseText(g,s.d2[0]+60,s.d2[1]-12,'HELP IS LOWER', '#f2b134',11);
+  } else if(a==='pointBoth'){
+    addDefenseLine(g,s.d2[0]-6,s.d2[1]-2,s.o1[0]+18,s.o1[1]-18,'#f2b134',4);
+    addDefenseLine(g,s.d2[0]+6,s.d2[1]-2,s.o2[0]-18,s.o2[1]-18,'#ffffff',4);
+  } else if(a==='swivel'){
+    addSightLine(g,s.d2[0],s.d2[1]-26,s.o1[0],s.o1[1]-20,'#f2b134',2);
+    addSightLine(g,s.d2[0],s.d2[1]-26,s.o2[0],s.o2[1]-20,'#ffffff',2);
+    const p=makeSvg('path',{d:`M ${s.d2[0]-24} ${s.d2[1]-40} Q ${s.d2[0]} ${s.d2[1]-58} ${s.d2[0]+24} ${s.d2[1]-40}`,fill:'none',stroke:'#f2b134','stroke-width':4,'stroke-linecap':'round'}); g.appendChild(p);
+  } else if(a==='flight'){
+    addPassLine2(g,s.o1[0]+28,s.o1[1]-8,s.o2[0]-28,s.o2[1]-8);
+    addDefenseArrow(g,s.d2[0],s.d2[1],285,220,325,230,'#7f1d1d',5,true);
+    addDefenseArrow(g,s.d1[0],s.d1[1],210,230,250,215,'#7f1d1d',5,true);
+  } else if(a==='onCatch'){
+    const wrongX = s.o2[0]-34, wrongY = s.o2[1]-2;
+    g.appendChild(makeSvg('circle',{cx:wrongX,cy:wrongY,r:18,fill:'rgba(127,29,29,0.15)',stroke:'#b91c1c','stroke-width':3,'stroke-dasharray':'5 4'}));
+    addDefenseText(g,wrongX,wrongY+5,'X2','#b91c1c',12);
+    addNoSymbol(g,wrongX-8,wrongY-34,11);
+    addCalloutBox(g,34,132,'WRONG SIDE',['X2 starts left of the receiver.'],wrongX-6,wrongY-10,'#b91c1c');
+    addDefenseArrow(g,wrongX+10,wrongY+8,s.o2[0]-8,s.o2[1]-30,s.d2[0]-3,s.d2[1]-4,'#d97706',5,true);
+    addDefenseLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#7f1d1d',4,true);
+    addCalloutBox(g,332,132,'CLOSE OUT',['Get to the RIGHT side','before the catch.'],s.d2[0]+8,s.d2[1]-14,'#f2b134');
+    addSightLine(g,s.d1[0],s.d1[1],s.o2[0],s.o2[1],'#f2b134',2);
+    addSightLine(g,s.d1[0],s.d1[1],s.o1[0],s.o1[1],'#ffffff',2);
+  } else if(a==='lateShot'){
+    addDefenseArrow(g,s.d2[0],s.d2[1],300,235,325,245,'#7f1d1d',5,true);
+    g.appendChild(makeSvg('circle',{cx:s.o2[0],cy:s.o2[1],r:38,fill:'none',stroke:'#f2b134','stroke-width':4,'stroke-dasharray':'6 5'}));
+  } else if(a==='lateDrive'){
+    addDefenseArrow(g,s.d2[0],s.d2[1],305,230,320,240,'#7f1d1d',5,true);
+    addDefenseArrow(g,s.o2[0],s.o2[1],305,205,270,150,'#d97706',6,false);
+  } else if(a==='switchJobs'){
+    addSightLine(g,s.d1[0],s.d1[1],s.o2[0],s.o2[1],'#f2b134',2);
+    addSightLine(g,s.d1[0],s.d1[1],s.o1[0],s.o1[1],'#ffffff',2);
+    addCalloutBox(g,148,138,'X1 = HELP',['Middle of the court.'],s.d1[0]-2,s.d1[1]-12,'#f2b134');
+    addDefenseLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#7f1d1d',4,true);
+    addCalloutBox(g,350,138,'X2 = BALL',['Right side of the handler.'],s.d2[0],s.d2[1]-12,'#ffffff');
+    addDefenseArrow(g,s.o2[0]+18,s.o2[1]-2,405,272,444,240,'#d97706',5,false);
+    addCalloutBox(g,332,212,'NO HELP',['Strong-hand side.'],430,240,'#f2b134');
+  } else if(a==='dropHelp'){
+    const highX = 248, highY = 236;
+    g.appendChild(makeSvg('circle',{cx:highX,cy:highY,r:18,fill:'rgba(127,29,29,0.12)',stroke:'#b91c1c','stroke-width':3,'stroke-dasharray':'5 4'}));
+    addDefenseText(g,highX,highY+5,'X2','#b91c1c',12);
+    addNoSymbol(g,highX,highY-30,11);
+    addCalloutBox(g,60,150,'TOO HIGH',['X2 cannot help from here.'],highX-8,highY-10,'#b91c1c');
+    addDefenseArrow(g,highX,highY,s.d2[0],278,s.d2[0],s.d2[1],'#d97706',5,true);
+    addCalloutBox(g,276,136,'DROP TO BALL LEVEL',['Get lower as the ball','moves to the corner.'],s.d2[0]+6,s.d2[1]-10,'#f2b134');
+    addSightLine(g,s.d2[0],s.d2[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#ffffff',2);
+  } else if(a==='gluedOpen'){
+    addCalloutBox(g,236,138,'GLUED TO MAN',['X2 stays attached','instead of helping.'],s.d2[0]-10,s.d2[1]-14,'#b91c1c');
+    addDefenseArrow(g,s.o1[0]+16,s.o1[1]-4,145,250,220,165,'#d97706',6,false);
+    addCalloutBox(g,48,136,'OPEN LANE',['No help at the rim.'],192,188,'#f2b134');
+    addCalloutBox(g,216,286,'TOO FAR TO HELP',['X2 cannot leave this spot','in time to stop the drive.'],s.d2[0]-8,s.d2[1]+6,'#ffffff');
+  } else if(a==='helpDrive'){
+    addSightLine(g,s.d2[0],s.d2[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#ffffff',2);
+    addDefenseArrow(g,s.o1[0]+16,s.o1[1]-4,145,248,215,168,'#d97706',6,false);
+    addDefenseArrow(g,s.d2[0],s.d2[1],230,198,225,180,'#7f1d1d',5,true);
+    addCalloutBox(g,312,150,'IN HELP',['X2 can step in','and stop the drive.'],s.d2[0]-2,s.d2[1]-10,'#f2b134');
+  } else if(a==='driveStop'){
+    addSightLine(g,s.d2[0],s.d2[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#ffffff',2);
+    addCalloutBox(g,304,146,'READY TO HELP',['X2 is low and inside —','ready to step in.'],s.d2[0]-2,s.d2[1]-10,'#f2b134');
+    addCalloutBox(g,44,146,'ATTACK BASKET',['Use the button to watch','the help defender stop the drive.'],152,240,'#ffffff');
+  } else if(a==='communicate'){
+    addCalloutBox(g,332,160,'BALL!',['On-ball defender talks.'],s.d2[0]+8,s.d2[1]-10,'#f2b134');
+    addCalloutBox(g,56,152,'HELP!',['Off-ball defender talks.'],s.d1[0]-8,s.d1[1]-10,'#ffffff');
+  } else if(a==='passShift'){
+    const st=passShiftState(s.ball,s);
+    passShiftOwner=s.ball;
+    moveDefenseActor('defDefender',st.d1);
+    moveDefenseActor('defDefender2',st.d2);
+    const bp=s.ball==='o2'?s.o2:s.o1;
+    document.getElementById('ball').setAttribute('cx',bp[0]+25);
+    document.getElementById('ball').setAttribute('cy',bp[1]-8);
+    bringBallToFront();
+    drawPassShiftRestAnnotations(s,passShiftOwner,st.d1,st.d2);
+  }
+}
+
+
+function drawDefense3Annotations(s){
+  const g=document.getElementById('annotations'); g.innerHTML='';
+  setSlideNotes(s.notes||[]);
+  const a=s.ann;
+  if(a==='3v3identity'){
+    addDefenseLine(g,s.d1[0],s.d1[1],s.o1[0],s.o1[1],'#7f1d1d',4,true);
+    addSightLine(g,s.d2[0],s.d2[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#ffffff',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o3[0],s.o3[1],'#ffffff',2);
+    addCalloutBox(g,18,358,'BALL FIRST',['1 starts above the break,','and X1 pressures the ball.'],s.o1[0]+12,s.o1[1]-8,'#f2b134');
+    addCalloutBox(g,300,92,'HELP', ['X2 and X3 stay in','shallow help triangles.'],s.d2[0]-6,s.d2[1]-8,'#ffffff');
+  } else if(a==='3v3onball'){
+    addDefenseLine(g,s.d1[0],s.d1[1],s.o1[0],s.o1[1],'#7f1d1d',4,true);
+    addSightLine(g,s.d2[0],s.d2[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#ffffff',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o3[0],s.o3[1],'#ffffff',2);
+    addCalloutBox(g,18,360,'X1 = BALL',['Pressure · take away right · no foul.'],s.d1[0]-4,s.d1[1]-12,'#f2b134');
+    addCalloutBox(g,318,88,'X2 + X3 = HELP',['Both stay connected','behind the ball.'],250,220,'#ffffff');
+  } else if(a==='twoHelps3'){
+    addSightLine(g,s.d2[0],s.d2[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#ffffff',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o3[0],s.o3[1],'#ffffff',2);
+    addCalloutBox(g,18,360,'BALL', ['X1 pressures at the top.'],s.d1[0]-4,s.d1[1]-12,'#f2b134');
+    addCalloutBox(g,318,324,'HELP', ['X2 is between the ball','and player 2.'],s.d2[0]-6,s.d2[1]-10,'#ffffff');
+    addCalloutBox(g,18,96,'HELP', ['X3 is between the ball','and player 3.'],s.d3[0]-6,s.d3[1]-10,'#ffffff');
+  } else if(a==='passShift3'){
+    const st=passShift3State(s.ball,s);
+    passShiftOwner=s.ball;
+    moveDefenseActor('defDefender',st.d1); moveDefenseActor('defDefender2',st.d2); moveDefenseActor('defDefender3',st.d3);
+    const bp=s.ball==='o2'?s.o2:s.o1;
+    document.getElementById('ball').setAttribute('cx',bp[0]+25);
+    document.getElementById('ball').setAttribute('cy',bp[1]-8);
+    bringBallToFront();
+    drawPassShift3RestAnnotations(s,passShiftOwner,st.d1,st.d2,st.d3);
+  } else if(a==='rotation3'){
+    addSightLine(g,s.d2[0],s.d2[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o3[0],s.o3[1],'#ffffff',2);
+    addCalloutBox(g,18,360,'ATTACK BASKET',['Click to watch the drive,','the help, and the rotation.'],s.o1[0]+4,s.o1[1]-10,'#ffffff');
+    addCalloutBox(g,318,326,'X2 = FIRST HELP',['X2 leaves help to stop','the ball at the rim.'],s.d2[0]-8,s.d2[1]-10,'#f2b134');
+    addCalloutBox(g,18,96,'X3 SPLITS', ['X3 protects the middle','while seeing 2 and 3.'],s.d3[0]-8,s.d3[1]-8,'#ffffff');
+  } else if(a==='split3'){
+    addSightLine(g,s.d3[0],s.d3[1],s.o2[0],s.o2[1],'#f2b134',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o3[0],s.o3[1],'#ffffff',2);
+    addCalloutBox(g,300,94,'X3 SPLITS 2 & 3',['X3 stays between the two','off-ball players.'],s.d3[0]-8,s.d3[1]-8,'#f2b134');
+    addCalloutBox(g,300,324,'X1 ROTATES TO 2',['X1 rotates out to player 2','instead of chasing the drive.'],s.d1[0]-8,s.d1[1]-10,'#ffffff');
+  } else if(a==='danger3'){
+    addSightLine(g,s.d3[0],s.d3[1],s.o2[0],s.o2[1],'#f2b134',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o3[0],s.o3[1],'#ffffff',2);
+    addCalloutBox(g,18,92,'MOST DANGEROUS', ['The drive to the rim','must be stopped first.'],s.o1[0]-8,s.o1[1]-10,'#f2b134');
+    addCalloutBox(g,304,324,'LOWER PRIORITY', ['If a kick-out pass is open,','make it a perimeter jumper.'],s.o2[0]-10,s.o2[1]-10,'#ffffff');
+  } else if(a==='wingHelp3'){
+    addDefenseLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#7f1d1d',4,true);
+    addSightLine(g,s.d1[0],s.d1[1],s.o2[0],s.o2[1],'#f2b134',2);
+    addSightLine(g,s.d1[0],s.d1[1],s.o1[0],s.o1[1],'#ffffff',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o2[0],s.o2[1],'#f2b134',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o3[0],s.o3[1],'#ffffff',2);
+    addCalloutBox(g,310,320,'X2 = BALL',['Pressure the wing.'],s.d2[0]-8,s.d2[1]-10,'#f2b134');
+    addCalloutBox(g,18,92,'X1 + X3 = HELP',['Both form new shallow','triangles to the new ball.'],230,215,'#ffffff');
+  } else if(a==='3v3check'){
+    addDefenseLine(g,s.d1[0],s.d1[1],s.o1[0],s.o1[1],'#7f1d1d',4,true);
+    addSightLine(g,s.d2[0],s.d2[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d2[0],s.d2[1],s.o2[0],s.o2[1],'#ffffff',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o1[0],s.o1[1],'#f2b134',2);
+    addSightLine(g,s.d3[0],s.d3[1],s.o3[0],s.o3[1],'#ffffff',2);
+  }
+}
+
+function passShift3State(owner,s){
+  return {
+    owner,
+    d1:s.passStates3[owner].d1.slice(),
+    d2:s.passStates3[owner].d2.slice(),
+    d3:s.passStates3[owner].d3.slice()
+  };
+}
+
+function drawPassShift3RestAnnotations(s,owner,d1,d2,d3){
+  const g=document.getElementById('annotations'); g.innerHTML=''; setSlideNotes(s.notes||[]);
+  if(owner==='o1') addPassLine2(g,s.o1[0]+28,s.o1[1]-8,s.o2[0]-28,s.o2[1]-8);
+  else addPassLine2(g,s.o2[0]-28,s.o2[1]-8,s.o1[0]+28,s.o1[1]-8);
+  if(owner==='o1'){
+    addCalloutBox(g,18,360,'X1 = BALL',['Pressure 1 at the top.'],d1[0]-4,d1[1]-12,'#f2b134');
+    addCalloutBox(g,318,326,'X2 = HELP',['Triangle between 1 and 2.'],d2[0]-6,d2[1]-10,'#ffffff');
+    addCalloutBox(g,18,96,'X3 = HELP',['Triangle between 1 and 3.'],d3[0]-6,d3[1]-10,'#ffffff');
+  } else {
+    addCalloutBox(g,18,358,'X1 = HELP',['After the pass, X1 drops','to the new help line.'],d1[0]-6,d1[1]-10,'#ffffff');
+    addCalloutBox(g,314,324,'X2 = BALL',['X2 closes out on the','flight of the pass.'],d2[0]-8,d2[1]-10,'#f2b134');
+    addCalloutBox(g,18,92,'X3 SHIFTS LOW',['X3 slides lower and','stays connected.'],d3[0]-6,d3[1]-10,'#ffffff');
+  }
+  document.getElementById('court').appendChild(g);
+}
+
+function drawPassShift3MovingAnnotations(s,fromOwner,d1,d2,d3){
+  const g=document.getElementById('annotations'); g.innerHTML='';
+  if(fromOwner==='o1') addPassLine2(g,s.o1[0]+28,s.o1[1]-8,s.o2[0]-28,s.o2[1]-8);
+  else addPassLine2(g,s.o2[0]-28,s.o2[1]-8,s.o1[0]+28,s.o1[1]-8);
+  if(fromOwner==='o1'){
+    addDefenseText(g,Math.max(30,d1[0]-40),d1[1]-34,'DROP','#f7f7f4',10);
+    addDefenseText(g,Math.min(420,d2[0]+42),d2[1]-34,'CLOSE OUT','#f2b134',10);
+    addDefenseText(g,Math.max(28,d3[0]-14),d3[1]-34,'SHIFT LOW','#f7f7f4',10);
+  } else {
+    addDefenseText(g,Math.max(30,d1[0]-44),d1[1]-34,'DROP','#f7f7f4',10);
+    addDefenseText(g,Math.min(420,d2[0]+42),d2[1]-34,'CLOSE OUT','#f2b134',10);
+    addDefenseText(g,Math.max(28,d3[0]-14),d3[1]-34,'SHIFT LOW','#f7f7f4',10);
+  }
+  document.getElementById('court').appendChild(g);
+}
+
+function draw3RotationFrame(s,o1,d1,d2,d3,done=false){
+  const g=document.getElementById('annotations'); g.innerHTML=''; setSlideNotes(s.notes||[]);
+  addDefenseArrow(g,s.o1[0]+14,s.o1[1]-4,236,255,245,155,'#d97706',6,false);
+  addDefenseArrow(g,s.d2[0],s.d2[1],292,214,245,165,'#7f1d1d',5,true);
+  addDefenseArrow(g,s.d1[0],s.d1[1],278,272,360,255,'#7f1d1d',5,true);
+  addDefenseArrow(g,s.d3[0],s.d3[1],170,236,220,228,'#7f1d1d',5,true);
+  if(!done){
+    addCalloutBox(g,318,326,'X2 STOPS BALL',['First help leaves the wing','and stops the drive.'],d2[0]-8,d2[1]-10,'#f2b134');
+    addCalloutBox(g,18,94,'X3 SPLITS 2 & 3',['X3 shifts toward the middle','while still seeing both wings.'],d3[0]-8,d3[1]-10,'#ffffff');
+  }else{
+    addCalloutBox(g,18,92,'ROTATION COMPLETE',['X2 stops the ball at the rim.'],245,165,'#f2b134');
+    addCalloutBox(g,304,324,'X1 ROTATES TO 2',['X1 rotates out to player 2.'],d1[0]-8,d1[1]-10,'#ffffff');
+    addCalloutBox(g,18,352,'MOST DANGEROUS FIRST',['Stop the layup first,','then recover to shooters.'],d2[0]-8,d2[1]-10,'#f2b134');
+  }
+}
+function setDefenseLegend(){
+  if(defenseLevel==='3v3'){
+    document.querySelector('.legend').innerHTML=`
+      <h3>3-ON-3 DIAGRAM LEGEND</h3>
+      <div class="small" style="margin-bottom:8px">Blue players are offense. Dark-red players are defenders.</div>
+      <div class="legend-row"><svg width="58" height="18"><rect x="3" y="2" width="18" height="14" rx="5" fill="#1d4ed8" stroke="white" stroke-width="2"/><text x="12" y="13" text-anchor="middle" font-size="9" font-weight="900" fill="white">1</text></svg><span>Offensive players 1, 2 & 3</span></div>
+      <div class="legend-row"><svg width="58" height="18"><rect x="3" y="2" width="22" height="14" rx="5" fill="#7f1d1d" stroke="white" stroke-width="2"/><text x="14" y="13" text-anchor="middle" font-size="8" font-weight="900" fill="white">X1</text></svg><span>Defenders X1, X2 & X3</span></div>
+      <div class="legend-row"><svg width="58" height="18"><line x1="2" y1="9" x2="52" y2="9" stroke="#fff" stroke-width="3" stroke-dasharray="6 5"/></svg><span>Vision / relationship line</span></div>
+      <div class="legend-row"><svg width="58" height="18"><line x1="2" y1="9" x2="52" y2="9" stroke="#7f1d1d" stroke-width="4" stroke-dasharray="6 5"/><polygon points="52,9 43,4 43,14" fill="#7f1d1d"/></svg><span>Defensive movement / rotation</span></div>`;
+    return;
+  }
+  if(defenseLevel==='2v2'){
+    document.querySelector('.legend').innerHTML=`
+      <h3>2-ON-2 DIAGRAM LEGEND</h3>
+      <div class="small" style="margin-bottom:8px">Blue players are offense. Dark-red players are defenders.</div>
+      <div class="legend-row"><svg width="58" height="18"><rect x="3" y="2" width="18" height="14" rx="5" fill="#1d4ed8" stroke="white" stroke-width="2"/><text x="12" y="13" text-anchor="middle" font-size="9" font-weight="900" fill="white">1</text></svg><span>Offensive players 1 & 2</span></div>
+      <div class="legend-row"><svg width="58" height="18"><rect x="3" y="2" width="22" height="14" rx="5" fill="#7f1d1d" stroke="white" stroke-width="2"/><text x="14" y="13" text-anchor="middle" font-size="8" font-weight="900" fill="white">X1</text></svg><span>Defenders X1 & X2</span></div>
+      <div class="legend-row"><svg width="58" height="18"><line x1="2" y1="9" x2="52" y2="9" stroke="#fff" stroke-width="3" stroke-dasharray="6 5"/></svg><span>Vision / relationship line</span></div>
+      <div class="legend-row"><svg width="58" height="18"><line x1="2" y1="9" x2="52" y2="9" stroke="#7f1d1d" stroke-width="4" stroke-dasharray="6 5"/><polygon points="52,9 43,4 43,14" fill="#7f1d1d"/></svg><span>Defensive movement</span></div>`;
+    return;
+  }
+
+  document.querySelector('.legend').innerHTML=`
+    <h3>DEFENSIVE DIAGRAM LEGEND</h3>
+    <div class="small" style="margin-bottom:8px">Same Triple Threat court. The offensive player and defender are shown as player icons.</div>
+    <div class="legend-row"><svg width="74" height="58" viewBox="0 0 74 58"><circle cx="19" cy="10" r="6" fill="#f4c7a1" stroke="white" stroke-width="1.5"/><line x1="13" y1="24" x2="2" y2="30" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="25" y1="24" x2="36" y2="30" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="15" y1="46" x2="10" y2="56" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="23" y1="46" x2="28" y2="56" stroke="white" stroke-width="3" stroke-linecap="round"/><rect x="7" y="18" width="24" height="28" rx="8" ry="8" fill="#1d4ed8" stroke="white" stroke-width="2"/><text x="19" y="37" text-anchor="middle" font-size="14" font-weight="900" fill="white">1</text></svg><span>Offensive ballhandler</span></div>
+    <div class="legend-row"><svg width="74" height="58" viewBox="0 0 74 58"><circle cx="19" cy="10" r="6" fill="#f4c7a1" stroke="white" stroke-width="1.5"/><line x1="13" y1="24" x2="2" y2="30" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="25" y1="24" x2="36" y2="30" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="15" y1="46" x2="10" y2="56" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="23" y1="46" x2="28" y2="56" stroke="white" stroke-width="3" stroke-linecap="round"/><rect x="7" y="18" width="24" height="28" rx="8" ry="8" fill="#7f1d1d" stroke="white" stroke-width="2"/><text x="19" y="37" text-anchor="middle" font-size="14" font-weight="900" fill="white">X</text></svg><span>On-ball defender</span></div>
+    <div class="legend-row"><svg width="58" height="18"><line x1="2" y1="9" x2="52" y2="9" stroke="#d97706" stroke-width="4"/><polygon points="52,9 43,4 43,14" fill="#d97706"/></svg><span>Offensive dribble / attack</span></div>
+    <div class="legend-row"><svg width="58" height="18"><line x1="2" y1="9" x2="52" y2="9" stroke="#7f1d1d" stroke-width="4" stroke-dasharray="6 5"/><polygon points="52,9 43,4 43,14" fill="#7f1d1d"/></svg><span>Defensive recovery / movement</span></div>`;
+}
+
+
+let passShiftAnimating=false;
+let passShiftRaf=null;
+let passShiftOwner='o1';
+
+function cancelPassShiftAnimation(){
+  if(passShiftRaf){ cancelAnimationFrame(passShiftRaf); passShiftRaf=null; }
+  passShiftAnimating=false;
+  ['defOffense','defOffense2','defOffense3','defDefender','defDefender2','defDefender3'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.transition='';
+  });
+  const ball=document.getElementById('ball');
+  if(ball) ball.style.transition='';
+}
+
+let driveStopAnimating=false;
+let driveStopRaf=null;
+
+function cancelDriveStopAnimation(){
+  if(driveStopRaf){ cancelAnimationFrame(driveStopRaf); driveStopRaf=null; }
+  driveStopAnimating=false;
+  ['defOffense','defOffense2','defOffense3','defDefender','defDefender2','defDefender3'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.transition='';
+  });
+  const ball=document.getElementById('ball');
+  if(ball) ball.style.transition='';
+}
+
+function pointOnPath(points,t){
+  if(!points || points.length===0) return [0,0];
+  if(points.length===1) return points[0];
+  const segs=[];
+  let total=0;
+  for(let i=0;i<points.length-1;i++){
+    const a=points[i], b=points[i+1];
+    const len=Math.hypot(b[0]-a[0],b[1]-a[1]);
+    segs.push({a,b,len,start:total});
+    total+=len;
+  }
+  if(total===0) return points[points.length-1];
+  const dist=t*total;
+  for(const seg of segs){
+    if(dist<=seg.start+seg.len){
+      const local=(dist-seg.start)/seg.len;
+      return [seg.a[0]+(seg.b[0]-seg.a[0])*local, seg.a[1]+(seg.b[1]-seg.a[1])*local];
+    }
+  }
+  return points[points.length-1];
+}
+
+function drawDriveStopFrame(s,o1,d1,d2,finished=false){
+  const g=document.getElementById('annotations');
+  g.innerHTML='';
+  addSightLine(g,d2[0],d2[1],o1[0],o1[1],'#f2b134',2);
+  addSightLine(g,d2[0],d2[1],s.o2[0],s.o2[1],'#ffffff',2);
+  addDefenseArrow(g,o1[0]+16,o1[1]-4,170,205,188,132,'#d97706',6,false);
+  addDefenseArrow(g,d2[0],d2[1],228,188,198,146,'#7f1d1d',5,true);
+  if(!finished){
+    addCalloutBox(g,42,146,'ATTACK',['1 drives to the rim.'],o1[0]+8,o1[1]-10,'#ffffff');
+    addCalloutBox(g,300,146,'HELP STEPS IN',['X2 leaves help and','stops the drive.'],d2[0]-2,d2[1]-10,'#f2b134');
+  } else {
+    addCalloutBox(g,34,136,'DRIVE STOPPED',['X2 gets there early','and cuts off the layup.'],190,145,'#f2b134');
+    addCalloutBox(g,302,154,'RECOVER WITHOUT FOULING',['X1 sprints back into','the play from behind.'],d1[0]-4,d1[1]-8,'#ffffff');
+  }
+}
+
+function attackBasket2v2(){
+  if(defenseLevel==='3v3') return attackBasket3v3();
+  if(systemMode!=='defense' || defenseLevel!=='2v2' || mode!=='watch' || driveStopAnimating) return;
+  const s=currentDefenseSteps()[defenseStep];
+  if(!s || (s.ann!=='driveStop' && s.ann!=='gluedOpen')) return;
+
+  const o1El=document.getElementById('defOffense');
+  const d1El=document.getElementById('defDefender');
+  const d2El=document.getElementById('defDefender2');
+  const ball=document.getElementById('ball');
+  const btn=document.getElementById('attackDriveBtn');
+
+  let o1Path,d1Path,d2Path,doneStatus,startStatus,drawFrame;
+  if(s.ann==='gluedOpen'){
+    // BAD HELP EXAMPLE: 1 gets all the way to the rim.
+    // X2 stays glued to O2 and never gets to the middle in time.
+    o1Path=[s.o1,[130,232],[165,190],[205,145],[238,102]];
+    d1Path=[s.d1,[146,216],[165,184],[190,150],[214,122]];
+    d2Path=[s.d2,[338,234],[340,236],[342,238],[344,240]];
+    startStatus='Attack the basket: X2 is glued to his man and cannot get to the middle.';
+    doneStatus='Wide-open layup: 1 gets all the way to the rim because X2 started too close to his man and never got into help.';
+    drawFrame=function(s,o1,d1,d2,done){
+      const g=document.getElementById('annotations');
+      g.innerHTML='';
+      setSlideNotes(s.notes||[]);
+
+      // Orange attack path all the way to the rim.
+      addDefenseArrow(g,s.o1[0]+14,s.o1[1]-2,170,200,238,102,'#d97706',6,false);
+
+      // X1 trails the drive after being beaten.
+      addDefenseArrow(g,s.d1[0],s.d1[1],175,180,214,122,'#7f1d1d',4,true);
+
+      // X2 remains next to O2 instead of sliding toward the middle.
+      addDefenseLine(g,d2[0],d2[1],s.o2[0],s.o2[1],'#b91c1c',3,true);
+      addCalloutBox(
+        g,236,142,
+        'X2 GLUED TO MAN',
+        ['Too far from the middle.','Cannot stop the drive.'],
+        d2[0]-10,d2[1]-12,'#b91c1c'
+      );
+
+      if(done){
+        addCalloutBox(
+          g,120,72,
+          'WIDE-OPEN LAYUP',
+          ['1 gets all the way','to the basket.'],
+          o1[0],o1[1]-14,'#f2b134'
+        );
+        addCalloutBox(
+          g,52,150,
+          'WHY?',
+          ['X2 started too close','to his own man.'],
+          205,170,'#ffffff'
+        );
+      }else{
+        addCalloutBox(
+          g,48,144,
+          'OPEN LANE',
+          ['No help is waiting','in the middle.'],
+          190,170,'#f2b134'
+        );
+      }
+
+      const court=document.getElementById('court');
+      court.appendChild(g);
+    };
+  } else {
+    o1Path=[s.o1,[132,236],[160,188],[184,134]];
+    d1Path=[s.d1,[145,215],[162,182],[176,154]];
+    d2Path=[s.d2,[244,198],[214,170],[188,142]];
+    startStatus='Ball attacks the basket: X2 leaves help and steps in to stop the drive.';
+    doneStatus='Drive stopped: X2 gets to the ball and X1 recovers from behind without fouling.';
+    drawFrame=function(s,o1,d1,d2,done){ drawDriveStopFrame(s,o1,d1,d2,done); };
+  }
+
+  driveStopAnimating=true;
+  if(btn) btn.disabled=true;
+  [o1El,d1El,d2El,ball].forEach(el=>{ if(el) el.style.transition='none'; });
+  document.getElementById('autoStatus').textContent=startStatus;
+
+  const reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const duration=reduce?1:1250;
+  const start=performance.now();
+  const ease=t=>t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+
+  function frame(now){
+    const raw=Math.min(1,(now-start)/duration);
+    const t=ease(raw);
+    const o1=pointOnPath(o1Path,t);
+    const d1=pointOnPath(d1Path,t);
+    const d2=pointOnPath(d2Path,t);
+
+    moveDefenseActor('defOffense',o1);
+    moveDefenseActor('defDefender',d1);
+    moveDefenseActor('defDefender2',d2);
+    ball.setAttribute('cx',o1[0]+25);
+    ball.setAttribute('cy',o1[1]-8);
+    bringBallToFront();
+    drawFrame(s,o1,d1,d2,raw>=1);
+
+    if(raw<1){
+      driveStopRaf=requestAnimationFrame(frame);
+      return;
+    }
+
+    driveStopAnimating=false;
+    driveStopRaf=null;
+    [o1El,d1El,d2El,ball].forEach(el=>{ if(el) el.style.transition=''; });
+    if(btn){ btn.disabled=false; btn.textContent='REPLAY ATTACK'; }
+    document.getElementById('autoStatus').textContent=doneStatus;
+  }
+
+  driveStopRaf=requestAnimationFrame(frame);
+}
+
+function passShiftState(owner,s){
+  if(s.passStates && s.passStates[owner]){
+    return {
+      owner,
+      d1:s.passStates[owner].d1.slice(),
+      d2:s.passStates[owner].d2.slice()
+    };
+  }
+  const help=[250,215];
+  if(owner==='o1'){
+    return {
+      owner:'o1',
+      d1:[s.o1[0]+30,s.o1[1]-55],
+      d2:help.slice()
+    };
+  }
+  return {
+    owner:'o2',
+    d1:help.slice(),
+    d2:[s.o2[0]+30,s.o2[1]-55]
+  };
+}
+
+function drawPassShiftRestAnnotations(s,owner,d1,d2){
+  const g=document.getElementById('annotations');
+  g.innerHTML='';
+  setSlideNotes(s.notes||[]);
+  if(owner==='o1') addPassLine2(g,s.o1[0]+28,s.o1[1]-8,s.o2[0]-28,s.o2[1]-8);
+  else addPassLine2(g,s.o2[0]-28,s.o2[1]-8,s.o1[0]+28,s.o1[1]-8);
+
+  if(owner==='o1'){
+    addCalloutBox(g,72,174,'X1 = BALL',['Pressure the ball.'],d1[0]-6,d1[1]-14,'#f2b134');
+    addCalloutBox(g,275,132,'X2 = HELP',['Pulled into help.'],d2[0]+5,d2[1]-12,'#ffffff');
+  }else{
+    addCalloutBox(g,72,132,'X1 = HELP',['Pulled into help.'],d1[0]-5,d1[1]-12,'#ffffff');
+    addCalloutBox(g,330,174,'X2 = BALL',['Close out to the catch.'],d2[0]+5,d2[1]-14,'#f2b134');
+  }
+
+  const court=document.getElementById('court');
+  court.appendChild(g);
+}
+
+function drawPassShiftMovingAnnotations(s,fromOwner,d1,d2){
+  const g=document.getElementById('annotations');
+  g.innerHTML='';
+  if(fromOwner==='o1') addPassLine2(g,s.o1[0]+28,s.o1[1]-8,s.o2[0]-28,s.o2[1]-8);
+  else addPassLine2(g,s.o2[0]-28,s.o2[1]-8,s.o1[0]+28,s.o1[1]-8);
+
+  if(fromOwner==='o1'){
+    addDefenseText(g,Math.max(72,d1[0]-62),d1[1]-34,'DROP TO HELP','#f7f7f4',10);
+    addDefenseText(g,Math.min(428,d2[0]+62),d2[1]-34,'CLOSE OUT','#f2b134',11);
+  }else{
+    addDefenseText(g,Math.max(72,d1[0]-62),d1[1]-34,'CLOSE OUT','#f2b134',11);
+    addDefenseText(g,Math.min(428,d2[0]+62),d2[1]-34,'DROP TO HELP','#f7f7f4',10);
+  }
+
+  const court=document.getElementById('court');
+  court.appendChild(g);
+}
+
+
+function passBall3v3(){
+  if(systemMode!=='defense' || defenseLevel!=='3v3' || mode!=='watch' || passShiftAnimating) return;
+  const s=currentDefenseSteps()[defenseStep];
+  if(!s || s.ann!=='passShift3') return;
+  const fromOwner=passShiftOwner;
+  const toOwner=fromOwner==='o1'?'o2':'o1';
+  const startState=passShift3State(fromOwner,s);
+  const endState=passShift3State(toOwner,s);
+  const d1El=document.getElementById('defDefender');
+  const d2El=document.getElementById('defDefender2');
+  const d3El=document.getElementById('defDefender3');
+  const ball=document.getElementById('ball');
+  const btn=document.getElementById('pass2v2Btn');
+  passShiftAnimating=true; if(btn) btn.disabled=true;
+  [d1El,d2El,d3El,ball].forEach(el=>{ if(el) el.style.transition='none'; });
+  const fromBall=fromOwner==='o1'?s.o1:s.o2;
+  const toBall=toOwner==='o1'?s.o1:s.o2;
+  const startBall=[fromBall[0]+25,fromBall[1]-8], endBall=[toBall[0]+25,toBall[1]-8];
+  const duration=(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)?1:1050;
+  const start=performance.now();
+  document.getElementById('autoStatus').textContent=fromOwner==='o1'?'Ball in flight: X2 closes out, X1 drops, and X3 shifts low.':'Ball in flight: X1 closes out, X2 drops, and X3 shifts back with the ball.';
+  const lerp=(a,b,t)=>a+(b-a)*t; const ease=t=>t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+  function frame(now){
+    const raw=Math.min(1,(now-start)/duration), t=ease(raw);
+    const d1=[lerp(startState.d1[0],endState.d1[0],t),lerp(startState.d1[1],endState.d1[1],t)];
+    const d2=[lerp(startState.d2[0],endState.d2[0],t),lerp(startState.d2[1],endState.d2[1],t)];
+    const d3=[lerp(startState.d3[0],endState.d3[0],t),lerp(startState.d3[1],endState.d3[1],t)];
+    moveDefenseActor('defDefender',d1); moveDefenseActor('defDefender2',d2); moveDefenseActor('defDefender3',d3);
+    ball.setAttribute('cx',lerp(startBall[0],endBall[0],t)); ball.setAttribute('cy',lerp(startBall[1],endBall[1],t));
+    bringBallToFront();
+    drawPassShift3MovingAnnotations(s,fromOwner,d1,d2,d3);
+    if(raw<1){ passShiftRaf=requestAnimationFrame(frame); return; }
+    passShiftOwner=toOwner; passShiftAnimating=false; passShiftRaf=null;
+    if(btn){ btn.disabled=false; updatePassShiftButton(); }
+    drawPassShift3RestAnnotations(s,passShiftOwner,endState.d1,endState.d2,endState.d3);
+    document.getElementById('autoStatus').textContent='All 3 defenders moved on the flight of the pass.';
+  }
+  passShiftRaf=requestAnimationFrame(frame);
+}
+
+function attackBasket3v3(){
+  if(systemMode!=='defense' || defenseLevel!=='3v3' || mode!=='watch' || driveStopAnimating) return;
+  const s=currentDefenseSteps()[defenseStep];
+  if(!s || s.ann!=='rotation3') return;
+  const o1El=document.getElementById('defOffense');
+  const d1El=document.getElementById('defDefender');
+  const d2El=document.getElementById('defDefender2');
+  const d3El=document.getElementById('defDefender3');
+  const ball=document.getElementById('ball');
+  const btn=document.getElementById('attackDriveBtn');
+  const o1Path=[s.o1,[232,282],[242,224],[245,155]];
+  const d1Path=[s.d1,[266,282],[312,268],[360,255]];
+  const d2Path=[s.d2,[300,222],[272,190],[245,165]];
+  const d3Path=[s.d3,[150,238],[182,232],[220,228]];
+  driveStopAnimating=true; if(btn) btn.disabled=true;
+  [o1El,d1El,d2El,d3El,ball].forEach(el=>{ if(el) el.style.transition='none'; });
+  document.getElementById('autoStatus').textContent='Drive: X2 stops the ball, X1 rotates to player 2, and X3 stays connected between the two off-ball players.';
+  const duration=(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)?1:1250;
+  const start=performance.now(); const ease=t=>t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+  function frame(now){
+    const raw=Math.min(1,(now-start)/duration), t=ease(raw);
+    const o1=pointOnPath(o1Path,t), d1=pointOnPath(d1Path,t), d2=pointOnPath(d2Path,t), d3=pointOnPath(d3Path,t);
+    moveDefenseActor('defOffense',o1); moveDefenseActor('defDefender',d1); moveDefenseActor('defDefender2',d2); moveDefenseActor('defDefender3',d3);
+    ball.setAttribute('cx',o1[0]+25); ball.setAttribute('cy',o1[1]-8);
+    bringBallToFront();
+    draw3RotationFrame(s,o1,d1,d2,d3,raw>=1);
+    if(raw<1){ driveStopRaf=requestAnimationFrame(frame); return; }
+    driveStopAnimating=false; driveStopRaf=null;
+    if(btn){ btn.disabled=false; btn.textContent='REPLAY ATTACK'; }
+    document.getElementById('autoStatus').textContent='Rotation complete: the layup was stopped first, X1 rotated out to 2, and X3 stayed connected to both off-ball players.';
+  }
+  driveStopRaf=requestAnimationFrame(frame);
+}
+function updatePassShiftButton(){
+  const b=document.getElementById('pass2v2Btn');
+  if(!b) return;
+  const s=currentDefenseSteps()[defenseStep];
+  const forward=(s && s.passButtonForward) ? s.passButtonForward : 'PASS BALL → 2';
+  const backward=(s && s.passButtonBackward) ? s.passButtonBackward : 'PASS BALL ← 1';
+  b.textContent=passShiftOwner==='o1' ? forward : backward;
+}
+
+function configurePassShiftControls(s){
+  const passInteractive=systemMode==='defense' && mode==='watch' && s && ((defenseLevel==='2v2' && s.ann==='passShift') || (defenseLevel==='3v3' && s.ann==='passShift3'));
+  const driveInteractive=systemMode==='defense' && mode==='watch' && s && (defenseLevel==='2v2' && (s.ann==='driveStop' || s.ann==='gluedOpen'));
+  const interactive=passInteractive || driveInteractive;
+  const passBtn=document.getElementById('pass2v2Btn');
+  const driveBtn=document.getElementById('attackDriveBtn');
+  const normalIds=['playBtn','pauseBtn','restartPlayBtn','speedSelect'];
+  normalIds.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display=interactive?'none':'';
+  });
+  if(passBtn){
+    passBtn.style.display=passInteractive?'block':'none';
+    passBtn.disabled=passShiftAnimating;
+    if(passInteractive) updatePassShiftButton();
+  }
+  if(driveBtn){
+    driveBtn.style.display=driveInteractive?'block':'none';
+    driveBtn.disabled=driveStopAnimating;
+    driveBtn.textContent='ATTACK BASKET';
+  }
+}
+
+function passBall2v2(){
+  if(defenseLevel==='3v3') return passBall3v3();
+  if(systemMode!=='defense' || defenseLevel!=='2v2' || mode!=='watch' || passShiftAnimating) return;
+  const s=currentDefenseSteps()[defenseStep];
+  if(!s || s.ann!=='passShift') return;
+
+  const fromOwner=passShiftOwner;
+  const toOwner=fromOwner==='o1'?'o2':'o1';
+  const startState=passShiftState(fromOwner,s);
+  const endState=passShiftState(toOwner,s);
+
+  const d1El=document.getElementById('defDefender');
+  const d2El=document.getElementById('defDefender2');
+  const ball=document.getElementById('ball');
+  const btn=document.getElementById('pass2v2Btn');
+
+  passShiftAnimating=true;
+  if(btn) btn.disabled=true;
+
+  [d1El,d2El,ball].forEach(el=>{ if(el) el.style.transition='none'; });
+
+  const fromBall=fromOwner==='o1'?s.o1:s.o2;
+  const toBall=toOwner==='o1'?s.o1:s.o2;
+  const startBall=[fromBall[0]+25,fromBall[1]-8];
+  const endBall=[toBall[0]+25,toBall[1]-8];
+
+  const reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const duration=reduce?1:1050;
+  const start=performance.now();
+
+  if(s.passVariant==='cornerHelp'){
+    document.getElementById('autoStatus').textContent=
+      fromOwner==='o1'
+        ? 'Ball out of the corner: X2 CLOSES OUT while X1 DROPS INTO HELP.'
+        : 'Ball back to the corner: X1 takes BALL and X2 DROPS TO BALL LEVEL.';
+  } else {
+    document.getElementById('autoStatus').textContent=
+      fromOwner==='o1'
+        ? 'Ball in flight: X2 CLOSES OUT while X1 DROPS INTO HELP.'
+        : 'Ball in flight: X1 CLOSES OUT while X2 DROPS INTO HELP.';
+  }
+
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  const ease=t=>t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+
+  function frame(now){
+    const raw=Math.min(1,(now-start)/duration);
+    const t=ease(raw);
+
+    const d1=[lerp(startState.d1[0],endState.d1[0],t),lerp(startState.d1[1],endState.d1[1],t)];
+    const d2=[lerp(startState.d2[0],endState.d2[0],t),lerp(startState.d2[1],endState.d2[1],t)];
+    const bx=lerp(startBall[0],endBall[0],t);
+    const by=lerp(startBall[1],endBall[1],t);
+
+    moveDefenseActor('defDefender',d1);
+    moveDefenseActor('defDefender2',d2);
+    ball.setAttribute('cx',bx);
+    ball.setAttribute('cy',by);
+    drawPassShiftMovingAnnotations(s,fromOwner,d1,d2);
+
+    if(raw<1){
+      passShiftRaf=requestAnimationFrame(frame);
+      return;
+    }
+
+    passShiftOwner=toOwner;
+    passShiftAnimating=false;
+    passShiftRaf=null;
+    [d1El,d2El,ball].forEach(el=>{ if(el) el.style.transition=''; });
+
+    moveDefenseActor('defDefender',endState.d1);
+    moveDefenseActor('defDefender2',endState.d2);
+    ball.setAttribute('cx',endBall[0]);
+    ball.setAttribute('cy',endBall[1]);
+    drawPassShiftRestAnnotations(s,passShiftOwner,endState.d1,endState.d2);
+    updatePassShiftButton();
+    if(btn) btn.disabled=false;
+
+    if(s.passVariant==='cornerHelp'){
+      document.getElementById('autoStatus').textContent=
+        passShiftOwner==='o1'
+          ? 'Ball in the left corner: X1 = BALL, X2 = HELP at ball level. Click PASS BALL to pass it out.'
+          : 'Ball out on the wing: X2 = BALL, X1 = HELP. Click PASS BALL to send it back to the corner.';
+    } else {
+      document.getElementById('autoStatus').textContent=
+        passShiftOwner==='o1'
+          ? '1 has the ball: X1 = BALL, X2 = HELP. Click PASS BALL to reverse it.'
+          : '2 has the ball: X2 = BALL, X1 = HELP. Click PASS BALL to reverse it.';
+    }
+  }
+
+  passShiftRaf=requestAnimationFrame(frame);
+}
+
+
+function renderDefense(){
+  cancelPassShiftAnimation();
+  cancelDriveStopAnimation();
+  ensureDefenseActors();
+  showOffenseActors(false);
+  const steps=currentDefenseSteps();
+  const s=steps[defenseStep];
+  if(defenseLevel==='3v3'){
+    showDefenseActors(true,true,true);
+    moveDefenseActor('defOffense',s.o1); moveDefenseActor('defOffense2',s.o2); moveDefenseActor('defOffense3',s.o3);
+    moveDefenseActor('defDefender',s.d1); moveDefenseActor('defDefender2',s.d2); moveDefenseActor('defDefender3',s.d3);
+    const bp=s.ball==='o2'?s.o2:(s.ball==='o3'?s.o3:s.o1);
+    document.getElementById('ball').setAttribute('cx',bp[0]+25);
+    document.getElementById('ball').setAttribute('cy',bp[1]-8);
+    document.getElementById('sectionName').textContent='DEFENSE · LEVEL 3 · 3 ON 3 TEAM DEFENSE';
+    drawDefense3Annotations(s);
+  }else if(defenseLevel==='2v2'){
+    showDefenseActors(true,true,false);
+    moveDefenseActor('defOffense',s.o1); moveDefenseActor('defOffense2',s.o2);
+    moveDefenseActor('defDefender',s.d1); moveDefenseActor('defDefender2',s.d2);
+    const bp=s.ball==='o2'?s.o2:s.o1;
+    document.getElementById('ball').setAttribute('cx',bp[0]+25);
+    document.getElementById('ball').setAttribute('cy',bp[1]-8);
+    document.getElementById('sectionName').textContent='DEFENSE · LEVEL 2 · 2 ON 2 TEAM DEFENSE';
+    drawDefense2Annotations(s);
+  }else{
+    showDefenseActors(true,false,false);
+    moveDefenseActor('defOffense',s.o); moveDefenseActor('defDefender',s.d);
+    document.getElementById('ball').setAttribute('cx',s.o[0]+25);
+    document.getElementById('ball').setAttribute('cy',s.o[1]-8);
+    document.getElementById('sectionName').textContent='DEFENSE · LEVEL 1 · 1 ON 1 ON-BALL DEFENSE';
+    drawDefenseAnnotations(s);
+  }
+  document.getElementById('ball').style.display='';
+  bringBallToFront();
+  const court=document.getElementById('court');
+  court.appendChild(document.getElementById('annotations'));
+  document.getElementById('title').textContent=s.title;
+  document.getElementById('status').textContent=`STEP ${defenseStep+1} OF ${steps.length}`;
+  document.getElementById('lesson').innerHTML=s.lesson+`<div class="rule"><b>${s.rule}</b></div>`;
+  setDefenseLegend(); updateDefenseJobPanel();
+  configurePassShiftControls(s);
+  document.getElementById('twoManChoice').style.display='none';
+  if(mode==='quiz'||mode==='job') document.getElementById('lesson').style.display='none'; else document.getElementById('lesson').style.display='block';
+}
+
+function updateDefensePlayUI(isPlaying){
+  document.getElementById('playBtn').disabled=isPlaying;
+  document.getElementById('pauseBtn').disabled=!isPlaying;
+}
+function defensePause(resetMessage=true){
+  if(defensePlayTimer){ clearInterval(defensePlayTimer); defensePlayTimer=null; }
+  updateDefensePlayUI(false);
+  if(resetMessage) document.getElementById('autoStatus').textContent='Autoplay paused.';
+}
+function defensePlay(){
+  if(mode!=='watch') setMode('watch');
+  if(defensePlayTimer) return;
+  const steps=currentDefenseSteps();
+  if(defenseStep>=steps.length-1) defenseStep=0;
+  updateDefensePlayUI(true);
+  document.getElementById('autoStatus').textContent=`Playing ${defenseLevel==='3v3'?'3-on-3 team defense':(defenseLevel==='2v2'?'2-on-2 team defense':'1-on-1 defense')} continuously. Press Pause at any time.`;
+  defensePlayTimer=setInterval(()=>{
+    if(defenseStep>=currentDefenseSteps().length-1){
+      defensePause(false);
+      document.getElementById('autoStatus').textContent='Reached the final defensive slide. Press Restart + Play to watch again.';
+      return;
+    }
+    defenseStep++; renderDefense();
+  },defensePlayDelay);
+}
+
+function switchSystem(which){
+  if(which===systemMode) return;
+  defensePause(false); offensePauseSlides(false);
+  systemMode=which;
+  document.getElementById('offenseSystemBtn').classList.toggle('active',which==='offense');
+  document.getElementById('defenseSystemBtn').classList.toggle('active',which==='defense');
+  document.getElementById('defenseLevelSwitch').style.display=which==='defense'?'flex':'none';
+  defenseStep=0; defenseQuizOrder=[];
+  mode='watch';
+  ['watch','job','quiz'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('active',x==='watch'));
+  document.getElementById('jobPicker').style.display='none';
+  document.getElementById('defenseJobPanel').style.display='none';
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('lesson').style.display='block';
+  if(which==='offense'){
+    configurePassShiftControls(null);
+    showDefenseActors(false,false); showOffenseActors(true);
+    document.querySelector('.legend').innerHTML=offenseLegendHTML;
+    document.getElementById('jobPicker').innerHTML=offenseJobPickerHTML;
+    document.getElementById('autoStatus').textContent='Autoplay is off. Use “Play Sequence” to run the slides continuously.';
+    offenseRender();
+  }else{
+    showOffenseActors(false); showDefenseActors(true,defenseLevel!=='1v1',defenseLevel==='3v3');
+    document.getElementById('autoStatus').textContent='Autoplay is off. Use “Play Sequence” to run the defensive slides continuously.';
+    renderDefense();
+  }
+}
+
+function switchDefenseLevel(level){
+  if(systemMode!=='defense') return;
+  defensePause(false);
+  defenseLevel=level; defenseStep=0; defenseQuizOrder=[]; defenseQuizIndex=0; defenseQuizScore=0; defenseQuizAnswered=false;
+  document.getElementById('defense1v1Btn').classList.toggle('active',level==='1v1');
+  document.getElementById('defense2v2Btn').classList.toggle('active',level==='2v2');
+  document.getElementById('defense3v3Btn').classList.toggle('active',level==='3v3');
+  mode='watch';
+  ['watch','job','quiz'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('active',x==='watch'));
+  document.getElementById('jobPicker').style.display='none'; document.getElementById('defenseJobPanel').style.display='none'; document.getElementById('quiz').style.display='none'; document.getElementById('lesson').style.display='block';
+  document.getElementById('autoStatus').textContent='Autoplay is off. Use “Play Sequence” to run the defensive slides continuously.';
+  renderDefense();
+}
+
+function setModeDefense(m){
+  defensePause(false);
+  mode=m;
+  ['watch','job','quiz'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('active',x===m));
+  document.getElementById('jobPicker').style.display='none';
+  document.getElementById('defenseJobPanel').style.display=m==='job'?'block':'none';
+  document.getElementById('quiz').style.display=m==='quiz'?'block':'none';
+  document.getElementById('twoManChoice').style.display='none';
+  if(m==='quiz'){
+    document.getElementById('lesson').style.display='none';
+    if(!defenseQuizOrder.length) makeDefenseQuiz(true);
+  }else if(m==='job'){
+    document.getElementById('lesson').style.display='none';
+  }else{
+    document.getElementById('lesson').style.display='block';
+  }
+  renderDefense();
+  updateDefensePlayUI(false);
+}
+
+function shuffleDefenseQuiz(){
+  const bank=currentDefenseQuizQuestions();
+  defenseQuizOrder=bank.map((_,i)=>i);
+  for(let i=defenseQuizOrder.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [defenseQuizOrder[i],defenseQuizOrder[j]]=[defenseQuizOrder[j],defenseQuizOrder[i]];
+  }
+}
+function makeDefenseQuiz(reset=true){
+  if(reset||!defenseQuizOrder.length){shuffleDefenseQuiz();defenseQuizIndex=0;defenseQuizScore=0;defenseQuizAnswered=false;}
+  renderDefenseQuizQuestion();
+}
+function renderDefenseQuizQuestion(){
+  const qbox=document.getElementById('quiz');
+  const bank=currentDefenseQuizQuestions();
+  if(defenseQuizIndex>=defenseQuizOrder.length){
+    const pct=Math.round((defenseQuizScore/defenseQuizOrder.length)*100);
+    const label=defenseLevel==='3v3'?'3-on-3 team defense with rotations':(defenseLevel==='2v2'?'2-on-2 team defensive foundation':'1-on-1 defensive foundation');
+    qbox.innerHTML=`<div class="rule"><b>DEFENSE QUIZ COMPLETE</b><br><br>Score: <b>${defenseQuizScore} / ${defenseQuizOrder.length}</b> (${pct}%)<br><br>${pct>=90?'Excellent command of our '+label+'.':pct>=75?'Good understanding. Review the missed concepts and try again.':'Go back through the teaching slides, then take another run at it.'}</div><button onclick="makeDefenseQuiz(true)">TAKE THE QUIZ AGAIN</button>`;
+    return;
+  }
+  const q=bank[defenseQuizOrder[defenseQuizIndex]];
+  defenseQuizAnswered=false; const letters=['A','B','C','D'];
+  qbox.innerHTML=`<div class="small" style="margin-bottom:8px"><b>QUESTION ${defenseQuizIndex+1} OF ${defenseQuizOrder.length}</b> &nbsp; • &nbsp; SCORE ${defenseQuizScore}</div><div class="rule"><b>${q.q}</b></div>${q.choices.map((c,i)=>`<button id="defQuizChoice${i}" onclick="answerDefenseQuiz(${i})">${letters[i]}. ${c}</button>`).join('')}<div id="defFeedback"></div><div id="defQuizNext" style="display:none;margin-top:10px"><button onclick="nextDefenseQuizQuestion()">NEXT QUESTION</button></div>`;
+}
+function answerDefenseQuiz(choice){
+  if(defenseQuizAnswered) return; defenseQuizAnswered=true;
+  const bank=currentDefenseQuizQuestions(); const q=bank[defenseQuizOrder[defenseQuizIndex]]; const correct=choice===q.answer; if(correct) defenseQuizScore++;
+  q.choices.forEach((_,i)=>{const b=document.getElementById('defQuizChoice'+i); if(!b)return; b.disabled=true; if(i===q.answer){b.style.borderColor='var(--good)';b.style.fontWeight='800';}else if(i===choice&&!correct){b.style.borderColor='var(--bad)';}});
+  document.getElementById('defFeedback').innerHTML=correct?`<p style="color:var(--good)"><b>Correct.</b> ${q.explain}</p>`:`<p style="color:var(--bad)"><b>Not quite.</b> ${q.explain}</p>`;
+  document.getElementById('defQuizNext').style.display='block';
+}
+function nextDefenseQuizQuestion(){ defenseQuizIndex++; renderDefenseQuizQuestion(); }
+
+// Wrap Version 60 functions. Offense behavior is left intact; defense gets its own state.
+render = function(){ return systemMode==='defense' ? renderDefense() : offenseRender(); };
+next = function(){ if(systemMode==='defense'){ defensePause(false); defenseStep=Math.min(currentDefenseSteps().length-1,defenseStep+1); return renderDefense(); } return offenseNext(); };
+prev = function(){ if(systemMode==='defense'){ defensePause(false); defenseStep=Math.max(0,defenseStep-1); return renderDefense(); } return offensePrev(); };
+resetAll = function(){ if(systemMode==='defense'){ defensePause(false); defenseStep=0; return renderDefense(); } return offenseResetAll(); };
+playSlides = function(){ return systemMode==='defense' ? defensePlay() : offensePlaySlides(); };
+pauseSlides = function(resetMessage=true){ return systemMode==='defense' ? defensePause(resetMessage) : offensePauseSlides(resetMessage); };
+restartAndPlay = function(){ if(systemMode==='defense'){ defenseStep=0; renderDefense(); defensePause(false); return defensePlay(); } return offenseRestartAndPlay(); };
+setPlaySpeed = function(ms){ if(systemMode==='defense'){ defensePlayDelay=parseInt(ms,10)||1500; if(defensePlayTimer){defensePause(false);defensePlay();} return; } return offenseSetPlaySpeed(ms); };
+setMode = function(m){ return systemMode==='defense' ? setModeDefense(m) : offenseSetMode(m); };
+
+setupSystemSwitcher();
+/* DEFENSE QUIZ V64: balanced correct-answer positions across A/B/C/D */
+/* ================= DEFENSE V61 EXTENSION END ================= */
+
+
 render();
 </script>
-
-
 </body></html>
