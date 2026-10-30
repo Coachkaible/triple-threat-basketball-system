@@ -1,10 +1,9 @@
-const CACHE_NAME = 'triple-threat-v1';
+const CACHE_NAME = 'triple-threat-v2';
 const ASSETS = [
-  '/',
-  '/index.html',
   '/app.js',
   '/styles.css',
-  '/manifest.json'
+  '/manifest.json',
+  '/icon.svg'
 ];
 
 self.addEventListener('install', (event) => {
@@ -24,7 +23,27 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  const req = event.request;
+
+  // Always try the network first for page navigations so a repaired index.html
+  // cannot be hidden behind an old cached copy on phones.
+  if (req.mode === 'navigate') {
+    event.respondWith(
+      fetch(req).catch(() => caches.match('/'))
+    );
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request).then((cached) => cached || fetch(event.request))
+    caches.match(req).then((cached) => {
+      const network = fetch(req).then((response) => {
+        if (response && response.ok && req.method === 'GET') {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+        }
+        return response;
+      });
+      return cached || network;
+    })
   );
 });
