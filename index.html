@@ -122,6 +122,7 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 <button onclick="prev()">◀ Previous</button>
 <button class="primary" onclick="next()">NEXT STEP ▶</button>
 <button onclick="resetAll()">Reset</button>
+<button class="primary" onclick="jumpToGameUpdate()">10/30 UPDATE</button>
 <button onclick="jumpToTwoMan()">2 MAN</button>
 <button id="playBtn" onclick="playSlides()">▶ Play Sequence</button>
 <button id="pauseBtn" onclick="pauseSlides()" disabled>⏸ Pause</button>
@@ -239,7 +240,14 @@ twoDhoSetup:{1:[350,275],2:[72,220],3:[472,48],4:[205,285],5:[418,220]},
 twoDhoHandoff:{1:[350,275],2:[72,220],3:[472,48],4:[102,212],5:[418,220]},
 // After receiving the handoff on the wing, 2 curls downhill toward the basket.
 twoDhoCurl:{1:[350,275],2:[185,120],3:[472,48],4:[92,220],5:[418,220]},
-twoReset:{1:[330,275],2:[205,285],3:[472,48],4:[28,48],5:[418,220]}
+twoReset:{1:[330,275],2:[205,285],3:[472,48],4:[28,48],5:[418,220]},
+
+// SECTION 4 — UPDATE FOR GAMES ON 10/30 AND BEYOND
+// Before the first left-slot entry, run one complete Wheel cycle to create movement.
+gameUpdateStart:{1:[350,335],2:[28,48],3:[82,220],4:[205,300],5:[472,48]},
+gameUpdateWheelCut:{1:[350,335],2:[28,48],3:[82,220],4:[250,125],5:[472,48]},
+gameUpdateWheelFill:{1:[350,335],2:[82,220],3:[205,285],4:[28,48],5:[472,48]},
+gameUpdateSlotEntry:{1:[350,335],2:[82,220],3:[205,285],4:[28,48],5:[472,48]}
 };
 const steps=[
 
@@ -293,7 +301,12 @@ const steps=[
 ["Option 6 — DHO: Dribble Hand Off on the Wing","DHO or Dribble Hand Off should take place on the TRUE WING OUTSIDE the 3-point line. The corner player raises to the wing while the slot player dribbles toward him. Unlike GET, we do NOT bring this exchange two steps inside the arc.","twoDhoSetup",4],
 ["DHO — Bump the Defender / Handoff on the Outside","The exchange stays on the TRUE WING OUTSIDE the 3-point line. As the slot player comes from the slot, he should try to BUMP the defender of the raising corner man to help create an advantage. The handoff is always on the OUTSIDE of the receiver so the ball is shielded from the defenders.","twoDhoHandoff",4],
 ["DHO — Curl Into It and Attack the Basket","The player receiving the DHO should get his momentum going TOWARD THE BASKET before he receives the ball — almost curling into it. He should not catch the ball with his momentum taking him toward the sideline. Catch it downhill so you can attack immediately.","twoDhoCurl",2],
-["Finish the 2 Man Action — Reset the Spacing","After the action, we return to our normal spacing rules. The ball handler relocates back to the slot after passing out. The roller goes to the block first and then replaces to the deep ball-side corner. From there, Base Motion can continue.","twoReset",1]
+["Finish the 2 Man Action — Reset the Spacing","After the action, we return to our normal spacing rules. The ball handler relocates back to the slot after passing out. The roller goes to the block first and then replaces to the deep ball-side corner. From there, Base Motion can continue.","twoReset",1],
+
+["UPDATE FOR GAMES ON 10/30 AND BEYOND","Before we make our first pass to the left slot, we are now going to run ONE FULL CYCLE OF WHEEL. The purpose is simple: get everybody moving immediately and make the first slot entry easier instead of trying to force a stationary pass to start the offense.","gameUpdateStart",1],
+["WHEEL FIRST — 4 Basket Cuts","The ball stays with 1. Before 1 tries to enter the ball to the left slot, 4 makes the hard Wheel basket cut. We are using the same Wheel movement we already know — but now we are using it proactively as our normal start, not only as a pressure release.","gameUpdateWheelCut",1],
+["Complete the Wheel — 3 and 2 Fill Behind","If 4 does not receive the ball, 4 continues all the way through to the deep left corner. 3 fills behind into the LEFT SLOT and 2 fills behind into the LEFT WING. We have now completed one cycle of Wheel before making the first slot pass.","gameUpdateWheelFill",1],
+["Now Enter the Ball to the New Left Slot","After the Wheel cycle is complete, 1 makes the easier entry pass to 3 in the new left slot. From here we begin Base Motion with the new roles: 3 is the slot player, 2 is the Action Man, and 4 is in the deep corner. This is our new starting sequence for games on 10/30 and beyond.","gameUpdateSlotEntry",3]
 ];
 let step=0,mode="watch",chosen=null;
 function move(id,xy){document.getElementById(id).setAttribute("transform",`translate(${xy[0]} ${xy[1]})`)}
@@ -882,6 +895,46 @@ function drawAnnotations(){
       {title:"Keep Playing", lines:["Once spacing is restored, flow right back into Base Motion."]}
     ]);
   }
+  else if(step===45){
+    addBottomBox(g,20,382,315,"NEW START — 10/30 AND BEYOND",["Before the first left-slot pass: ONE FULL WHEEL.","Movement first → easier entry pass."],210,292,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"NEW GAME UPDATE", lines:["For games on 10/30 and beyond, we will run one full Wheel cycle BEFORE the ball gets to the left slot."], accent:true},
+      {title:"Why", lines:["We want everybody moving immediately and we want to make the first slot entry easier."]},
+      {title:"Important", lines:["Do not force the stationary pass to the original slot. WHEEL FIRST."]}
+    ]);
+  }
+  else if(step===46){
+    addCurveMove(g,205,300,220,190,250,125);
+    addLabel(g,252,154,"WHEEL CUT",{fontSize:11,bg:"#fde68a",padX:6,padY:4});
+    addBottomBox(g,20,382,285,"BALL STAYS WITH 1",["4 basket cuts before the first slot entry."],210,292,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"STEP 1 — 4 CUTS", lines:["1 keeps the ball. 4 makes the hard Wheel basket cut before we attempt the slot pass."], accent:true},
+      {title:"Same Wheel", lines:["This is the same movement we already teach in Pressure Release — now it is our planned opening action."]},
+      {title:"No Forced Pass", lines:["The ball does NOT go to the left slot yet."]}
+    ]);
+  }
+  else if(step===47){
+    addCurveMove(g,250,125,135,82,28,48);
+    addMove(g,82,220,205,285);
+    addMove(g,28,48,82,220);
+    addLabel(g,205,257,"3 FILLS SLOT",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
+    addLabel(g,92,245,"2 FILLS WING",{anchor:"middle",fontSize:11,bg:"#ffffff",padX:6,padY:4});
+    setSlideNotes([
+      {title:"STEP 2 — COMPLETE THE WHEEL", lines:["4 continues to the deep corner. 3 fills the left slot. 2 fills the left wing."], accent:true},
+      {title:"Everybody Moves", lines:["The opening movement changes the picture for the defense before we ever make the entry pass."]},
+      {title:"New Roles", lines:["3 is now the slot player. 2 becomes the Action Man. 4 is in the deep corner."]}
+    ]);
+  }
+  else if(step===48){
+    addPass(g,350,335,205,285);
+    addLabel(g,218,252,"NEW LEFT SLOT",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
+    addBottomBox(g,20,382,305,"NOW START BASE MOTION",["1 enters to 3 after the Wheel is complete.","3 = Slot • 2 = Action Man • 4 = Deep Corner"],215,285,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"STEP 3 — EASY SLOT ENTRY", lines:["After the Wheel cycle, 1 enters the ball to 3 in the new left slot."], accent:true},
+      {title:"Base Motion Starts Here", lines:["Once 3 catches, we are back into our normal reads and spacing rules."]},
+      {title:"Our New Opening", lines:["WHEEL FIRST → then get the ball to the left slot."]}
+    ]);
+  }
 }
 function render(){
  const s=steps[step], P=pos[s[2]];
@@ -891,7 +944,7 @@ function render(){
  document.getElementById("ball").setAttribute("cx",b[0]+18);
  document.getElementById("ball").setAttribute("cy",b[1]-14);
  document.getElementById("title").textContent=s[0];
- document.getElementById("sectionName").textContent = step <= 19 ? "SECTION 1 · BASE MOTION" : (step <= 28 ? "SECTION 2 · PRESSURE RELEASE" : "SECTION 3 · 2 MAN");
+ document.getElementById("sectionName").textContent = step <= 19 ? "SECTION 1 · BASE MOTION" : (step <= 28 ? "SECTION 2 · PRESSURE RELEASE" : (step <= 44 ? "SECTION 3 · 2 MAN" : "UPDATE FOR GAMES ON 10/30 AND BEYOND"));
  document.getElementById("lesson").innerHTML=s[1]+
    (step==0?'<div class="rule"><b>STARTING SPACING:</b> All five players begin outside the 3-point line. Corner players are deep in the corners.</div>':
     step==1?'<div class="rule"><b>RULE #1:</b> Get the ball to the slot.</div>':
@@ -937,7 +990,11 @@ function render(){
      41:'<div class="rule"><b>OPTION 6 — DHO:</b> The corner raises to the <b>true wing OUTSIDE the 3-point line</b>. The slot player dribbles into the handoff. Unlike GET, the exchange does not move inside the arc.</div>',
      42:'<div class="rule"><b>DHO DETAIL:</b> Stay on the <b>wing outside the arc</b>, try to <b>bump the defender</b> of the raising corner man, and make the handoff on the <b>outside</b> to protect the ball.</div>',
      43:'<div class="rule"><b>DHO ATTACK:</b> Receive the handoff on the <b>wing outside the arc</b>, <b>curl into it</b>, and catch with momentum heading <b>toward the basket</b>, not the sideline.</div>',
-     44:'<div class="rule"><b>RESET:</b> Handler back to slot. Roller block first, then deep corner. Resume Base Motion.</div>'
+     44:'<div class="rule"><b>RESET:</b> Handler back to slot. Roller block first, then deep corner. Resume Base Motion.</div>',
+     45:'<div class="rule"><b>10/30 UPDATE:</b> Before the first left-slot entry, run <b>ONE FULL CYCLE OF WHEEL</b> to get everyone moving and make the pass easier.</div>',
+     46:'<div class="rule"><b>WHEEL FIRST:</b> 1 keeps the ball while 4 makes the hard basket cut. <b>Do not enter the slot yet.</b></div>',
+     47:'<div class="rule"><b>FILL BEHIND:</b> 4 fills the corner, <b>3 fills the left slot</b>, and <b>2 fills the left wing</b>.</div>',
+     48:'<div class="rule"><b>NOW START:</b> 1 enters to 3 in the new left slot. <b>3 = Slot · 2 = Action Man · 4 = Deep Corner.</b></div>'
    };
    document.getElementById("lesson").innerHTML += (rules[step]||'');
  }
@@ -1017,6 +1074,7 @@ function restartAndPlay(){
 function next(){pauseSlides(false);step=Math.min(steps.length-1,step+1);render()}
 function prev(){pauseSlides(false);step=Math.max(0,step-1);render()}
 function jumpToTwoMan(){pauseSlides(false);if(mode!=="watch") setMode("watch");step=29;render()}
+function jumpToGameUpdate(){pauseSlides(false);if(mode!=="watch") setMode("watch");step=45;render()}
 function resetAll(){pauseSlides(false);step=0;render()}
 function setMode(m){pauseSlides(false);mode=m;["watch","job","quiz"].forEach(x=>document.getElementById(x+"Tab").classList.toggle("active",x==m));document.getElementById("jobPicker").style.display=m=="job"?"block":"none";document.getElementById("quiz").style.display=m=="quiz"?"block":"none";document.getElementById("twoManChoice").style.display="none";if(m=="quiz"&&!quizOrder.length) makeQuiz(true);highlight();updatePlayUI(false)}
 function pickPlayer(n){chosen=n;const jobs={
