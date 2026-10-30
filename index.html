@@ -247,7 +247,16 @@ twoReset:{1:[330,275],2:[205,285],3:[472,48],4:[28,48],5:[418,220]},
 gameUpdateStart:{1:[350,335],2:[28,48],3:[82,220],4:[205,300],5:[472,48]},
 gameUpdateWheelCut:{1:[350,335],2:[28,48],3:[82,220],4:[250,125],5:[472,48]},
 gameUpdateWheelFill:{1:[350,335],2:[82,220],3:[205,285],4:[28,48],5:[472,48]},
-gameUpdateSlotEntry:{1:[350,335],2:[82,220],3:[205,285],4:[28,48],5:[472,48]}
+gameUpdateSlotEntry:{1:[350,335],2:[82,220],3:[205,285],4:[28,48],5:[472,48]},
+
+// After the Wheel-first start, complete the first rotation on the LEFT.
+// If no advantage is created, flow directly into a GET on the RIGHT.
+gameUpdateLeftRotationSetup:{1:[350,275],2:[472,48],3:[205,285],4:[72,220],5:[418,220]},
+gameUpdateLeftPnr:{1:[350,275],2:[472,48],3:[135,172],4:[72,220],5:[418,220]},
+gameUpdateRightGetSetup:{1:[330,275],2:[472,48],3:[82,220],4:[205,285],5:[28,48]},
+gameUpdateRightGetCatch:{1:[330,275],2:[350,185],3:[82,220],4:[205,285],5:[28,48]},
+gameUpdateRightGetReturn:{1:[395,205],2:[350,185],3:[82,220],4:[205,285],5:[28,48]},
+gameUpdateRightGetAttack:{1:[310,120],2:[350,185],3:[82,220],4:[205,285],5:[28,48]}
 };
 const steps=[
 
@@ -306,7 +315,14 @@ const steps=[
 ["UPDATE FOR GAMES ON 10/30 AND BEYOND","Before we make our first pass to the left slot, we are now going to run ONE FULL CYCLE OF WHEEL. The purpose is simple: get everybody moving immediately and make the first slot entry easier instead of trying to force a stationary pass to start the offense.","gameUpdateStart",1],
 ["WHEEL FIRST — 4 Basket Cuts","The ball stays with 1. Before 1 tries to enter the ball to the left slot, 4 makes the hard Wheel basket cut. We are using the same Wheel movement we already know — but now we are using it proactively as our normal start, not only as a pressure release.","gameUpdateWheelCut",1],
 ["Complete the Wheel — 3 and 2 Fill Behind","If 4 does not receive the ball, 4 continues all the way through to the deep left corner. 3 fills behind into the LEFT SLOT and 2 fills behind into the LEFT WING. We have now completed one cycle of Wheel before making the first slot pass.","gameUpdateWheelFill",1],
-["Now Enter the Ball to the New Left Slot","After the Wheel cycle is complete, 1 makes the easier entry pass to 3 in the new left slot. From here we begin Base Motion with the new roles: 3 is the slot player, 2 is the Action Man, and 4 is in the deep corner. This is our new starting sequence for games on 10/30 and beyond.","gameUpdateSlotEntry",3]
+["Now Enter the Ball to the New Left Slot","After the Wheel cycle is complete, 1 makes the easier entry pass to 3 in the new left slot. From here we begin Base Motion with the new roles: 3 is the slot player, 2 is the Action Man, and 4 is in the deep corner. This is our new starting sequence for games on 10/30 and beyond.","gameUpdateSlotEntry",3],
+
+["First Rotation — Run It on the Left","After 3 catches in the new left slot, we run our first normal rotation on the LEFT. 2 is the Action Man and cuts through to the opposite deep corner. 5 raises on the right side, 4 lifts from the deep left corner to the left wing, and 3 is ready to play the two-man action with 4.","gameUpdateLeftRotationSetup",3],
+["Left-Side Two-Man Action","3 passes to 4 on the left wing and gets lower to set the low-angle screen. 4 attacks the middle and reads the same order we always teach: score first, look back to the roller second, then weak side. We are looking to create an advantage on this first left-side rotation.","gameUpdateLeftPnr",4],
+["If Nothing Is Open — Flow to a Right-Side GET","If the first rotation on the left does not create a shot, layup, roller, or open weak-side pass, we do NOT stop. The ball comes out to 1 in the right slot. 5 cuts through and 3 lifts on the weak side, leaving 1 in the right slot and 2 in the deep right corner. That gives us our 2 Man spacing for a GET on the right side.","gameUpdateRightGetSetup",1],
+["Right-Side GET — 1 Passes to 2 Raising","2 raises from the deep right corner and catches slightly inside the 3-point line, about two steps inside the arc near the right elbow. 1 passes to 2 and immediately prepares to sprint to the OUTSIDE of him.","gameUpdateRightGetCatch",2],
+["Right-Side GET — 1 Sprints Outside and Gets It Back","Immediately after the pass, 1 sprints outside of 2 toward the right sideline. 2 gives the ball right back. The exchange happens near the elbow so 1 can turn the corner with the best downhill angle.","gameUpdateRightGetReturn",1],
+["Right-Side GET — Attack the 45","After getting the ball back, 1 turns the corner and attacks the basket on a 45-degree angle. This is our next automatic action if the first rotation on the left does not create an advantage: LEFT ROTATION → RIGHT-SIDE GET.","gameUpdateRightGetAttack",1]
 ];
 let step=0,mode="watch",chosen=null;
 function move(id,xy){document.getElementById(id).setAttribute("transform",`translate(${xy[0]} ${xy[1]})`)}
@@ -935,6 +951,70 @@ function drawAnnotations(){
       {title:"Our New Opening", lines:["WHEEL FIRST → then get the ball to the left slot."]}
     ]);
   }
+  else if(step===49){
+    addCurveMove(g,82,220,250,115,472,48);
+    addMove(g,472,48,418,220);
+    addMove(g,28,48,72,220);
+    addLabel(g,250,112,"2 CUTS THROUGH",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"FIRST ROTATION — LEFT", lines:["After the new slot catch, run the first rotation on the LEFT side."], accent:true},
+      {title:"2 = Action Man", lines:["2 cuts through to the opposite deep corner if the backdoor is not open."]},
+      {title:"Fill the Spaces", lines:["5 raises on the right. 4 lifts from the left corner to the left wing."]}
+    ]);
+  }
+  else if(step===50){
+    addPass(g,205,285,72,220);
+    addCurveMove(g,205,285,165,225,135,172);
+    addScreen(g,135,172,58);
+    addDribble(g,72,220,145,190,210,150);
+    setSlideNotes([
+      {title:"LEFT TWO-MAN ACTION", lines:["3 passes to 4 on the left wing and sets the low-angle screen."], accent:true},
+      {title:"Read It Normally", lines:["4 reads: score → LOOK BACK TO ROLLER → weak side."]},
+      {title:"If We Get Nothing", lines:["Do not reset. Our next automatic action is a GET on the RIGHT."]}
+    ]);
+  }
+  else if(step===51){
+    addPass(g,250,150,330,275);
+    addCurveMove(g,418,220,300,120,28,48);
+    addMove(g,28,48,82,220);
+    addLabel(g,340,247,"1 = RIGHT SLOT",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
+    addLabel(g,426,76,"2 = DEEP CORNER",{anchor:"middle",fontSize:11,bg:"#ffffff",padX:6,padY:4});
+    setSlideNotes([
+      {title:"NOTHING OPEN? KEEP FLOWING", lines:["The ball comes out to 1 in the right slot."], accent:true},
+      {title:"Clear the Right Side", lines:["5 cuts through and 3 lifts on the weak side."]},
+      {title:"2 Man Created", lines:["Now the right side is 1 in the slot + 2 in the deep corner. That is our GET setup."]}
+    ]);
+  }
+  else if(step===52){
+    addMove(g,472,48,350,185);
+    addPass(g,330,275,350,185);
+    addLabel(g,350,156,"2 STEPS INSIDE ARC",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"RIGHT-SIDE GET", lines:["2 raises from the deep right corner and catches about two steps inside the arc near the right elbow."], accent:true},
+      {title:"1 Passes", lines:["1 delivers the pass as 2 raises."]},
+      {title:"Next", lines:["As soon as the ball leaves 1's hands, 1 is sprinting OUTSIDE of 2."]}
+    ]);
+  }
+  else if(step===53){
+    addCurveMove(g,330,275,372,245,395,205);
+    addPass(g,350,185,395,205);
+    addLabel(g,394,238,"SPRINT OUTSIDE",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"PASS → SPRINT OUTSIDE", lines:["1 sprints to the outside of 2, toward the right sideline."], accent:true},
+      {title:"Give It Back", lines:["2 gives the ball right back to 1 without stopping the action."]},
+      {title:"Why Here", lines:["The elbow-area exchange gives 1 room to turn the corner downhill."]}
+    ]);
+  }
+  else if(step===54){
+    addDribble(g,395,205,350,160,310,120);
+    addLabel(g,342,146,"45° ATTACK",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
+    addBottomBox(g,20,382,315,"NEW OPENING FLOW",["WHEEL FIRST → LEFT ROTATION → RIGHT-SIDE GET","If nothing is open, keep attacking without stopping."],310,120,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"ATTACK THE 45", lines:["1 turns the corner and attacks the basket on a 45-degree angle."], accent:true},
+      {title:"Automatic Next Action", lines:["If the first left rotation creates nothing, we flow directly into this right-side GET."]},
+      {title:"Our New Flow", lines:["WHEEL FIRST → LEFT ROTATION → RIGHT-SIDE GET."]}
+    ]);
+  }
 }
 function render(){
  const s=steps[step], P=pos[s[2]];
@@ -994,7 +1074,13 @@ function render(){
      45:'<div class="rule"><b>10/30 UPDATE:</b> Before the first left-slot entry, run <b>ONE FULL CYCLE OF WHEEL</b> to get everyone moving and make the pass easier.</div>',
      46:'<div class="rule"><b>WHEEL FIRST:</b> 1 keeps the ball while 4 makes the hard basket cut. <b>Do not enter the slot yet.</b></div>',
      47:'<div class="rule"><b>FILL BEHIND:</b> 4 fills the corner, <b>3 fills the left slot</b>, and <b>2 fills the left wing</b>.</div>',
-     48:'<div class="rule"><b>NOW START:</b> 1 enters to 3 in the new left slot. <b>3 = Slot · 2 = Action Man · 4 = Deep Corner.</b></div>'
+     48:'<div class="rule"><b>NOW START:</b> 1 enters to 3 in the new left slot. <b>3 = Slot · 2 = Action Man · 4 = Deep Corner.</b></div>',
+     49:'<div class="rule"><b>FIRST ROTATION:</b> Run the normal first rotation on the <b>LEFT</b>. 2 cuts through, 4 lifts, and 3 owns the slot.</div>',
+     50:'<div class="rule"><b>LEFT TWO-MAN:</b> 3 and 4 run the normal wing action. If we create an advantage, take it. If not, keep flowing.</div>',
+     51:'<div class="rule"><b>NEXT AUTOMATIC ACTION:</b> If nothing is open after the first left rotation, get the ball to 1 in the right slot, clear the side, and prepare a <b>RIGHT-SIDE GET</b>.</div>',
+     52:'<div class="rule"><b>RIGHT-SIDE GET:</b> 2 raises from the deep corner and catches <b>about two steps inside the arc near the right elbow</b>.</div>',
+     53:'<div class="rule"><b>GET TIMING:</b> 1 passes, then <b>SPRINTS OUTSIDE</b> of 2 and gets the ball right back.</div>',
+     54:'<div class="rule"><b>FINISH:</b> 1 attacks on a <b>45° angle</b>. New flow: <b>WHEEL FIRST → LEFT ROTATION → RIGHT-SIDE GET.</b></div>'
    };
    document.getElementById("lesson").innerHTML += (rules[step]||'');
  }
