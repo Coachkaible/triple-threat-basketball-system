@@ -36,79 +36,8 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 .legend svg{flex:0 0 auto}
 #playBtn,#pauseBtn,#restartPlayBtn{white-space:nowrap}
 #speedSelect{cursor:pointer}
-#pass2v2Btn{background:var(--accent);color:#151515;font-weight:900}
-#attackDriveBtn{background:#d97706;color:#fff;font-weight:900}
-@media (min-width:1050px){#pass2v2Btn,#attackDriveBtn{grid-column:1/-1}}
-
 @media(max-width:820px){.wrap{grid-template-columns:1fr}}
 </style>
-
-
-<!-- WEB WIDESCREEN FIT START -->
-<style id="webWidescreenFitStyles">
-@media (min-width: 1050px) {
-  html, body { width:100%; height:100%; overflow:hidden !important; }
-  body { min-height:100dvh; }
-  header { height:58px; padding:9px 18px; display:flex; flex-direction:column; justify-content:center; position:relative; }
-  header h1 { font-size:20px; line-height:1.05; }
-  header p { margin:3px 0 0; font-size:12px; line-height:1.05; }
-  .wrap { width:100%; max-width:none; height:calc(100dvh - 58px); margin:0; padding:9px 12px 10px; gap:12px; grid-template-columns:minmax(0,1fr) 330px; align-items:stretch; overflow:hidden; }
-  .wrap > section.card { position:relative; min-width:0; min-height:0; height:100%; padding:10px 11px; overflow:hidden; display:grid; grid-template-rows:auto minmax(0,1fr); }
-  .wrap > section.card > .tabs { grid-row:1; min-height:36px; flex-wrap:nowrap; gap:6px; }
-  .wrap > section.card > .tabs button { padding:7px 10px; font-size:12px; }
-  .wrap > section.card > .tabs + div[style*="height:12px"] { display:none !important; }
-  .stage { grid-row:2; min-width:0; min-height:0; height:100%; margin-top:7px; padding-left:232px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-  .slide-notes { position:absolute; left:11px; top:55px; bottom:218px; width:218px; min-height:0; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-start; gap:7px; }
-  .note-bubble { padding:7px 8px; border-radius:10px; }
-  .note-title { margin-bottom:4px; font-size:10px; }
-  .note-line { font-size:10.5px; line-height:1.2; }
-  #court { width:auto !important; height:100% !important; max-width:100% !important; max-height:100% !important; aspect-ratio:50/47; margin:0 auto; flex:0 1 auto; }
-  .wrap > section.card > .controls { position:absolute; left:11px; bottom:43px; width:218px; margin:0 !important; display:grid; grid-template-columns:1fr 1fr; gap:5px; z-index:3; }
-  .wrap > section.card > .controls button, .wrap > section.card > .controls select { min-width:0; width:100%; padding:6px 5px !important; min-height:32px; border-radius:8px; font-size:10px !important; line-height:1.05; }
-  .wrap > section.card > .controls #speedSelect { grid-column:1/-1; }
-  #autoStatus { position:absolute; left:11px; bottom:10px; width:218px; margin:0 !important; font-size:9.5px; line-height:1.15; }
-  .wrap > aside.card { width:330px; min-width:330px; height:100%; min-height:0; padding:11px; overflow:hidden; }
-  .wrap > aside.card h2 { margin:0 0 5px; font-size:17px; line-height:1.08; }
-  .wrap > aside.card .status { margin:5px 0; font-size:13px; }
-  .wrap > aside.card .lesson { min-height:0; margin:0; font-size:12px; line-height:1.28; }
-  .wrap > aside.card .rule { margin:7px 0; padding:7px 8px; font-size:11px; line-height:1.2; }
-  .wrap > aside.card .legend { margin-top:7px; padding:7px 8px; border-radius:8px; }
-  .wrap > aside.card .legend h3 { margin:0 0 4px; font-size:11px; }
-  .wrap > aside.card .legend > .small { margin-bottom:4px !important; font-size:9px; line-height:1.15; }
-  .wrap > aside.card .legend-row { margin:3px 0; gap:6px; font-size:10px; line-height:1.05; }
-  .wrap > aside.card .legend-row svg { width:46px; height:13px; }
-  .wrap > aside.card > p.small:last-child { display:none; }
-}
-@media (min-width:1050px) and (max-height:760px) {
-  header { height:50px; padding:6px 16px; }
-  header h1 { font-size:18px; } header p { font-size:10px; }
-  .wrap { height:calc(100dvh - 50px); padding-top:7px; padding-bottom:7px; grid-template-columns:minmax(0,1fr) 305px; }
-  .wrap > section.card { padding-top:8px; padding-bottom:8px; }
-  .wrap > section.card > .tabs button { min-height:31px; padding:5px 8px; font-size:11px; }
-  .stage { margin-top:5px; padding-left:220px; }
-  .slide-notes { left:9px; top:47px; bottom:190px; width:208px; gap:5px; }
-  .note-bubble { padding:5px 6px; } .note-title { font-size:9px; margin-bottom:2px; } .note-line { font-size:9.5px; line-height:1.15; }
-  .wrap > section.card > .controls { left:9px; bottom:35px; width:208px; gap:4px; }
-  .wrap > section.card > .controls button, .wrap > section.card > .controls select { min-height:28px; padding:4px 3px !important; font-size:9px !important; }
-  #autoStatus { left:9px; bottom:7px; width:208px; font-size:8.5px; }
-  .wrap > aside.card { width:305px; min-width:305px; padding:9px; }
-  .wrap > aside.card h2 { font-size:15px; } .wrap > aside.card .status { font-size:11px; margin:4px 0; }
-  .wrap > aside.card .lesson { font-size:10.5px; line-height:1.2; }
-  .wrap > aside.card .rule { font-size:9.5px; line-height:1.15; padding:5px 6px; margin:5px 0; }
-  .wrap > aside.card .legend { margin-top:5px; padding:5px 6px; }
-  .wrap > aside.card .legend h3 { font-size:10px; } .wrap > aside.card .legend > .small { font-size:8px; }
-  .wrap > aside.card .legend-row { font-size:8.5px; margin:2px 0; } .wrap > aside.card .legend-row svg { width:38px; height:11px; }
-}
-@media (min-width:1450px) {
-  .wrap { grid-template-columns:minmax(0,1fr) 370px; padding-left:16px; padding-right:16px; }
-  .wrap > aside.card { width:370px; min-width:370px; }
-  .stage { padding-left:260px; }
-  .slide-notes, .wrap > section.card > .controls, #autoStatus { width:246px; }
-}
-</style>
-<!-- WEB WIDESCREEN FIT END -->
-
-
 <!-- DEFENSE V61 STYLES START -->
 <style id="defenseV61Styles">
 .system-switch{position:absolute;right:18px;top:11px;display:flex;gap:6px;z-index:10}
@@ -193,8 +122,7 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 <button onclick="prev()">◀ Previous</button>
 <button class="primary" onclick="next()">NEXT STEP ▶</button>
 <button onclick="resetAll()">Reset</button>
-<button id="pass2v2Btn" onclick="passBall2v2()" style="display:none">PASS BALL → 2</button>
-<button id="attackDriveBtn" onclick="attackBasket2v2()" style="display:none">ATTACK BASKET</button>
+<button onclick="jumpToTwoMan()">2 MAN</button>
 <button id="playBtn" onclick="playSlides()">▶ Play Sequence</button>
 <button id="pauseBtn" onclick="pauseSlides()" disabled>⏸ Pause</button>
 <button id="restartPlayBtn" onclick="restartAndPlay()">↺ Restart + Play</button>
@@ -288,7 +216,30 @@ pr4slotFill:{1:[350,335],2:[82,220],3:[205,285],4:[28,48],5:[472,48]},
 pr4slotFlow:{1:[350,335],2:[82,220],3:[205,285],4:[28,48],5:[472,48]},
 pr4slotRule:{1:[350,335],2:[82,220],3:[205,285],4:[28,48],5:[472,48]},
 prWheelRoles:{1:[350,335],2:[82,220],3:[205,285],4:[28,48],5:[472,48]},
-prVAction:{1:[205,300],2:[28,48],3:[82,220],4:[350,335],5:[472,48]}
+prVAction:{1:[205,300],2:[28,48],3:[82,220],4:[350,335],5:[472,48]},
+
+// SECTION 3 — 2 MAN
+// The core teaching example uses 4 in the slot and 2 in the deep corner.
+twoIntro:{1:[350,275],2:[28,48],3:[472,48],4:[205,285],5:[418,220]},
+twoPushRight:{1:[350,335],2:[28,48],3:[82,220],4:[205,285],5:[418,220]},
+twoPairLeft:{1:[350,275],2:[28,48],3:[472,48],4:[205,285],5:[418,220]},
+twoPnr:{1:[350,275],2:[72,220],3:[472,48],4:[135,172],5:[418,220]},
+twoAttack:{1:[350,275],2:[250,150],3:[472,48],4:[192,110],5:[418,220]},
+twoReject:{1:[350,275],2:[105,105],3:[472,48],4:[72,220],5:[418,220]},
+twoSlip:{1:[350,275],2:[72,220],3:[472,48],4:[195,105],5:[418,220]},
+twoRescreen:{1:[350,275],2:[105,205],3:[472,48],4:[155,190],5:[418,220]},
+// GET: 4 starts in the slot with the ball, 2 raises from the corner.
+// The exchange happens about two steps inside the 3-point line near the elbow for the best 45-degree attack angle.
+twoGetCatch:{1:[350,275],2:[150,185],3:[472,48],4:[205,285],5:[418,220]},
+twoGetReturn:{1:[350,275],2:[150,185],3:[472,48],4:[105,205],5:[418,220]},
+twoGetAttack:{1:[350,275],2:[150,185],3:[472,48],4:[190,120],5:[418,220]},
+// DHO: return to true-wing spacing OUTSIDE the 3-point line.
+// 4 starts in the slot; 2 raises from the corner to the same true-wing landmark used in Base Motion.
+twoDhoSetup:{1:[350,275],2:[72,220],3:[472,48],4:[205,285],5:[418,220]},
+twoDhoHandoff:{1:[350,275],2:[72,220],3:[472,48],4:[102,212],5:[418,220]},
+// After receiving the handoff on the wing, 2 curls downhill toward the basket.
+twoDhoCurl:{1:[350,275],2:[185,120],3:[472,48],4:[92,220],5:[418,220]},
+twoReset:{1:[330,275],2:[205,285],3:[472,48],4:[28,48],5:[418,220]}
 };
 const steps=[
 
@@ -325,7 +276,24 @@ const steps=[
 ["After Wheel — New Roles","After 4 basket cuts and fills the corner, 3 becomes the new slot man and 2 becomes the new ACTION MAN. The ACTION MAN does not move until the ball reaches the left slot. Once the ball gets to 3 in the slot, 2 is now responsible for the Action Man read. This is why every player must know every spot in the offense — all five players are interchangeable.","prWheelRoles",3],
 ["Secondary Pressure Release — V","When 'V' is called, the slots interchange to get the offense started. The overplayed man (4 in this example) makes a small V by cutting to the middle of the free-throw line and back out to the other slot. This creates room for 1 to simply dribble over to the left slot and begin the offense. V is best used in transition, not when both the offense and defense are already fully set.","prVAction",1],
 ["Wheel & V — Moving the Ball Side to Side","Both Wheel and V are pressure-release tools used when we are trying to move the ball from one side of the court to the other and defensive pressure makes the direct pass too difficult. Instead of forcing the pass, we create movement to change the spacing and get the ball safely to the other side.","pressureIntro",1],
-["Danger of the Flat Pass","If we do not use Wheel or V against aggressive pressure and instead throw a flat pass, we put the offense in danger. A flat pass is a straight-line pass from slot to slot. If an aggressive defender steals that pass, we not only lose the ball, but we likely give up a wide open layup because nobody is back to defend.","pressureIntro",1]
+["Danger of the Flat Pass","If we do not use Wheel or V against aggressive pressure and instead throw a flat pass, we put the offense in danger. A flat pass is a straight-line pass from slot to slot. If an aggressive defender steals that pass, we not only lose the ball, but we likely give up a wide open layup because nobody is back to defend.","pressureIntro",1],
+
+["SECTION 3 — 2 Man","2 Man is what we call the action when we have only two offensive players on the strong side: one player in the slot and one player in the deep corner. The other three players stay spaced away so the two-man side has room to create an advantage.","twoIntro",4],
+["How We Can Get to 2 Man — Push Directly Right","We can get to 2 Man immediately if the guard pushing the action goes directly to the player on the right wing. We do not have to force the normal three-man entry first. If the strong side naturally gives us a slot player and a corner player, we can flow directly into 2 Man.","twoPushRight",1],
+["How We Can Get to 2 Man — Action Man Cuts Through","We can also get to 2 Man during Base Motion. When the ball gets to the left side and the Action Man makes the hard cut through, that side is reduced to the slot player and the corner player. That immediately creates our 2 Man spacing.","clear3Raise5",4],
+["2 Man Alignment — Slot + Corner","The basic picture is simple: one player is in the slot and one player is in the deep corner on the strong side. In this example, 4 is the slot and 2 is the corner. The three weak-side players stay out of the action and keep the floor spaced.","twoPairLeft",4],
+["Option 1 — Pick & Roll","The corner player lifts to the true wing to receive the pass. The slot player passes, gets lower toward the basket, and sets the same low-angle screen we use in Base Motion. This is our first and most common 2 Man option.","twoPnr",2],
+["Pick & Roll Reads — Score, Roller, Weak Side","The ball handler attacks the middle / far side of the paint. Read 1 is your own rhythm shot or lane to the basket. Read 2 is LOOK BACK TO THE ROLLER. Read 3 is the weak-side kickout if the first two options are covered.","twoAttack",2],
+["Option 2 — Reject: Baseline Drive, We Bump Behind","If the ball handler rejects the screen and drives baseline, the screener does NOT roll to the rim. The screener stays BEHIND the 3-point line and fills in behind the drive so the ball handler has a safe pass-back option if the baseline attack does not produce a good shot or pass. Rolling on the reject would crowd the baseline and create poor spacing. Our lingo is: BASELINE DRIVE — WE BUMP BEHIND.","twoReject",2],
+["Option 3 — Slip the Screen","A SLIP means the screener does NOT actually set the screen. As the screener approaches the screen, BEFORE any contact is made, he recognizes that there is nobody between himself and the basket and sees a wide-open lane. Instead of stopping to make contact, he immediately releases and cuts to the basket. The ball handler must recognize the open lane and look for the slip pass right away.","twoSlip",2],
+["Option 4 — Re-Screen","If the first screen does not create an advantage, do not force the drive. The screener can flip the angle and screen again. The ball handler stays patient and attacks the second screen with a new angle.","twoRescreen",2],
+["Option 5 — GET: Corner Raises / Slot Passes","GET starts with the slot player passing to the corner player as the corner player raises up toward the slot. The receiver should catch the ball slightly INSIDE the 3-point line — about two steps inside the arc, right around the elbow area. We want the exchange there because it creates the best angle for the next player to attack on a 45.","twoGetCatch",2],
+["GET — Passer Sprints Outside and Gets It Back","Immediately after making the pass, the original slot player SPRINTS to the OUTSIDE of the teammate he just passed to. The receiver gives the ball right back to him. This is why we call it a GET — pass it, sprint outside, and GET the ball right back without stopping the action.","twoGetReturn",4],
+["GET — Attack the 45","The player getting the ball back turns the corner and attacks the basket on a 45-degree angle. The exchange should happen about two steps inside the 3-point line near the elbow so the attacker is already downhill and has the strongest possible angle to the rim.","twoGetAttack",4],
+["Option 6 — DHO: Dribble Hand Off on the Wing","DHO or Dribble Hand Off should take place on the TRUE WING OUTSIDE the 3-point line. The corner player raises to the wing while the slot player dribbles toward him. Unlike GET, we do NOT bring this exchange two steps inside the arc.","twoDhoSetup",4],
+["DHO — Bump the Defender / Handoff on the Outside","The exchange stays on the TRUE WING OUTSIDE the 3-point line. As the slot player comes from the slot, he should try to BUMP the defender of the raising corner man to help create an advantage. The handoff is always on the OUTSIDE of the receiver so the ball is shielded from the defenders.","twoDhoHandoff",4],
+["DHO — Curl Into It and Attack the Basket","The player receiving the DHO should get his momentum going TOWARD THE BASKET before he receives the ball — almost curling into it. He should not catch the ball with his momentum taking him toward the sideline. Catch it downhill so you can attack immediately.","twoDhoCurl",2],
+["Finish the 2 Man Action — Reset the Spacing","After the action, we return to our normal spacing rules. The ball handler relocates back to the slot after passing out. The roller goes to the block first and then replaces to the deep ball-side corner. From there, Base Motion can continue.","twoReset",1]
 ];
 let step=0,mode="watch",chosen=null;
 function move(id,xy){document.getElementById(id).setAttribute("transform",`translate(${xy[0]} ${xy[1]})`)}
@@ -468,12 +436,6 @@ function addDHO(g,x,y){
   g.appendChild(t);
 }
 
-function bringBallToFront(){
-  const court=document.getElementById('court');
-  const ball=document.getElementById('ball');
-  if(court && ball) court.appendChild(ball);
-}
-
 function setSlideNotes(items){
   const el=document.getElementById("slideNotes");
   if(!el) return;
@@ -487,101 +449,6 @@ function setSlideNotes(items){
     return `<div class="${klass}"><div class="note-title">${item.title}</div>${lines}</div>`;
   }).join("");
 }
-const COURT_W=500, COURT_H=470;
-function parseTranslate(el){
-  if(!el) return null;
-  const tr=el.getAttribute('transform')||'';
-  const m=tr.match(/translate\(([-\d.]+)\s+([-\d.]+)\)/);
-  if(!m) return null;
-  return [parseFloat(m[1]), parseFloat(m[2])];
-}
-function getVisibleActorBounds(){
-  const ids=['p1','p2','p3','p4','p5','defOffense','defDefender','defOffense2','defDefender2','defOffense3','defDefender3'];
-  const bounds=[];
-  ids.forEach(id=>{
-    const el=document.getElementById(id);
-    if(!el) return;
-    const st=el.style && el.style.display;
-    if(st==='none') return;
-    const pt=parseTranslate(el);
-    if(!pt) return;
-    const [x,y]=pt;
-    if(id.startsWith('p')) bounds.push({x:x-24,y:y-24,w:48,h:48});
-    else if(id.startsWith('def')) bounds.push({x:x-30,y:y-42,w:60,h:92});
-  });
-  return bounds;
-}
-function rectsOverlap(a,b,pad=6){
-  return !(a.x+a.w+pad<=b.x || b.x+b.w+pad<=a.x || a.y+a.h+pad<=b.y || b.y+b.h+pad<=a.y);
-}
-function clampRectToCourt(r){
-  return {
-    x:Math.max(4, Math.min(COURT_W-r.w-4, r.x)),
-    y:Math.max(4, Math.min(COURT_H-r.h-4, r.y)),
-    w:r.w,h:r.h
-  };
-}
-function scoreRectForActors(r,targetX,targetY){
-  const cx=r.x+r.w/2, cy=r.y+r.h/2;
-  return Math.hypot(cx-targetX,cy-targetY);
-}
-function avoidPlayersRect(x,y,w,h,targetX,targetY){
-  const actors=getVisibleActorBounds();
-  const offsets=[[0,0],[0,-46],[0,46],[-46,0],[46,0],[-70,-20],[70,-20],[-70,20],[70,20],[0,-78],[0,78],[-90,0],[90,0],[-120,-30],[120,-30],[-120,30],[120,30]];
-  let best=null, bestScore=1e9;
-  for(const [dx,dy] of offsets){
-    let r=clampRectToCourt({x:x+dx,y:y+dy,w,h});
-    let overlaps=actors.some(a=>rectsOverlap(r,a,6));
-    let score=scoreRectForActors(r,targetX,targetY)+(overlaps?10000:0);
-    if(score<bestScore){ bestScore=score; best=r; }
-    if(!overlaps) return r;
-  }
-  return best || {x,y,w,h};
-}
-
-function wrapCalloutLines(lines,maxChars=20){
-  const out=[];
-  (lines||[]).forEach(line=>{
-    const words=String(line||'').split(/\s+/).filter(Boolean);
-    if(!words.length){ out.push(''); return; }
-    let current='';
-    words.forEach(word=>{
-      const candidate=current ? current+' '+word : word;
-      if(candidate.length<=maxChars || !current){
-        current=candidate;
-      }else{
-        out.push(current);
-        current=word;
-      }
-    });
-    if(current) out.push(current);
-  });
-  return out;
-}
-function addCalloutBox(g,x,y,title,lines,targetX,targetY,accent='#f2b134'){
-  const titleSize=11, lineSize=10, lineGap=13, pad=8, titleGap=15;
-  const wrappedLines=wrapCalloutLines(lines||[],20);
-  const content=[title].concat(wrappedLines);
-  const approxWidth=Math.max(104,...content.map(s => (s||'').length*5.8))+pad*2;
-  const width=Math.min(182, approxWidth);
-  const height=pad*2 + titleGap + (wrappedLines.length*lineGap) + 2;
-  const placed=avoidPlayersRect(x,y,width,height,targetX,targetY);
-  x=placed.x; y=placed.y;
-  const rect=makeSvg('rect',{x:x,y:y,width:width,height:height,rx:10,ry:10,fill:'rgba(17,24,32,0.96)',stroke:accent,'stroke-width':2});
-  g.appendChild(rect);
-  const titleText=makeSvg('text',{x:x+pad,y:y+pad+3,fill:accent,'font-size':String(titleSize),'font-weight':'800'});
-  titleText.textContent=title; g.appendChild(titleText);
-  wrappedLines.forEach((line,idx)=>{
-    const t=makeSvg('text',{x:x+pad,y:y+pad+titleGap+(idx*lineGap),fill:'#f7f7f4','font-size':String(lineSize),'font-weight':'700'});
-    t.textContent=line; g.appendChild(t);
-  });
-  const sx = targetX < x ? x : (targetX > x+width ? x+width : targetX);
-  const sy = targetY < y ? y : (targetY > y+height ? y+height : targetY);
-  const ex = targetX, ey = targetY;
-  g.appendChild(makeSvg('line',{x1:sx,y1:sy,x2:ex,y2:ey,stroke:accent,'stroke-width':2.5,'stroke-linecap':'round'}));
-  g.appendChild(makeSvg('circle',{cx:ex,cy:ey,r:3.5,fill:accent}));
-}
-
 function drawAnnotations(){
   const g=document.getElementById("annotations");
   g.innerHTML="";
@@ -841,6 +708,180 @@ function drawAnnotations(){
       {title:"Why It Hurts", lines:["Now we lose the ball and likely give up a wide open layup","because there is nobody back to defend the breakaway."]}
     ]);
   }
+  else if(step===29){
+    addLeader(g,155,260,196,282);
+    addLabel(g,150,250,"SLOT",{anchor:"middle",bg:"#fde68a"});
+    addLeader(g,82,88,35,55);
+    addLabel(g,90,92,"DEEP CORNER",{anchor:"middle",bg:"#fde68a"});
+    setSlideNotes([
+      {title:"What Is 2 Man?", lines:["Two players on the strong side.","One in the SLOT and one in the DEEP CORNER."], accent:true},
+      {title:"Keep Space", lines:["The other three players stay away from the action.","We want room for the two-man side to create an advantage."]},
+      {title:"Mirrors", lines:["The same rules work on either side of the floor."]}
+    ]);
+  }
+  else if(step===30){
+    addPass(g,350,335,418,220);
+    setSlideNotes([
+      {title:"Entry #1 — Push Right", lines:["If the guard pushing the action goes directly to the right wing,","we can flow straight into 2 Man."], accent:true},
+      {title:"Do Not Force 3 Man", lines:["If the spacing already gives us a clean two-player strong side,","use it instead of forcing another entry first."]}
+    ]);
+  }
+  else if(step===31){
+    addCurveMove(g,82,220,155,125,250,95);
+    addCurveMove(g,250,95,350,70,472,48);
+    setSlideNotes([
+      {title:"Entry #2 — Action Man Through", lines:["When the ball reaches the left side, the Action Man makes the hard cut through."], accent:true},
+      {title:"What Is Left", lines:["Now the strong side is reduced to the SLOT + CORNER pair.","That is our 2 Man alignment."]}
+    ]);
+  }
+  else if(step===32){
+    addLeader(g,145,260,197,280);
+    addLabel(g,138,252,"SLOT — 4",{anchor:"middle",bg:"#fde68a"});
+    addLeader(g,85,86,36,53);
+    addLabel(g,90,92,"CORNER — 2",{anchor:"middle",bg:"#fde68a"});
+    setSlideNotes([
+      {title:"2 Man Alignment", lines:["4 is the slot player.","2 is the deep-corner player."], accent:true},
+      {title:"Strong Side", lines:["Those two players own the action."]},
+      {title:"Weak Side", lines:["The other three players keep their spacing and stay available for the kickout."]}
+    ]);
+  }
+  else if(step===33){
+    addMove(g,28,48,72,220);
+    addPass(g,205,285,72,220);
+    addCurveMove(g,205,285,165,225,135,172);
+    addScreen(g,135,172,58);
+    setSlideNotes([
+      {title:"Option 1 — Pick & Roll", lines:["Corner player lifts to the true wing and catches outside the arc."], accent:true},
+      {title:"Slot Player", lines:["Pass, get lower toward the basket, and set the low-angle screen."]},
+      {title:"Same Screen Rule", lines:["Screen from inside / below the ball to create the attack angle."]}
+    ]);
+  }
+  else if(step===34){
+    addScreen(g,135,172,58);
+    addDribble(g,72,220,160,185,250,150);
+    addCurveMove(g,135,172,150,135,192,110);
+    setSlideNotes([
+      {title:"Read 1 — Score", lines:["Rhythm jumper or lane all the way to the basket."], accent:true},
+      {title:"Read 2 — Roller", lines:["If your shot is not there, LOOK BACK TO THE ROLLER."]},
+      {title:"Read 3 — Weak Side", lines:["If both are covered, find the open weak-side teammate."]}
+    ]);
+  }
+  else if(step===35){
+    addScreen(g,135,172,58);
+    addDribble(g,72,220,72,150,105,105);
+    addCurveMove(g,135,172,112,205,72,220);
+    addLabel(g,142,240,"BUMP BEHIND",{anchor:"middle",bg:"#fde68a"});
+    setSlideNotes([
+      {title:"BASELINE DRIVE — WE BUMP BEHIND", lines:["If the ball handler rejects and drives baseline, the screener stays BEHIND the 3-point line and fills in behind the drive."], accent:true},
+      {title:"Why", lines:["The driver now has a safe option behind him if there is no good shot or pass on the baseline attack."]},
+      {title:"Do NOT Roll", lines:["The screener does NOT roll to the rim on a reject.","Rolling would crowd the baseline and create poor spacing."]}
+    ]);
+  }
+  else if(step===36){
+    addCurveMove(g,145,185,170,145,195,105);
+    addPass(g,72,220,190,112);
+    addLabel(g,156,176,"NO CONTACT",{anchor:"middle",bg:"#fde68a"});
+    setSlideNotes([
+      {title:"WHAT IS A SLIP?", lines:["The screener does NOT actually set the screen.","He releases and cuts BEFORE any contact is made."], accent:true},
+      {title:"The Read", lines:["As he approaches the screen, the screener sees that nobody is between himself and the basket.","There is a wide-open lane — so he immediately cuts to the rim."]},
+      {title:"Ball Handler", lines:["Recognize the slip immediately and look for the pass before the defense can recover."]}
+    ]);
+  }
+  else if(step===37){
+    addScreen(g,135,172,58);
+    addScreen(g,155,190,-58);
+    addDribble(g,72,220,105,205,125,190);
+    setSlideNotes([
+      {title:"Option 4 — Re-Screen", lines:["If the first screen creates nothing, flip the angle and screen again."], accent:true},
+      {title:"Ball Handler", lines:["Stay patient. Do not force the first drive."]},
+      {title:"New Angle", lines:["Attack the second screen once the defense has shifted."]}
+    ]);
+  }
+  else if(step===38){
+    addPass(g,205,285,150,185);
+    addCurveMove(g,28,48,82,120,150,185);
+    // Viewer slide 39: keep the teaching cue out of the action so it stays fully readable.
+    addBottomBox(g,25,385,220,"2 STEPS INSIDE ARC",["Catch near the elbow for the best attack angle"],150,185,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"OPTION 5 — GET", lines:["The slot passes to the corner player as the corner player RAISES toward the slot."], accent:true},
+      {title:"Catch Location", lines:["Catch slightly INSIDE the 3-point line — about two steps inside the arc, near the elbow."]},
+      {title:"Why Here?", lines:["That location gives the next attacker the best 45-degree angle to the basket."]}
+    ]);
+  }
+  else if(step===39){
+    addCurveMove(g,205,285,165,245,105,205);
+    addPass(g,150,185,108,203);
+    // Keep teaching words off the action itself so they never get hidden by players/arrows.
+    addBottomBox(g,25,385,220,"SPRINT OUTSIDE",["Pass → sprint outside → GET it back"],120,215,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"PASS → SPRINT OUTSIDE → GET IT BACK", lines:["As soon as the slot player passes, he SPRINTS to the OUTSIDE of the receiver."], accent:true},
+      {title:"Give-Back", lines:["The receiver gives the ball right back to the passer as he comes around the outside."]},
+      {title:"No Pause", lines:["The whole action should flow continuously — pass it, sprint outside, GET it right back."]}
+    ]);
+  }
+  else if(step===40){
+    addDribble(g,105,205,145,160,190,120);
+    // Put the teaching cue in a clean box below the court action instead of over the drive lane.
+    addBottomBox(g,25,385,220,"ATTACK THE 45°",["Turn the corner downhill on a 45° angle"],175,145,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"ATTACK THE 45", lines:["After getting the ball back, turn the corner and attack the basket on a 45-degree angle."], accent:true},
+      {title:"Best Angle", lines:["The exchange being two steps inside the arc near the elbow puts the ball handler downhill immediately."]},
+      {title:"Purpose", lines:["We are trying to create a clean driving lane without needing a traditional ball screen."]}
+    ]);
+  }
+  else if(step===41){
+    // Viewer slide 42: true-wing DHO spacing OUTSIDE the 3-point line.
+    addCurveMove(g,28,48,48,135,72,220);
+    addDribble(g,205,285,155,260,105,225);
+    // Wider box + two shorter lines so ALL writing stays inside the white box.
+    addBottomBox(g,20,375,315,"WING DHO",["Corner raises to the TRUE WING outside the arc.","Slot dribbles toward the handoff."],88,220,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"OPTION 6 — DHO", lines:["DHO stands for Dribble Hand Off. The action takes place on the TRUE WING OUTSIDE the 3-point line."], accent:true},
+      {title:"Different From GET", lines:["GET comes two steps inside the arc near the elbow. DHO stays back outside the arc on the wing."]},
+      {title:"Initial Movement", lines:["The corner player raises to the wing and the slot player dribbles toward him to create the exchange."]}
+    ]);
+  }
+  else if(step===42){
+    // Exchange remains on the true wing outside the arc.
+    addCurveMove(g,28,48,48,135,72,220);
+    addDribble(g,205,285,150,250,102,212);
+    addDHO(g,86,216);
+    addBottomBox(g,20,382,285,"OUTSIDE HANDOFF",["Bump the defender.","Hand it off on the OUTSIDE to shield the ball."],86,216,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"BUMP THE DEFENDER", lines:["As the slot player comes down from the slot, he should try to bump the defender of the raising corner man and help create the advantage."], accent:true},
+      {title:"Outside Handoff", lines:["The exchange is on the wing OUTSIDE the 3-point line, and the ball is handed off on the OUTSIDE of the receiver so his body shields it from the defense."]},
+      {title:"No Inside Exchange", lines:["Do not drift into GET spacing and do not hand the ball off on the inside where the defense can reach through."]}
+    ]);
+  }
+  else if(step===43){
+    // Show a true curl: 2 loops around 4 on the wing, turns the corner, then attacks downhill.
+    addDHO(g,86,216);
+    // Clear curl path around 4 first.
+    addDribble(g,72,220,88,248,116,230);
+    addDribble(g,116,230,132,205,145,182);
+    // Then 45-degree attack path to the basket.
+    addDribble(g,145,182,162,152,185,120);
+    // Show 4's dribble handoff path into the wing spot.
+    addCurveMove(g,205,285,150,245,92,220);
+    // Small cue labels by the action so the curl reads clearly.
+    addLabel(g,132,202,"CURL around 4",{fontSize:11,bg:"#ffffff",padX:6,padY:4});
+    addLabel(g,154,186,"then 45° attack",{fontSize:11,bg:"#ffffff",padX:6,padY:4});
+    addBottomBox(g,20,382,285,"CURL TO THE BASKET",["2 should CURL around 4 first — not go in a straight line.","Turn the corner toward the free-throw line, then attack downhill on a 45° angle."],150,155,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"RECEIVER'S MOMENTUM", lines:["The DHO is received on the wing OUTSIDE the 3-point line. Before the ball changes hands, 2 should already be curling toward the basket."], accent:true},
+      {title:"ACTUAL CURL", lines:["2 must wrap around 4 first so the path clearly shows the curl into the handoff. This should not look like a straight-line drive." ]},
+      {title:"45° ATTACK", lines:["After curling around 4, 2 turns the corner and attacks the basket on a 45-degree angle."]}
+    ]);
+  }
+  else if(step===44){
+    addCurveMove(g,205,150,220,225,205,285);
+    addCurveMove(g,192,110,110,85,28,48);
+    setSlideNotes([
+      {title:"Reset the Spacing", lines:["Ball handler returns to the slot after the pass-out."], accent:true},
+      {title:"Roller", lines:["Block first, then replace to the deep ball-side corner."]},
+      {title:"Keep Playing", lines:["Once spacing is restored, flow right back into Base Motion."]}
+    ]);
+  }
 }
 function render(){
  const s=steps[step], P=pos[s[2]];
@@ -849,9 +890,8 @@ function render(){
  const b=P[ballOwner];
  document.getElementById("ball").setAttribute("cx",b[0]+18);
  document.getElementById("ball").setAttribute("cy",b[1]-14);
- bringBallToFront();
  document.getElementById("title").textContent=s[0];
- document.getElementById("sectionName").textContent = step <= 19 ? "SECTION 1 · BASE MOTION" : "SECTION 2 · PRESSURE RELEASE";
+ document.getElementById("sectionName").textContent = step <= 19 ? "SECTION 1 · BASE MOTION" : (step <= 28 ? "SECTION 2 · PRESSURE RELEASE" : "SECTION 3 · 2 MAN");
  document.getElementById("lesson").innerHTML=s[1]+
    (step==0?'<div class="rule"><b>STARTING SPACING:</b> All five players begin outside the 3-point line. Corner players are deep in the corners.</div>':
     step==1?'<div class="rule"><b>RULE #1:</b> Get the ball to the slot.</div>':
@@ -880,6 +920,27 @@ function render(){
     step==26?'<div class="rule"><b>V:</b> This is the <b>secondary pressure release</b>. When <b>"V"</b> is called, the slots interchange. The overplayed slot man (4) cuts to the middle of the free-throw line and back out to the opposite slot, while 1 simply dribbles over to the left slot to begin the offense. <b>Best used in transition</b>, not when both offense and defense are already set.</div>':
     step==27?'<div class="rule"><b>WHEEL & V:</b> Both are tools for the same problem: we need to get the ball from <b>one side of the court to the other</b>, but defensive pressure makes the direct pass too difficult. <b>Do not force the pass.</b> Use Wheel or V to create movement, change the spacing, and safely get the ball to the other side.</div>':
     step==28?'<div class="rule"><b>DANGER OF THE FLAT PASS:</b> A <b>flat pass</b> is a straight-line pass from slot to slot. If we ignore Wheel or V and force that pass against aggressive pressure, a defender can steal it. That means we not only <b>lose the ball</b>, but we also likely give up a <b>wide open layup</b> because nobody is back to defend.</div>':'');
+ if(step>=29){
+   const rules={
+     29:'<div class="rule"><b>2 MAN:</b> Strong side = <b>one SLOT + one DEEP CORNER</b>. The other three players keep the weak side spaced.</div>',
+     30:'<div class="rule"><b>ENTRY #1:</b> If the guard pushes the action directly to the <b>right wing</b>, we can flow immediately into 2 Man instead of forcing the normal three-man entry.</div>',
+     31:'<div class="rule"><b>ENTRY #2:</b> When the ball gets to the <b>left side</b> and the <b>Action Man cuts through</b>, the remaining slot + corner pair automatically creates 2 Man.</div>',
+     32:'<div class="rule"><b>ALIGNMENT:</b> The slot player and deep-corner player own the strong-side action. Everybody else stays spaced away.</div>',
+     33:'<div class="rule"><b>OPTION 1 — PICK & ROLL:</b> Corner lifts to the wing. Slot passes, gets lower, and sets the low-angle screen.</div>',
+     34:'<div class="rule"><b>READ ORDER:</b> 1) Score. 2) Look back to the roller. 3) Weak-side kickout.</div>',
+     35:'<div class="rule"><b>OPTION 2 — REJECT:</b> If the defender jumps the screen early, attack away from it.</div>',
+     36:'<div class="rule"><b>OPTION 3 — SLIP:</b> If the defense loads up on the screen, the screener can slip early to the rim.</div>',
+     37:'<div class="rule"><b>OPTION 4 — RE-SCREEN:</b> If the first angle creates nothing, flip the screen and attack again.</div>',
+     38:'<div class="rule"><b>OPTION 5 — GET:</b> Slot passes to the corner player raising up. The catch happens <b>about two steps inside the 3-point line near the elbow</b>.</div>',
+     39:'<div class="rule"><b>GET TIMING:</b> Pass it, then <b>SPRINT TO THE OUTSIDE</b> of the receiver and get the ball right back.</div>',
+     40:'<div class="rule"><b>GET FINISH:</b> Turn the corner and <b>ATTACK ON A 45° ANGLE</b>. The inside-the-arc exchange gives us the best downhill angle.</div>',
+     41:'<div class="rule"><b>OPTION 6 — DHO:</b> The corner raises to the <b>true wing OUTSIDE the 3-point line</b>. The slot player dribbles into the handoff. Unlike GET, the exchange does not move inside the arc.</div>',
+     42:'<div class="rule"><b>DHO DETAIL:</b> Stay on the <b>wing outside the arc</b>, try to <b>bump the defender</b> of the raising corner man, and make the handoff on the <b>outside</b> to protect the ball.</div>',
+     43:'<div class="rule"><b>DHO ATTACK:</b> Receive the handoff on the <b>wing outside the arc</b>, <b>curl into it</b>, and catch with momentum heading <b>toward the basket</b>, not the sideline.</div>',
+     44:'<div class="rule"><b>RESET:</b> Handler back to slot. Roller block first, then deep corner. Resume Base Motion.</div>'
+   };
+   document.getElementById("lesson").innerHTML += (rules[step]||'');
+ }
  document.getElementById("status").textContent=`STEP ${step+1} OF ${steps.length}`;
  document.getElementById("twoManChoice").style.display="none";
  drawAnnotations();
@@ -955,6 +1016,7 @@ function restartAndPlay(){
 
 function next(){pauseSlides(false);step=Math.min(steps.length-1,step+1);render()}
 function prev(){pauseSlides(false);step=Math.max(0,step-1);render()}
+function jumpToTwoMan(){pauseSlides(false);if(mode!=="watch") setMode("watch");step=29;render()}
 function resetAll(){pauseSlides(false);step=0;render()}
 function setMode(m){pauseSlides(false);mode=m;["watch","job","quiz"].forEach(x=>document.getElementById(x+"Tab").classList.toggle("active",x==m));document.getElementById("jobPicker").style.display=m=="job"?"block":"none";document.getElementById("quiz").style.display=m=="quiz"?"block":"none";document.getElementById("twoManChoice").style.display="none";if(m=="quiz"&&!quizOrder.length) makeQuiz(true);highlight();updatePlayUI(false)}
 function pickPlayer(n){chosen=n;const jobs={
