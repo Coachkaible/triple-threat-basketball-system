@@ -1824,11 +1824,157 @@ const defense3v3QuizQuestions = [
  {q:"When the ball is passed to a wing, what happens?",choices:["Only the new ball defender moves","The new ball defender closes out and both other defenders find new help spots","Everyone stays where they were","The defense automatically switches"],answer:1,explain:"The pass changes all three jobs: one closes out and the other two shift into new help positions."}
 ];
 
+
+const defense5v5Offense = {
+  o1:[250,340],
+  o2:[418,220],
+  o3:[450,70],
+  o4:[82,220],
+  o5:[50,70]
+};
+
+const defense5v5States = {
+  top:{
+    x1:[274,312], x2:[354,200], x3:[338,99], x4:[146,200], x5:[162,99]
+  },
+  rightWing:{
+    x1:[302,258], x2:[434,196], x3:[390,54], x4:[222,142], x5:[278,116]
+  },
+  rightCorner:{
+    x1:[322,258], x2:[387,179], x3:[436,52], x4:[264,168], x5:[258,82]
+  },
+  topReturn:{
+    x1:[274,312], x2:[354,200], x3:[338,99], x4:[146,200], x5:[162,99]
+  },
+  leftWing:{
+    x1:[198,258], x2:[278,142], x3:[248,116], x4:[98,196], x5:[110,54]
+  },
+  leftCorner:{
+    x1:[178,258], x2:[236,168], x3:[242,82], x4:[138,166], x5:[74,48]
+  }
+};
+
+function make5v5Step(title,lesson,rule,ball,stateKey,notes){
+  return {title,lesson,rule,ball,off:defense5v5Offense,def:defense5v5States[stateKey],notes};
+}
+
+const defense5v5Steps = [
+  make5v5Step(
+    "5-on-5 Shell — Ball at the Point",
+    "We begin in true 5-out spacing: 1 at the point, 2 and 4 on the wings, and 3 and 5 in the deep corners. All five offensive players are outside the 3-point line. X1 is BALL. X2, X3, X4 and X5 are HELP.",
+    "BALL FIRST · MAN SECOND · ONE BALL · FOUR HELPERS",
+    "o1","top",
+    [
+      {title:"5-Out Spacing",lines:["1 point · 2 wings · 2 deep corners. Everyone starts outside the 3-point line."],accent:true},
+      {title:"On Ball",lines:["X1 applies our 1-on-1 rules and sits on the ballhandler’s RIGHT shoulder."]},
+      {title:"Four Helpers",lines:["Each helper forms his OWN shallow triangle between the ball and his man. Stay lower toward the basket and keep vision of both."]}
+    ]
+  ),
+  make5v5Step(
+    "Pass: Point → Right Wing",
+    "As the ball travels to 2 on the right wing, X2 becomes BALL and closes to 2’s right shoulder. X1, X3, X4 and X5 all shift on the flight of the pass. Every help defender keeps his own shallow triangle and stays lower than the lowest thing.",
+    "MOVE ON FLIGHT · X2 = BALL · EVERYONE ELSE = HELP",
+    "o2","rightWing",
+    [
+      {title:"X2 = Ball",lines:["Arrive on the catch and close to the offensive player’s RIGHT shoulder."],accent:true},
+      {title:"Own Triangle",lines:["X1, X3, X4 and X5 each maintain a separate shallow triangle. Defenders never stack in one help spot."]},
+      {title:"Lower Than Lowest",lines:["Help is the low point of the triangle — closer to the basket than both the ball and your man."]}
+    ]
+  ),
+  make5v5Step(
+    "Pass: Right Wing → Right Corner",
+    "When the ball goes to 3 in the deep right corner, X3 becomes BALL. X3 is in front of 3 and closes under control to the right-shoulder position. X1, X2, X4 and X5 shift into new help positions tied to the corner ball.",
+    "CORNER BALL · X3 IN FRONT · WEAK SIDE GETS TO THE MIDDLE",
+    "o3","rightCorner",
+    [
+      {title:"X3 = Ball",lines:["Be in front of 3 — not behind him — and protect against the strong-hand drive."],accent:true},
+      {title:"Weak-Side Help",lines:["X4 and X5 pinch toward the middle to protect the paint, but keep enough cushion to discourage backdoors and recover to a skip."]},
+      {title:"See Both",lines:["Head on a swivel. One hand can point at your man and the other at the ball."]}
+    ]
+  ),
+  make5v5Step(
+    "Pass: Right Corner → Right Wing",
+    "The ball returns to 2. X2 goes back to BALL and X3 immediately becomes HELP. The other defenders adjust their own triangles again. No defender stands still when the ball moves.",
+    "JOBS CHANGE ON EVERY PASS · MOVE WHILE THE BALL IS IN THE AIR",
+    "o2","rightWing",
+    [
+      {title:"X2 = Ball Again",lines:["Close out under control and be there when 2 catches."],accent:true},
+      {title:"X3 = Help",lines:["As soon as the pass leaves the corner, X3 comes off the ball and gets back into the proper help relationship."]},
+      {title:"No Standing",lines:["Every pass changes all five defensive positions."]}
+    ]
+  ),
+  make5v5Step(
+    "Pass: Right Wing → Point",
+    "As the ball returns to 1 at the point, X1 becomes BALL again. The other four defenders reform their help triangles around the top. Point help must be low enough to stunt at a drive but not buried so deep that it cannot recover to the perimeter.",
+    "POINT BALL · BALANCED HELP · STAY CONNECTED",
+    "o1","topReturn",
+    [
+      {title:"X1 = Ball",lines:["Pressure the point using the same right-shoulder on-ball rules."],accent:true},
+      {title:"Point-Side Balance",lines:["Think elbow-to-elbow shell help: protect the lane without sinking so deep that recovery becomes impossible."]},
+      {title:"Connected",lines:["The defense moves as one unit while every defender still owns a different relationship."]}
+    ]
+  ),
+  make5v5Step(
+    "Pass: Point → Left Wing",
+    "When 1 passes to 4 on the left wing, X4 becomes BALL. X1, X2, X3 and X5 shift toward the new ball location. Help must drop lower with the wing ball so each defender remains lower than the lowest of the ball or his man.",
+    "LEFT-WING BALL · HELP DROPS LOWER · STAY LOWER THAN LOWEST",
+    "o4","leftWing",
+    [
+      {title:"X4 = Ball",lines:["Close to 4’s RIGHT shoulder and contest without giving up the strong-hand drive."],accent:true},
+      {title:"Help Drops",lines:["With the ball on the wing, helpers get lower toward the basket so the ball and their man stay in peripheral vision."]},
+      {title:"Weak Side",lines:["Opposite-side defenders get toward the middle, but stay separate and recoverable."]}
+    ]
+  ),
+  make5v5Step(
+    "Pass: Left Wing → Left Corner",
+    "The ball finishes in the deep left corner with 5. X5 becomes BALL. X1 through X4 settle into the final help positions. The locations have changed, but the rules have not: ball first, man second, see both, move on flight, and protect the paint before giving up an easy cut.",
+    "SAME RULES EVERYWHERE · BALL FIRST · MAN SECOND · SEE BOTH",
+    "o5","leftCorner",
+    [
+      {title:"X5 = Ball",lines:["Close under control to the right-shoulder position in the deep corner."],accent:true},
+      {title:"Four Helpers",lines:["Every other defender is in his own shallow triangle and is the low point of that triangle."]},
+      {title:"The Big Idea",lines:["Five defenders move together without ever becoming five defenders standing in the same place."]}
+    ]
+  )
+];
+
+const defense5v5QuizQuestions = [
+  {q:"What is our 5-on-5 starting alignment?",choices:["1 point, 2 wings and 2 deep corners — all outside the 3-point line","Two posts, two wings and one point","Four players in the lane and one point","Everyone around the free-throw line"],answer:0,explain:"The teaching shell begins in 5-out spacing: point, two wings and two deep corners, all outside the arc."},
+  {q:"When your player does NOT have the ball, what is your first positioning priority?",choices:["Stay glued to your man","Ball first, then man","Stand under the rim","Find the nearest teammate"],answer:1,explain:"Our rule is ball first, man second. Help position is determined first by the ball and then by your man."},
+  {q:"What shape should each help defender create?",choices:["A straight line with the ball","A deep rectangle","His own shallow triangle between ball and man","A circle around the paint"],answer:2,explain:"Each helper owns a separate shallow triangle between the ball and his man."},
+  {q:"Where should the help defender be in that triangle?",choices:["Higher than both ball and man","Even with his man","Directly beside the ball","The low point — closer to the basket than ball and man"],answer:3,explain:"Help is the low point of the triangle so the defender can protect the basket and still see both."},
+  {q:"When should all five defenders move on a pass?",choices:["While the pass is in the air","After the receiver dribbles","Only when the coach calls it","After the receiver holds the ball for two seconds"],answer:0,explain:"We move on the flight so the defense is already in position when the catch is made."},
+  {q:"Where does the new on-ball defender close out?",choices:["To the offensive player’s left hip","To the offensive player’s RIGHT shoulder","Directly behind the offensive player","Under the basket"],answer:1,explain:"The same 1-on-1 rule carries into team defense: right-shoulder alignment against a right-handed player."},
+  {q:"What should weak-side defenders do as the ball moves away from them?",choices:["Stay glued to their players","Run to the opposite sideline","Pinch toward the middle while keeping vision and recovery ability","Stand on the baseline"],answer:2,explain:"Weak-side help gets toward the middle to protect the paint but stays connected enough to prevent backdoors and recover."},
+  {q:"What should NOT happen with our help defenders?",choices:["They should communicate","They should move on flight","They should see ball and man","They should stack in the same help spot"],answer:3,explain:"Every defender owns a different shallow triangle. We stay connected and separated rather than stacking."},
+  {q:"When the ball moves to the left wing, what happens to help?",choices:["Help drops lower to stay lower than the lowest thing","Help moves higher toward half court","Help stays exactly where it was","Everyone traps the ball"],answer:0,explain:"Wing ball requires the helpers to drop lower toward the basket while preserving their individual triangles."},
+  {q:"What is the simplest summary of our 5-on-5 defense?",choices:["Man first, ball second","Ball first, man second — see both and move on flight","Switch everything automatically","Stay home and never help"],answer:1,explain:"Ball first, man second, see both and move on flight connects the 1-on-1 rules to full team defense."}
+];
+
+function drawDefense5Annotations(s){
+  const g=document.getElementById('annotations');
+  g.innerHTML='';
+  setSlideNotes(s.notes||[]);
+  const ballPos=s.off[s.ball];
+  for(let i=1;i<=5;i++){
+    const oid='o'+i, xid='x'+i;
+    const op=s.off[oid], dp=s.def[xid];
+    if(oid===s.ball){
+      addDefenseLine(g,dp[0],dp[1],op[0],op[1],'#7f1d1d',3,true);
+    }else{
+      addSightLine(g,dp[0],dp[1],ballPos[0],ballPos[1],'#f2b134',1.7);
+      addSightLine(g,dp[0],dp[1],op[0],op[1],'#ffffff',1.7);
+    }
+  }
+}
+
 function currentDefenseSteps(){
+  if(defenseLevel==='5v5') return defense5v5Steps;
   if(defenseLevel==='3v3') return defense3v3Steps;
   return defenseLevel==='2v2' ? defense2v2Steps : defenseSteps;
 }
 function currentDefenseQuizQuestions(){
+  if(defenseLevel==='5v5') return defense5v5QuizQuestions;
   if(defenseLevel==='3v3') return defense3v3QuizQuestions;
   return defenseLevel==='2v2' ? defense2v2QuizQuestions : defenseQuizQuestions;
 }
@@ -1865,7 +2011,7 @@ function setupSystemSwitcher(){
   if(!document.getElementById('defenseLevelSwitch')){
     const levels=document.createElement('div');
     levels.id='defenseLevelSwitch'; levels.className='defense-level-switch';
-    levels.innerHTML='<button id="defense1v1Btn" class="active" onclick="switchDefenseLevel(\'1v1\')">1 ON 1</button><button id="defense2v2Btn" onclick="switchDefenseLevel(\'2v2\')">2 ON 2</button><button id="defense3v3Btn" onclick="switchDefenseLevel(\'3v3\')">3 ON 3</button>';
+    levels.innerHTML='<button id="defense1v1Btn" class="active" onclick="switchDefenseLevel(\'1v1\')">1 ON 1</button><button id="defense2v2Btn" onclick="switchDefenseLevel(\'2v2\')">2 ON 2</button><button id="defense3v3Btn" onclick="switchDefenseLevel(\'3v3\')">3 ON 3</button><button id="defense5v5Btn" onclick="switchDefenseLevel(\'5v5\')">5 ON 5</button>';
     document.querySelector('.wrap > section.card > .tabs').appendChild(levels);
   }
   ensureDefenseActors();
@@ -1880,7 +2026,9 @@ function setupSystemSwitcher(){
 
 function updateDefenseJobPanel(){
   const p=document.getElementById('defenseJobPanel'); if(!p) return;
-  if(defenseLevel==='3v3'){
+  if(defenseLevel==='5v5'){
+    p.innerHTML=`<div class="defense-job-card"><b>5-ON-5 TEAM DEFENDER</b><br><br><b>Ball first. Man second.</b> If your player has the ball, you are <b>BALL</b> and apply the same 1-on-1 right-shoulder rules. If your player does not have the ball, you are <b>HELP</b>. Form your own shallow triangle between ball and man, be the low point of that triangle, see both, and move on the flight of every pass. Weak-side defenders pinch toward the middle without stacking or losing recovery ability.</div><div class="defense-core"><div>BALL FIRST</div><div>MAN SECOND</div><div>OWN TRIANGLE</div><div>LOWER THAN LOWEST</div><div>SEE BOTH</div><div>MOVE ON FLIGHT</div><div>NO STACKING</div><div>RIGHT SHOULDER</div></div>`;
+  }else if(defenseLevel==='3v3'){
     p.innerHTML=`<div class="defense-job-card"><b>3-ON-3 DEFENDER</b><br><br><b>Same rules, more connection.</b> Ball first. Man second. If your player has the ball, you are <b>BALL</b> and apply our 1-on-1 rules. If not, you are in <b>HELP</b>. Help defenders form shallow triangles between the ball and their player, stay lower toward the basket, keep vision of both, and move on the flight of every pass.</div><div class="defense-core"><div>BALL FIRST</div><div>MAN SECOND</div><div>ONE BALL</div><div>TWO HELPS</div><div>SHALLOW TRIANGLE</div><div>SEE BOTH</div><div>MOVE ON FLIGHT</div></div>`;
   }else if(defenseLevel==='2v2'){
     p.innerHTML=`<div class="defense-job-card"><b>2-ON-2 DEFENDER</b><br><br><b>Ball first. Man second.</b> If your player has the ball, say <b>BALL</b> and apply our 1-on-1 rules. If your player does not have the ball, say <b>HELP</b> and find a shallow triangle between the ball and your man. Always be lower — closer to the basket — than the lowest thing. Keep vision of both with your head on a swivel. Move <b>on the flight of the pass</b> so you are already there when the catch is made.</div><div class="defense-core"><div>BALL FIRST</div><div>MAN SECOND</div><div>SHALLOW TRIANGLE</div><div>LOWER THAN LOWEST</div><div>SEE BOTH</div><div>MOVE ON FLIGHT</div><div>BALL / HELP</div><div>ARRIVE ON CATCH</div></div>`;
@@ -1916,19 +2064,31 @@ function ensureDefenseActors(){
   addDefensePlayerFigure(o3,'#1d4ed8','3');
   const d3=makeSvg('g',{id:'defDefender3',style:'display:none'});
   addDefensePlayerFigure(d3,'#7f1d1d','X3');
-  court.appendChild(o); court.appendChild(d); court.appendChild(o2); court.appendChild(d2); court.appendChild(o3); court.appendChild(d3);
+  const o4=makeSvg('g',{id:'defOffense4',style:'display:none'});
+  addDefensePlayerFigure(o4,'#1d4ed8','4');
+  const d4=makeSvg('g',{id:'defDefender4',style:'display:none'});
+  addDefensePlayerFigure(d4,'#7f1d1d','X4');
+  const o5=makeSvg('g',{id:'defOffense5',style:'display:none'});
+  addDefensePlayerFigure(o5,'#1d4ed8','5');
+  const d5=makeSvg('g',{id:'defDefender5',style:'display:none'});
+  addDefensePlayerFigure(d5,'#7f1d1d','X5');
+  court.appendChild(o); court.appendChild(d); court.appendChild(o2); court.appendChild(d2); court.appendChild(o3); court.appendChild(d3); court.appendChild(o4); court.appendChild(d4); court.appendChild(o5); court.appendChild(d5);
 }
 
 function showOffenseActors(show){
   for(let i=1;i<=5;i++) document.getElementById('p'+i).style.display=show?'':'none';
 }
-function showDefenseActors(show,showSecond=false,showThird=false){
+function showDefenseActors(show,showSecond=false,showThird=false,showFourth=false,showFifth=false){
   document.getElementById('defOffense').style.display=show?'':'none';
   document.getElementById('defDefender').style.display=show?'':'none';
   document.getElementById('defOffense2').style.display=(show&&showSecond)?'':'none';
   document.getElementById('defDefender2').style.display=(show&&showSecond)?'':'none';
   document.getElementById('defOffense3').style.display=(show&&showThird)?'':'none';
   document.getElementById('defDefender3').style.display=(show&&showThird)?'':'none';
+  document.getElementById('defOffense4').style.display=(show&&showFourth)?'':'none';
+  document.getElementById('defDefender4').style.display=(show&&showFourth)?'':'none';
+  document.getElementById('defOffense5').style.display=(show&&showFifth)?'':'none';
+  document.getElementById('defDefender5').style.display=(show&&showFifth)?'':'none';
 }
 function moveDefenseActor(id,xy){ document.getElementById(id).setAttribute('transform',`translate(${xy[0]} ${xy[1]})`); }
 
@@ -2250,6 +2410,16 @@ function draw3RotationFrame(s,o1,d1,d2,d3,done=false){
   }
 }
 function setDefenseLegend(){
+  if(defenseLevel==='5v5'){
+    document.querySelector('.legend').innerHTML=`
+      <h3>5-ON-5 DIAGRAM LEGEND</h3>
+      <div class="small" style="margin-bottom:8px">Blue = offense. Dark red = defense. The basket/baseline is at the top of the court.</div>
+      <div class="legend-row"><svg width="58" height="18"><rect x="3" y="2" width="18" height="14" rx="5" fill="#1d4ed8" stroke="white" stroke-width="2"/><text x="12" y="13" text-anchor="middle" font-size="9" font-weight="900" fill="white">1</text></svg><span>5-out offensive players</span></div>
+      <div class="legend-row"><svg width="58" height="18"><rect x="3" y="2" width="22" height="14" rx="5" fill="#7f1d1d" stroke="white" stroke-width="2"/><text x="14" y="13" text-anchor="middle" font-size="8" font-weight="900" fill="white">X1</text></svg><span>Defenders X1–X5</span></div>
+      <div class="legend-row"><svg width="58" height="18"><line x1="2" y1="9" x2="52" y2="9" stroke="#f2b134" stroke-width="2" stroke-dasharray="5 4"/></svg><span>Help defender vision to the ball</span></div>
+      <div class="legend-row"><svg width="58" height="18"><line x1="2" y1="9" x2="52" y2="9" stroke="#fff" stroke-width="2" stroke-dasharray="5 4"/></svg><span>Help defender relationship to his man</span></div>`;
+    return;
+  }
   if(defenseLevel==='3v3'){
     document.querySelector('.legend').innerHTML=`
       <h3>3-ON-3 DIAGRAM LEGEND</h3>
@@ -2288,7 +2458,7 @@ let passShiftOwner='o1';
 function cancelPassShiftAnimation(){
   if(passShiftRaf){ cancelAnimationFrame(passShiftRaf); passShiftRaf=null; }
   passShiftAnimating=false;
-  ['defOffense','defOffense2','defOffense3','defDefender','defDefender2','defDefender3'].forEach(id=>{
+  ['defOffense','defOffense2','defOffense3','defOffense4','defOffense5','defDefender','defDefender2','defDefender3','defDefender4','defDefender5'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.style.transition='';
   });
@@ -2302,7 +2472,7 @@ let driveStopRaf=null;
 function cancelDriveStopAnimation(){
   if(driveStopRaf){ cancelAnimationFrame(driveStopRaf); driveStopRaf=null; }
   driveStopAnimating=false;
-  ['defOffense','defOffense2','defOffense3','defDefender','defDefender2','defDefender3'].forEach(id=>{
+  ['defOffense','defOffense2','defOffense3','defOffense4','defOffense5','defDefender','defDefender2','defDefender3','defDefender4','defDefender5'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.style.transition='';
   });
@@ -2731,7 +2901,18 @@ function renderDefense(){
   showOffenseActors(false);
   const steps=currentDefenseSteps();
   const s=steps[defenseStep];
-  if(defenseLevel==='3v3'){
+  if(defenseLevel==='5v5'){
+    showDefenseActors(true,true,true,true,true);
+    for(let i=1;i<=5;i++){
+      moveDefenseActor('defOffense'+(i===1?'':i),s.off['o'+i]);
+      moveDefenseActor('defDefender'+(i===1?'':i),s.def['x'+i]);
+    }
+    const bp=s.off[s.ball];
+    document.getElementById('ball').setAttribute('cx',bp[0]-12);
+    document.getElementById('ball').setAttribute('cy',bp[1]+18);
+    document.getElementById('sectionName').textContent='DEFENSE · LEVEL 4 · 5 ON 5 TEAM DEFENSE';
+    drawDefense5Annotations(s);
+  }else if(defenseLevel==='3v3'){
     showDefenseActors(true,true,true);
     moveDefenseActor('defOffense',s.o1); moveDefenseActor('defOffense2',s.o2); moveDefenseActor('defOffense3',s.o3);
     moveDefenseActor('defDefender',s.d1); moveDefenseActor('defDefender2',s.d2); moveDefenseActor('defDefender3',s.d3);
@@ -2831,6 +3012,7 @@ function switchDefenseLevel(level){
   document.getElementById('defense1v1Btn').classList.toggle('active',level==='1v1');
   document.getElementById('defense2v2Btn').classList.toggle('active',level==='2v2');
   document.getElementById('defense3v3Btn').classList.toggle('active',level==='3v3');
+  document.getElementById('defense5v5Btn').classList.toggle('active',level==='5v5');
   mode='watch';
   ['watch','job','quiz'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('active',x==='watch'));
   document.getElementById('jobPicker').style.display='none'; document.getElementById('defenseJobPanel').style.display='none'; document.getElementById('quiz').style.display='none'; document.getElementById('lesson').style.display='block';
@@ -2875,7 +3057,7 @@ function renderDefenseQuizQuestion(){
   const bank=currentDefenseQuizQuestions();
   if(defenseQuizIndex>=defenseQuizOrder.length){
     const pct=Math.round((defenseQuizScore/defenseQuizOrder.length)*100);
-    const label=defenseLevel==='3v3'?'3-on-3 team defense with rotations':(defenseLevel==='2v2'?'2-on-2 team defensive foundation':'1-on-1 defensive foundation');
+    const label=defenseLevel==='5v5'?'5-on-5 team defensive shell':(defenseLevel==='3v3'?'3-on-3 team defense with rotations':(defenseLevel==='2v2'?'2-on-2 team defensive foundation':'1-on-1 defensive foundation'));
     qbox.innerHTML=`<div class="rule"><b>DEFENSE QUIZ COMPLETE</b><br><br>Score: <b>${defenseQuizScore} / ${defenseQuizOrder.length}</b> (${pct}%)<br><br>${pct>=90?'Excellent command of our '+label+'.':pct>=75?'Good understanding. Review the missed concepts and try again.':'Go back through the teaching slides, then take another run at it.'}</div><button onclick="makeDefenseQuiz(true)">TAKE THE QUIZ AGAIN</button>`;
     return;
   }
