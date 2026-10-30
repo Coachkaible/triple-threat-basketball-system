@@ -1,0 +1,24 @@
+{
+  "name": "Triple Threat Basketball System",
+  "short_name": "Triple Threat",
+  "description": "Interactive offense and defense playbook for the Triple Threat Basketball System",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#101419",
+  "theme_color": "#f2b134",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
