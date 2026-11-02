@@ -1067,8 +1067,8 @@ function drawAnnotations(){
   }
   else if(step===57){
     addPass(g,350,275,205,285);
-    addLabel(g,126,245,"ACTION MAN = TRIGGER",{anchor:"start",fontSize:11,bg:"#fde68a",padX:7,padY:4});
-    addLeader(g,122,255,82,220);
+    addLabel(g,20,188,"ACTION MAN = TRIGGER",{anchor:"start",fontSize:11,bg:"#fde68a",padX:7,padY:4});
+    addLeader(g,120,193,82,220);
     addBottomBox(g,145,382,335,"BUILD EVERY 3 MAN ACTION FROM HERE",["Ball reaches the slot → Action Man triggers the action.","Corner man reacts as part of the same 3-player package."],82,220,{titleSize:12,lineSize:10});
     setSlideNotes([
       {title:"THE TRIGGER", lines:["Once the ball reaches the ball-side slot, the Action Man becomes the trigger."], accent:true},
@@ -1106,9 +1106,10 @@ function drawAnnotations(){
     ]);
   }
   else if(step===61){
+    addScreen(g,50,105,0);
     addCurveMove(g,50,105,250,85,472,48);
     addMove(g,472,48,418,220);
-    addLabel(g,275,78,"ACTION MAN CONTINUES THROUGH",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    addLabel(g,285,64,"ACTION MAN CONTINUES THROUGH",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
       {title:"SCREEN → CUT THROUGH", lines:["After setting the screen, the Action Man continues all the way to the opposite deep corner."], accent:true},
       {title:"Normal Flow", lines:["This is the same final destination as the normal Action Man cut."]},
