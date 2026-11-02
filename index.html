@@ -278,7 +278,7 @@ threeDownTwoMan:{1:[350,275],2:[72,220],3:[472,48],4:[135,172],5:[418,220]},
 // Slot MUST use the screen and dribble off it.
 threeUpSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
 threeUpScreen:{1:[350,275],2:[28,48],3:[150,250],4:[205,285],5:[472,48]},
-threeUpUseScreen:{1:[350,275],2:[28,48],3:[150,250],4:[110,205],5:[472,48]},
+threeUpUseScreen:{1:[350,275],2:[28,48],3:[150,250],4:[78,225],5:[472,48]},
 threeUpClear:{1:[350,275],2:[28,48],3:[472,48],4:[140,205],5:[418,220]},
 threeUpCornerDho:{1:[350,275],2:[100,185],3:[472,48],4:[135,205],5:[418,220]},
 threeUpCornerBackdoor:{1:[350,275],2:[250,105],3:[472,48],4:[125,185],5:[418,220]}
@@ -1175,12 +1175,12 @@ function drawAnnotations(){
   }
   else if(step===66){
     addScreen(g,150,250,62);
-    addDribble(g,205,285,150,238,110,205);
-    addLabel(g,215,225,"USE OUTSIDE — LEFT OF SCREENER",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    addDribble(g,205,285,132,282,78,225);
+    addLabel(g,205,210,"OUTSIDE — AWAY FROM BASKET",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
       {title:"SLOT MUST USE IT", lines:["On UP, the slot dribbles off the OUTSIDE of the Action Man's ball screen."], accent:true},
-      {title:"Direction", lines:["Ballhandler goes to the screener's LEFT — not to the right."]},
-      {title:"Attack", lines:["Turn the corner with intent and begin the drive."]}
+      {title:"Direction", lines:["Go farther away from the basket, to the screener's LEFT." ]},
+      {title:"Visual Cue", lines:["The first move should clearly widen outside before the ballhandler turns the corner."]}
     ]);
   }
   else if(step===67){
