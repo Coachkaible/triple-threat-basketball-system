@@ -124,6 +124,7 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 <button onclick="resetAll()">Reset</button>
 <button class="primary" onclick="jumpToGameUpdate()">10/30 UPDATE</button>
 <button onclick="jumpToTwoMan()">2 MAN</button>
+<button onclick="jumpToThreeMan()">3 MAN</button>
 <button id="playBtn" onclick="playSlides()">▶ Play Sequence</button>
 <button id="pauseBtn" onclick="pauseSlides()" disabled>⏸ Pause</button>
 <button id="restartPlayBtn" onclick="restartAndPlay()">↺ Restart + Play</button>
@@ -256,7 +257,13 @@ gameUpdateLeftPnr:{1:[350,275],2:[472,48],3:[135,172],4:[72,220],5:[418,220]},
 gameUpdateRightGetSetup:{1:[330,275],2:[472,48],3:[82,220],4:[205,285],5:[28,48]},
 gameUpdateRightGetCatch:{1:[330,275],2:[350,185],3:[82,220],4:[205,285],5:[28,48]},
 gameUpdateRightGetReturn:{1:[395,205],2:[350,185],3:[82,220],4:[205,285],5:[28,48]},
-gameUpdateRightGetAttack:{1:[310,120],2:[350,185],3:[82,220],4:[205,285],5:[28,48]}
+gameUpdateRightGetAttack:{1:[310,120],2:[350,185],3:[82,220],4:[205,285],5:[28,48]},
+
+// SECTION 4 — 3 MAN ACTIONS
+// Base 3-man side: ball-side slot + Action Man on the wing + corner man.
+threeManSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
+threeManRoles:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
+threeManTrigger:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]}
 };
 const steps=[
 
@@ -322,7 +329,11 @@ const steps=[
 ["If Nothing Is Open — Flow to a Right-Side GET","If the first rotation on the left does not create a shot, layup, roller, or open weak-side pass, we do NOT stop. The ball comes out to 1 in the right slot. 5 cuts through and 3 lifts on the weak side, leaving 1 in the right slot and 2 in the deep right corner. That gives us our 2 Man spacing for a GET on the right side.","gameUpdateRightGetSetup",1],
 ["Right-Side GET — 1 Passes to 2 Raising","2 raises from the deep right corner and catches slightly inside the 3-point line, about two steps inside the arc near the right elbow. 1 passes to 2 and immediately prepares to sprint to the OUTSIDE of him.","gameUpdateRightGetCatch",2],
 ["Right-Side GET — 1 Sprints Outside and Gets It Back","Immediately after the pass, 1 sprints outside of 2 toward the right sideline. 2 gives the ball right back. The exchange happens near the elbow so 1 can turn the corner with the best downhill angle.","gameUpdateRightGetReturn",1],
-["Right-Side GET — Attack the 45","After getting the ball back, 1 turns the corner and attacks the basket on a 45-degree angle. This is our next automatic action if the first rotation on the left does not create an advantage: LEFT ROTATION → RIGHT-SIDE GET.","gameUpdateRightGetAttack",1]
+["Right-Side GET — Attack the 45","After getting the ball back, 1 turns the corner and attacks the basket on a 45-degree angle. This is our next automatic action if the first rotation on the left does not create an advantage: LEFT ROTATION → RIGHT-SIDE GET.","gameUpdateRightGetAttack",1],
+
+["SECTION 4 — 3 Man Actions","This section introduces our 3 Man actions. Every 3 Man action starts with the same three-player structure on the ball side: the BALL-SIDE SLOT has the ball, the ACTION MAN starts on the wing, and the CORNER MAN is spaced in the deep corner. The other two players stay spaced on the weak side.","threeManSetup",4],
+["3 Man — Know the Three Roles","The three players involved are defined by their spots, not by their jersey numbers. In this example: 4 is the BALL-SIDE SLOT, 3 is the ACTION MAN on the wing, and 2 is the CORNER MAN. Because our spots are interchangeable, any three players can become these three roles during the possession.","threeManRoles",4],
+["3 Man — Action Man Is the Trigger","The Action Man is the key to the 3 Man package. Once the ball reaches the ball-side slot, the Action Man on the wing becomes the trigger for the action. The slot, Action Man, and corner man will work together while the two weak-side players maintain spacing. We will build the individual 3 Man actions from this exact picture.","threeManTrigger",4]
 ];
 let step=0,mode="watch",chosen=null;
 function move(id,xy){document.getElementById(id).setAttribute("transform",`translate(${xy[0]} ${xy[1]})`)}
@@ -1015,6 +1026,41 @@ function drawAnnotations(){
       {title:"Our New Flow", lines:["WHEEL FIRST → LEFT ROTATION → RIGHT-SIDE GET."]}
     ]);
   }
+  else if(step===55){
+    addLabel(g,205,250,"BALL-SIDE SLOT",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
+    addLabel(g,82,252,"ACTION MAN",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
+    addLabel(g,55,82,"CORNER MAN",{anchor:"middle",fontSize:11,bg:"#ffffff",padX:7,padY:4});
+    addBottomBox(g,155,382,320,"3 MAN STARTING PICTURE",["SLOT + ACTION MAN + CORNER MAN","Three players connected on the ball side."],205,285,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"3 MAN STRUCTURE", lines:["Every 3 Man action begins with the same three spots."], accent:true},
+      {title:"Ball-Side Slot", lines:["The slot player has the ball and initiates the action."]},
+      {title:"Action Man + Corner", lines:["Action Man starts on the wing. Corner man stays deep in the corner."]}
+    ]);
+  }
+  else if(step===56){
+    addLeader(g,205,255,205,285);
+    addLabel(g,205,245,"SLOT",{anchor:"middle",fontSize:12,bg:"#fde68a",padX:8,padY:5});
+    addLeader(g,115,245,82,220);
+    addLabel(g,125,245,"ACTION MAN",{anchor:"start",fontSize:11,bg:"#fde68a",padX:7,padY:4});
+    addLeader(g,100,85,28,48);
+    addLabel(g,108,88,"CORNER MAN",{anchor:"start",fontSize:11,bg:"#ffffff",padX:7,padY:4});
+    setSlideNotes([
+      {title:"SPOTS — NOT NUMBERS", lines:["The three roles are defined by location, not jersey number."], accent:true},
+      {title:"In This Example", lines:["4 = Slot • 3 = Action Man • 2 = Corner Man."]},
+      {title:"Interchangeable", lines:["As the offense rotates, different players will occupy these roles."]}
+    ]);
+  }
+  else if(step===57){
+    addPass(g,350,275,205,285);
+    addLabel(g,126,245,"ACTION MAN = TRIGGER",{anchor:"start",fontSize:11,bg:"#fde68a",padX:7,padY:4});
+    addLeader(g,122,255,82,220);
+    addBottomBox(g,145,382,335,"BUILD EVERY 3 MAN ACTION FROM HERE",["Ball reaches the slot → Action Man triggers the action.","Corner man reacts as part of the same 3-player package."],82,220,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"THE TRIGGER", lines:["Once the ball reaches the ball-side slot, the Action Man becomes the trigger."], accent:true},
+      {title:"Three Players Work Together", lines:["Slot + Action Man + Corner Man are one connected action."]},
+      {title:"Weak Side", lines:["The other two players maintain spacing while the 3 Man action develops."]}
+    ]);
+  }
 }
 function render(){
  const s=steps[step], P=pos[s[2]];
@@ -1024,7 +1070,7 @@ function render(){
  document.getElementById("ball").setAttribute("cx",b[0]+18);
  document.getElementById("ball").setAttribute("cy",b[1]-14);
  document.getElementById("title").textContent=s[0];
- document.getElementById("sectionName").textContent = step <= 19 ? "SECTION 1 · BASE MOTION" : (step <= 28 ? "SECTION 2 · PRESSURE RELEASE" : (step <= 44 ? "SECTION 3 · 2 MAN" : "UPDATE FOR GAMES ON 10/30 AND BEYOND"));
+ document.getElementById("sectionName").textContent = step <= 19 ? "SECTION 1 · BASE MOTION" : (step <= 28 ? "SECTION 2 · PRESSURE RELEASE" : (step <= 44 ? "SECTION 3 · 2 MAN" : (step <= 54 ? "UPDATE FOR GAMES ON 10/30 AND BEYOND" : "SECTION 4 · 3 MAN ACTIONS")));
  document.getElementById("lesson").innerHTML=s[1]+
    (step==0?'<div class="rule"><b>STARTING SPACING:</b> All five players begin outside the 3-point line. Corner players are deep in the corners.</div>':
     step==1?'<div class="rule"><b>RULE #1:</b> Get the ball to the slot.</div>':
@@ -1080,7 +1126,10 @@ function render(){
      51:'<div class="rule"><b>NEXT AUTOMATIC ACTION:</b> If nothing is open after the first left rotation, get the ball to 1 in the right slot, clear the side, and prepare a <b>RIGHT-SIDE GET</b>.</div>',
      52:'<div class="rule"><b>RIGHT-SIDE GET:</b> 2 raises from the deep corner and catches <b>about two steps inside the arc near the right elbow</b>.</div>',
      53:'<div class="rule"><b>GET TIMING:</b> 1 passes, then <b>SPRINTS OUTSIDE</b> of 2 and gets the ball right back.</div>',
-     54:'<div class="rule"><b>FINISH:</b> 1 attacks on a <b>45° angle</b>. New flow: <b>WHEEL FIRST → LEFT ROTATION → RIGHT-SIDE GET.</b></div>'
+     54:'<div class="rule"><b>FINISH:</b> 1 attacks on a <b>45° angle</b>. New flow: <b>WHEEL FIRST → LEFT ROTATION → RIGHT-SIDE GET.</b></div>',
+     55:'<div class="rule"><b>3 MAN SPACING:</b> <b>Ball-side Slot + Action Man on the Wing + Deep Corner.</b> The other two players stay spaced weak side.</div>',
+     56:'<div class="rule"><b>THREE ROLES:</b> The roles belong to the <b>spots</b>, not specific players. Any player can become Slot, Action Man, or Corner Man.</div>',
+     57:'<div class="rule"><b>TRIGGER:</b> Once the ball reaches the ball-side slot, the <b>Action Man on the wing triggers the 3 Man action.</b></div>'
    };
    document.getElementById("lesson").innerHTML += (rules[step]||'');
  }
@@ -1160,6 +1209,7 @@ function restartAndPlay(){
 function next(){pauseSlides(false);step=Math.min(steps.length-1,step+1);render()}
 function prev(){pauseSlides(false);step=Math.max(0,step-1);render()}
 function jumpToTwoMan(){pauseSlides(false);if(mode!=="watch") setMode("watch");step=29;render()}
+function jumpToThreeMan(){pauseSlides(false);if(mode!=="watch") setMode("watch");step=55;render()}
 function jumpToGameUpdate(){pauseSlides(false);if(mode!=="watch") setMode("watch");step=45;render()}
 function resetAll(){pauseSlides(false);step=0;render()}
 function setMode(m){pauseSlides(false);mode=m;["watch","job","quiz"].forEach(x=>document.getElementById(x+"Tab").classList.toggle("active",x==m));document.getElementById("jobPicker").style.display=m=="job"?"block":"none";document.getElementById("quiz").style.display=m=="quiz"?"block":"none";document.getElementById("twoManChoice").style.display="none";if(m=="quiz"&&!quizOrder.length) makeQuiz(true);highlight();updatePlayUI(false)}
