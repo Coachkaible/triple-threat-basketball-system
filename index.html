@@ -281,7 +281,16 @@ threeUpScreen:{1:[350,275],2:[28,48],3:[150,250],4:[205,285],5:[472,48]},
 threeUpUseScreen:{1:[350,275],2:[28,48],3:[150,250],4:[78,225],5:[472,48]},
 threeUpClear:{1:[350,275],2:[28,48],3:[472,48],4:[140,205],5:[418,220]},
 threeUpCornerDho:{1:[350,275],2:[100,185],3:[472,48],4:[135,205],5:[418,220]},
-threeUpCornerBackdoor:{1:[350,275],2:[250,105],3:[472,48],4:[125,185],5:[418,220]}
+threeUpCornerBackdoor:{1:[350,275],2:[250,105],3:[472,48],4:[125,185],5:[418,220]},
+
+// 3 MAN ACTION #3 — PUNCH
+// Action Man sells the normal cut, reaches the opposite block, then punches back to the rim.
+// Corner man raises to wing and makes the post entry.
+threePunchSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
+threePunchSellCut:{1:[350,275],2:[28,48],3:[250,105],4:[205,285],5:[472,48]},
+threePunchOppBlock:{1:[350,275],2:[72,220],3:[355,110],4:[205,285],5:[418,220]},
+threePunchReturn:{1:[350,275],2:[72,220],3:[285,95],4:[205,285],5:[418,220]},
+threePunchEntry:{1:[350,275],2:[72,220],3:[285,95],4:[205,285],5:[418,220]}
 };
 const steps=[
 
@@ -365,7 +374,13 @@ const steps=[
 ["UP — Slot MUST Use the Screen","On UP, the ball-side slot dribbles off the Action Man's screen. If the slot refuses the screen, the action has no purpose. The ballhandler should turn the corner with intent and begin the drive.","threeUpUseScreen",4],
 ["UP — Action Man Cuts Through After Screening","After setting the ball screen, the Action Man continues through to the opposite deep corner just like normal. The weak-side player raises to maintain spacing while the slot attacks.","threeUpClear",4],
 ["UP — Corner Read #1: Raise for DHO","As the original ballhandler comes off the UP screen, the corner man may raise toward the wing/elbow area to receive a dribble handoff from the original ballhandler. This gives the offense a second action without stopping the drive.","threeUpCornerDho",4],
-["UP — Corner Read #2: Hard Backdoor","Instead of raising for the DHO, the corner man can make a hard backdoor cut. The purpose is both to threaten the rim and to clear the corner/side so the original ballhandler has more space to continue the drive.","threeUpCornerBackdoor",4]
+["UP — Corner Read #2: Hard Backdoor","Instead of raising for the DHO, the corner man can make a hard backdoor cut. The purpose is both to threaten the rim and to clear the corner/side so the original ballhandler has more space to continue the drive.","threeUpCornerBackdoor",4],
+
+["3 Man Action #3 — PUNCH","PUNCH starts by looking exactly like the Action Man's normal cut through. The Action Man sells the usual movement toward the far corner so the defense relaxes and turns its attention away from the rim.","threePunchSetup",4],
+["PUNCH — Sell the Normal Cut","The Action Man begins the normal cut across the lane as if he is simply continuing through to the opposite deep corner. The key is to make the first part of the movement look completely normal.","threePunchSellCut",4],
+["PUNCH — Reach the Opposite Block","Instead of finishing all the way to the far corner, the Action Man reaches the opposite block. At the same time, the original corner man raises up to the wing to become the passer.","threePunchOppBlock",4],
+["PUNCH — Sprint Back to the Basket","Once the Action Man reaches the opposite block, he immediately changes direction and sprints back toward the basket. This is the punch back: a sudden return to the rim after selling the normal cut through.","threePunchReturn",4],
+["PUNCH — Wing Entry to the Low Post","The corner man, now raised to the wing, makes the entry pass to the Action Man near the low post/rim. The goal is a quick layup first. If the layup is not there, the Action Man can finish with a quick post move before the defense recovers.","threePunchEntry",3]
 ];
 let step=0,mode="watch",chosen=null;
 function move(id,xy){document.getElementById(id).setAttribute("transform",`translate(${xy[0]} ${xy[1]})`)}
@@ -1216,6 +1231,54 @@ function drawAnnotations(){
       {title:"Commit to the Cut", lines:["This must be a hard cut — not a slow drift through the lane."]}
     ]);
   }
+  else if(step===70){
+    addLabel(g,118,248,"PUNCH",{anchor:"middle",fontSize:13,bg:"#fde68a",padX:9,padY:5});
+    addBottomBox(g,145,382,335,"3 MAN ACTION #3 — PUNCH",["Sell the normal cut through first.","Opposite block → sprint back to the rim."],82,220,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"PUNCH", lines:["Make it look like the normal Action Man cut through."], accent:true},
+      {title:"The Deception", lines:["The defense should believe the Action Man is simply clearing to the far corner."]},
+      {title:"The Finish", lines:["Reach the opposite block, then explode back to the basket."]}
+    ]);
+  }
+  else if(step===71){
+    addCurveMove(g,82,220,160,130,250,105);
+    addLabel(g,145,122,"SELL NORMAL CUT",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"SELL IT", lines:["Start exactly like the normal cut through."], accent:true},
+      {title:"No Early Tell", lines:["Do not slow down or turn your body toward the ball too soon."]},
+      {title:"Goal", lines:["Make the defender believe you are clearing to the far corner."]}
+    ]);
+  }
+  else if(step===72){
+    addCurveMove(g,250,105,315,100,355,110);
+    addMove(g,28,48,72,220);
+    addLabel(g,355,140,"OPPOSITE BLOCK",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    addLabel(g,82,252,"CORNER RAISES TO WING",{anchor:"middle",fontSize:9.5,bg:"#ffffff",padX:6,padY:4});
+    setSlideNotes([
+      {title:"REACH THE BLOCK", lines:["The Action Man gets all the way to the opposite block before changing direction."], accent:true},
+      {title:"Corner Raises", lines:["The corner man lifts to the wing and becomes the entry passer."]},
+      {title:"Timing", lines:["The pass should not be early — wait for the punch back toward the rim."]}
+    ]);
+  }
+  else if(step===73){
+    addCurveMove(g,355,110,330,95,285,95);
+    addLabel(g,330,70,"PUNCH BACK",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"SPRINT BACK TO THE RIM", lines:["At the opposite block, plant and explode back toward the basket."], accent:true},
+      {title:"Sudden Change", lines:["The value of PUNCH is the sharp change of direction after selling the clear-out."]},
+      {title:"Be Ready to Catch", lines:["Show a target and expect the ball immediately."]}
+    ]);
+  }
+  else if(step===74){
+    addPass(g,72,220,285,95);
+    addLabel(g,165,175,"LOW-POST ENTRY",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    addBottomBox(g,145,382,335,"FINISH QUICKLY",["1) QUICK LAYUP  →  2) QUICK POST MOVE","Do not hold the ball and let the defense recover."],285,95,{titleSize:11,lineSize:9.5});
+    setSlideNotes([
+      {title:"WING ENTRY", lines:["The raised corner man makes the pass into the Action Man near the low post."], accent:true},
+      {title:"First Look", lines:["Quick layup if the rim is available."]},
+      {title:"Second Look", lines:["If not, go immediately to a simple post move before help recovers."]}
+    ]);
+  }
 }
 function render(){
  const s=steps[step], P=pos[s[2]];
@@ -1296,7 +1359,12 @@ function render(){
      66:'<div class="rule"><b>NON-NEGOTIABLE:</b> On UP, the slot <b>MUST DRIBBLE OFF THE OUTSIDE OF THE SCREEN — TO THE SCREENER\'S LEFT</b>.</div>',
      67:'<div class="rule"><b>AFTER SCREENING:</b> Action Man continues through to the opposite deep corner while the slot attacks.</div>',
      68:'<div class="rule"><b>CORNER READ #1:</b> Raise for a <b>DHO</b> from the original ballhandler.</div>',
-     69:'<div class="rule"><b>CORNER READ #2:</b> Hard backdoor cut to threaten the rim and <b>clear space for the drive</b>.</div>'
+     69:'<div class="rule"><b>CORNER READ #2:</b> Hard backdoor cut to threaten the rim and <b>clear space for the drive</b>.</div>',
+     70:'<div class="rule"><b>PUNCH:</b> Sell the normal Action Man cut through, reach the <b>opposite block</b>, then sprint back to the basket.</div>',
+     71:'<div class="rule"><b>SELL THE CUT:</b> The first part of PUNCH should look exactly like the normal clear-through.</div>',
+     72:'<div class="rule"><b>TIMING:</b> Action Man reaches the opposite block while the corner man <b>raises to the wing</b>.</div>',
+     73:'<div class="rule"><b>PUNCH BACK:</b> Plant at the opposite block and sprint back toward the rim.</div>',
+     74:'<div class="rule"><b>ENTRY:</b> Wing passer feeds the low post. Look for <b>quick layup first, quick post move second</b>.</div>'
    };
    document.getElementById("lesson").innerHTML += (rules[step]||'');
  }
