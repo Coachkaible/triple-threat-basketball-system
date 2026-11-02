@@ -263,7 +263,15 @@ gameUpdateRightGetAttack:{1:[310,120],2:[350,185],3:[82,220],4:[205,285],5:[28,4
 // Base 3-man side: ball-side slot + Action Man on the wing + corner man.
 threeManSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
 threeManRoles:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
-threeManTrigger:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]}
+threeManTrigger:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
+
+// 3 MAN ACTION #1 — DOWN
+threeDownSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
+threeDownScreen:{1:[350,275],2:[28,48],3:[50,105],4:[205,285],5:[472,48]},
+threeDownCornerRaise:{1:[350,275],2:[72,220],3:[50,105],4:[205,285],5:[472,48]},
+threeDownClear:{1:[350,275],2:[72,220],3:[472,48],4:[205,285],5:[418,220]},
+threeDownWingCatch:{1:[350,275],2:[72,220],3:[472,48],4:[205,285],5:[418,220]},
+threeDownTwoMan:{1:[350,275],2:[72,220],3:[472,48],4:[135,172],5:[418,220]}
 };
 const steps=[
 
@@ -333,7 +341,14 @@ const steps=[
 
 ["SECTION 4 — 3 Man Actions","This section introduces our 3 Man actions. Every 3 Man action starts with the same three-player structure on the ball side: the BALL-SIDE SLOT has the ball, the ACTION MAN starts on the wing, and the CORNER MAN is spaced in the deep corner. The other two players stay spaced on the weak side.","threeManSetup",4],
 ["3 Man — Know the Three Roles","The three players involved are defined by their spots, not by their jersey numbers. In this example: 4 is the BALL-SIDE SLOT, 3 is the ACTION MAN on the wing, and 2 is the CORNER MAN. Because our spots are interchangeable, any three players can become these three roles during the possession.","threeManRoles",4],
-["3 Man — Action Man Is the Trigger","The Action Man is the key to the 3 Man package. Once the ball reaches the ball-side slot, the Action Man on the wing becomes the trigger for the action. The slot, Action Man, and corner man will work together while the two weak-side players maintain spacing. We will build the individual 3 Man actions from this exact picture.","threeManTrigger",4]
+["3 Man — Action Man Is the Trigger","The Action Man is the key to the 3 Man package. Once the ball reaches the ball-side slot, the Action Man on the wing becomes the trigger for the action. The slot, Action Man, and corner man will work together while the two weak-side players maintain spacing. We will build the individual 3 Man actions from this exact picture.","threeManTrigger",4],
+
+["3 Man Action #1 — DOWN","DOWN is our first 3 Man action. Instead of immediately cutting through, the Action Man first screens DOWN for the corner man. The purpose is to give the corner man separation before the wing catch. After setting the screen, the Action Man continues through to the opposite deep corner just like normal.","threeDownSetup",4],
+["DOWN — Action Man Screens Down","On the DOWN call, the Action Man turns and screens down for the corner man. The screen happens before the Action Man begins the normal cut-through. This gives the corner player a chance to shake free from the defender before receiving the ball.","threeDownScreen",4],
+["DOWN — Corner Man Raises Off the Screen","The corner man comes off the down screen tight and raises to the true wing outside the 3-point line. The goal is to arrive at the wing already holding a slight advantage because the defender had to fight through or around the screen.","threeDownCornerRaise",4],
+["DOWN — Action Man Continues Through","After setting the down screen, the Action Man does not stop or stand. The Action Man continues the normal cut-through all the way to the opposite deep corner. The weak-side corner player raises to maintain spacing, just as in our normal flow.","threeDownClear",4],
+["DOWN — Wing Catch With an Advantage","The ball-side slot passes to the corner man arriving on the wing. Because the corner man used the down screen first, the catch should happen with more separation and a better chance to attack immediately.","threeDownWingCatch",2],
+["DOWN — Flow Into Normal 2 Man","After the wing catch, nothing changes in our 2 Man package. The slot gets lower and follows into the same low-angle ball screen. The ballhandler still reads: 1) own score, 2) LOOK BACK TO THE ROLLER, 3) weak side. DOWN only creates the advantage before the normal 2 Man action begins.","threeDownTwoMan",2]
 ];
 let step=0,mode="watch",chosen=null;
 function move(id,xy){document.getElementById(id).setAttribute("transform",`translate(${xy[0]} ${xy[1]})`)}
@@ -1061,6 +1076,66 @@ function drawAnnotations(){
       {title:"Weak Side", lines:["The other two players maintain spacing while the 3 Man action develops."]}
     ]);
   }
+  else if(step===58){
+    addLabel(g,118,248,"DOWN",{anchor:"middle",fontSize:13,bg:"#fde68a",padX:9,padY:5});
+    addBottomBox(g,145,382,335,"3 MAN ACTION #1 — DOWN",["Action Man screens DOWN for the corner man first.","Then the Action Man continues through like normal."],82,220,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"DOWN", lines:["The Action Man adds one thing before the normal cut-through: a down screen for the corner man."], accent:true},
+      {title:"Purpose", lines:["Create separation for the corner man BEFORE the wing catch."]},
+      {title:"After the Screen", lines:["The Action Man still continues through to the opposite deep corner."]}
+    ]);
+  }
+  else if(step===59){
+    addMove(g,82,220,50,105);
+    addScreen(g,50,105,0);
+    addLabel(g,100,130,"SCREEN DOWN",{anchor:"start",fontSize:11,bg:"#fde68a",padX:7,padY:4});
+    setSlideNotes([
+      {title:"ACTION MAN SCREENS", lines:["On DOWN, the Action Man screens for the corner man before cutting through."], accent:true},
+      {title:"Screen Location", lines:["Get low enough to make the corner defender work through or around the screen."]},
+      {title:"Do Not Drift", lines:["Set the screen with purpose, then immediately continue the action."]}
+    ]);
+  }
+  else if(step===60){
+    addScreen(g,50,105,0);
+    addCurveMove(g,28,48,42,130,72,220);
+    addLabel(g,98,184,"COME OFF TIGHT",{anchor:"start",fontSize:11,bg:"#fde68a",padX:7,padY:4});
+    setSlideNotes([
+      {title:"CORNER MAN USES IT", lines:["Come off the down screen tight and raise to the true wing outside the arc."], accent:true},
+      {title:"The Advantage", lines:["The defender has already had to navigate the screen before the catch."]},
+      {title:"Catch Ready", lines:["Arrive on the wing balanced and ready to attack immediately."]}
+    ]);
+  }
+  else if(step===61){
+    addCurveMove(g,50,105,250,85,472,48);
+    addMove(g,472,48,418,220);
+    addLabel(g,275,78,"ACTION MAN CONTINUES THROUGH",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"SCREEN → CUT THROUGH", lines:["After setting the screen, the Action Man continues all the way to the opposite deep corner."], accent:true},
+      {title:"Normal Flow", lines:["This is the same final destination as the normal Action Man cut."]},
+      {title:"Weak Side Fills", lines:["The weak-side corner raises to keep the floor balanced."]}
+    ]);
+  }
+  else if(step===62){
+    addPass(g,205,285,72,220);
+    addLabel(g,82,252,"CATCH WITH ADVANTAGE",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"WING CATCH", lines:["The slot delivers the pass to the player arriving on the wing."], accent:true},
+      {title:"Why DOWN Helps", lines:["The receiver should have a small separation advantage before the ball even arrives."]},
+      {title:"Attack the Advantage", lines:["Catch ready to shoot, drive, or flow immediately into 2 Man."]}
+    ]);
+  }
+  else if(step===63){
+    addPass(g,205,285,72,220);
+    addCurveMove(g,205,285,165,225,135,172);
+    addScreen(g,135,172,58);
+    addDribble(g,72,220,145,190,210,150);
+    addBottomBox(g,145,382,335,"ALL ORIGINAL 2 MAN OPTIONS REMAIN",["1) OWN SCORE  →  2) LOOK BACK TO ROLLER  →  3) WEAK SIDE","DOWN only creates the advantage before the 2 Man action starts."],210,150,{titleSize:11,lineSize:9.5});
+    setSlideNotes([
+      {title:"NORMAL 2 MAN FROM HERE", lines:["After the wing catch, use the same low-angle screen and the same reads."], accent:true},
+      {title:"Read Order", lines:["1) Own score","2) LOOK BACK TO THE ROLLER","3) Weak side"]},
+      {title:"What Changed?", lines:["Only the setup: DOWN creates separation before the catch. Everything after that stays the same."]}
+    ]);
+  }
 }
 function render(){
  const s=steps[step], P=pos[s[2]];
@@ -1129,7 +1204,13 @@ function render(){
      54:'<div class="rule"><b>FINISH:</b> 1 attacks on a <b>45° angle</b>. New flow: <b>WHEEL FIRST → LEFT ROTATION → RIGHT-SIDE GET.</b></div>',
      55:'<div class="rule"><b>3 MAN SPACING:</b> <b>Ball-side Slot + Action Man on the Wing + Deep Corner.</b> The other two players stay spaced weak side.</div>',
      56:'<div class="rule"><b>THREE ROLES:</b> The roles belong to the <b>spots</b>, not specific players. Any player can become Slot, Action Man, or Corner Man.</div>',
-     57:'<div class="rule"><b>TRIGGER:</b> Once the ball reaches the ball-side slot, the <b>Action Man on the wing triggers the 3 Man action.</b></div>'
+     57:'<div class="rule"><b>TRIGGER:</b> Once the ball reaches the ball-side slot, the <b>Action Man on the wing triggers the 3 Man action.</b></div>',
+     58:'<div class="rule"><b>DOWN:</b> Action Man screens down for the corner man <b>before</b> continuing through to the opposite corner.</div>',
+     59:'<div class="rule"><b>SCREEN FIRST:</b> On DOWN, the Action Man becomes the screener before beginning the normal cut-through.</div>',
+     60:'<div class="rule"><b>CORNER MAN:</b> Come off the screen tight and raise to the <b>true wing outside the 3-point line</b>.</div>',
+     61:'<div class="rule"><b>KEEP FLOWING:</b> After the screen, the Action Man continues through to the opposite deep corner just like normal.</div>',
+     62:'<div class="rule"><b>THE ADVANTAGE:</b> The corner man should catch on the wing with separation already created by the down screen.</div>',
+     63:'<div class="rule"><b>2 MAN STAYS THE SAME:</b> After the catch, all original options remain: <b>own score → roller → weak side.</b></div>'
    };
    document.getElementById("lesson").innerHTML += (rules[step]||'');
  }
