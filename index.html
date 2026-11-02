@@ -271,7 +271,17 @@ threeDownScreen:{1:[350,275],2:[28,48],3:[50,105],4:[205,285],5:[472,48]},
 threeDownCornerRaise:{1:[350,275],2:[72,220],3:[50,105],4:[205,285],5:[472,48]},
 threeDownClear:{1:[350,275],2:[72,220],3:[472,48],4:[205,285],5:[418,220]},
 threeDownWingCatch:{1:[350,275],2:[72,220],3:[472,48],4:[205,285],5:[418,220]},
-threeDownTwoMan:{1:[350,275],2:[72,220],3:[472,48],4:[135,172],5:[418,220]}
+threeDownTwoMan:{1:[350,275],2:[72,220],3:[472,48],4:[135,172],5:[418,220]},
+
+// 3 MAN ACTION #2 — UP
+// Action Man screens UP for the slot as a ball screen, then cuts through.
+// Slot MUST use the screen and dribble off it.
+threeUpSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
+threeUpScreen:{1:[350,275],2:[28,48],3:[150,250],4:[205,285],5:[472,48]},
+threeUpUseScreen:{1:[350,275],2:[28,48],3:[150,250],4:[140,205],5:[472,48]},
+threeUpClear:{1:[350,275],2:[28,48],3:[472,48],4:[140,205],5:[418,220]},
+threeUpCornerDho:{1:[350,275],2:[100,185],3:[472,48],4:[135,205],5:[418,220]},
+threeUpCornerBackdoor:{1:[350,275],2:[250,105],3:[472,48],4:[125,185],5:[418,220]}
 };
 const steps=[
 
@@ -348,7 +358,14 @@ const steps=[
 ["DOWN — Corner Man Raises Off the Screen","The corner man comes off the down screen tight and raises to the true wing outside the 3-point line. The goal is to arrive at the wing already holding a slight advantage because the defender had to fight through or around the screen.","threeDownCornerRaise",4],
 ["DOWN — Action Man Continues Through","After setting the down screen, the Action Man does not stop or stand. The Action Man continues the normal cut-through all the way to the opposite deep corner. The weak-side corner player raises to maintain spacing, just as in our normal flow.","threeDownClear",4],
 ["DOWN — Wing Catch With an Advantage","The ball-side slot passes to the corner man arriving on the wing. Because the corner man used the down screen first, the catch should happen with more separation and a better chance to attack immediately.","threeDownWingCatch",2],
-["DOWN — Flow Into Normal 2 Man","After the wing catch, nothing changes in our 2 Man package. The slot gets lower and follows into the same low-angle ball screen. The ballhandler still reads: 1) own score, 2) LOOK BACK TO THE ROLLER, 3) weak side. DOWN only creates the advantage before the normal 2 Man action begins.","threeDownTwoMan",2]
+["DOWN — Flow Into Normal 2 Man","After the wing catch, nothing changes in our 2 Man package. The slot gets lower and follows into the same low-angle ball screen. The ballhandler still reads: 1) own score, 2) LOOK BACK TO THE ROLLER, 3) weak side. DOWN only creates the advantage before the normal 2 Man action begins.","threeDownTwoMan",2],
+
+["3 Man Action #2 — UP","UP is a 3 Man action where the Action Man screens UP for the ball-side slot as a ball screen before continuing through to the opposite deep corner. The screen only makes sense if the slot actually uses it, so on UP the slot MUST dribble off the screen.","threeUpSetup",4],
+["UP — Action Man Screens Up for the Slot","The Action Man turns toward the slot and sets a ball screen UP for the ballhandler. This is not a decoy screen. The slot is required to use it and attack off it.","threeUpScreen",4],
+["UP — Slot MUST Use the Screen","On UP, the ball-side slot dribbles off the Action Man's screen. If the slot refuses the screen, the action has no purpose. The ballhandler should turn the corner with intent and begin the drive.","threeUpUseScreen",4],
+["UP — Action Man Cuts Through After Screening","After setting the ball screen, the Action Man continues through to the opposite deep corner just like normal. The weak-side player raises to maintain spacing while the slot attacks.","threeUpClear",4],
+["UP — Corner Read #1: Raise for DHO","As the original ballhandler comes off the UP screen, the corner man may raise toward the wing/elbow area to receive a dribble handoff from the original ballhandler. This gives the offense a second action without stopping the drive.","threeUpCornerDho",4],
+["UP — Corner Read #2: Hard Backdoor","Instead of raising for the DHO, the corner man can make a hard backdoor cut. The purpose is both to threaten the rim and to clear the corner/side so the original ballhandler has more space to continue the drive.","threeUpCornerBackdoor",4]
 ];
 let step=0,mode="watch",chosen=null;
 function move(id,xy){document.getElementById(id).setAttribute("transform",`translate(${xy[0]} ${xy[1]})`)}
@@ -1137,6 +1154,68 @@ function drawAnnotations(){
       {title:"What Changed?", lines:["Only the setup: DOWN creates separation before the catch. Everything after that stays the same."]}
     ]);
   }
+  else if(step===64){
+    addLabel(g,118,248,"UP",{anchor:"middle",fontSize:13,bg:"#fde68a",padX:9,padY:5});
+    addBottomBox(g,145,382,335,"3 MAN ACTION #2 — UP",["Action Man screens UP for the slot as a BALL SCREEN.","The slot MUST use the screen and dribble off it."],205,285,{titleSize:12,lineSize:10});
+    setSlideNotes([
+      {title:"UP", lines:["Action Man screens UP for the ball-side slot before cutting through."], accent:true},
+      {title:"Non-Negotiable", lines:["The slot MUST use the screen. Otherwise there is no reason to set it."]},
+      {title:"Next Layer", lines:["After the drive begins, the corner reacts: DHO raise or hard backdoor."]}
+    ]);
+  }
+  else if(step===65){
+    addMove(g,82,220,150,250);
+    addScreen(g,150,250,62);
+    addLabel(g,108,286,"BALL SCREEN UP",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"ACTION MAN SCREENS UP", lines:["Turn toward the slot and set a real ball screen for the ballhandler."], accent:true},
+      {title:"Screen With Purpose", lines:["This screen is designed to create a driving advantage immediately."]},
+      {title:"Slot's Responsibility", lines:["Be ready to use it — UP requires the dribble off the screen."]}
+    ]);
+  }
+  else if(step===66){
+    addScreen(g,150,250,62);
+    addDribble(g,205,285,170,240,140,205);
+    addLabel(g,235,235,"MUST USE SCREEN",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"SLOT MUST USE IT", lines:["On UP, the slot dribbles off the Action Man's ball screen."], accent:true},
+      {title:"Why", lines:["If the ballhandler does not use the screen, the action makes no sense."]},
+      {title:"Attack", lines:["Turn the corner with intent and begin the drive."]}
+    ]);
+  }
+  else if(step===67){
+    addCurveMove(g,150,250,285,120,472,48);
+    addMove(g,472,48,418,220);
+    addDribble(g,205,285,165,230,140,205);
+    addLabel(g,304,100,"ACTION MAN CUTS THROUGH",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"SCREEN → CUT THROUGH", lines:["After setting the ball screen, the Action Man continues to the opposite deep corner."], accent:true},
+      {title:"Ballhandler Keeps Going", lines:["The slot is already attacking off the screen."]},
+      {title:"Weak Side", lines:["The weak-side player raises to keep the floor spaced."]}
+    ]);
+  }
+  else if(step===68){
+    addDribble(g,205,285,170,235,135,205);
+    addMove(g,28,48,100,185);
+    addDHO(g,112,190);
+    addLabel(g,132,176,"CORNER RAISES FOR DHO",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"CORNER READ #1 — DHO", lines:["The corner man can raise into the path of the original ballhandler for a dribble handoff."], accent:true},
+      {title:"Keep the Advantage Moving", lines:["The DHO gives us a second action without stopping the drive."]},
+      {title:"Original Ballhandler", lines:["Deliver the handoff cleanly and keep spacing after the exchange."]}
+    ]);
+  }
+  else if(step===69){
+    addDribble(g,205,285,165,225,125,185);
+    addCurveMove(g,28,48,135,105,250,105);
+    addLabel(g,250,135,"HARD BACKDOOR",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    addBottomBox(g,155,382,325,"CORNER READ #2",["Hard backdoor = scoring threat + clears space for the drive.","Make the cut with full speed and purpose."],250,105,{titleSize:11,lineSize:9.5});
+    setSlideNotes([
+      {title:"CORNER READ #2 — BACKDOOR", lines:["The corner man can hard backdoor instead of raising for the DHO."], accent:true},
+      {title:"Two Purposes", lines:["1) Threaten the rim","2) Clear the side for the slot's drive"]},
+      {title:"Commit to the Cut", lines:["This must be a hard cut — not a slow drift through the lane."]}
+    ]);
+  }
 }
 function render(){
  const s=steps[step], P=pos[s[2]];
@@ -1211,7 +1290,13 @@ function render(){
      60:'<div class="rule"><b>CORNER MAN:</b> Come off the screen tight and raise to the <b>true wing outside the 3-point line</b>.</div>',
      61:'<div class="rule"><b>KEEP FLOWING:</b> After the screen, the Action Man continues through to the opposite deep corner just like normal.</div>',
      62:'<div class="rule"><b>THE ADVANTAGE:</b> The corner man should catch on the wing with separation already created by the down screen.</div>',
-     63:'<div class="rule"><b>2 MAN STAYS THE SAME:</b> After the catch, all original options remain: <b>own score → roller → weak side.</b></div>'
+     63:'<div class="rule"><b>2 MAN STAYS THE SAME:</b> After the catch, all original options remain: <b>own score → roller → weak side.</b></div>',
+     64:'<div class="rule"><b>UP:</b> Action Man screens UP for the slot as a <b>ball screen</b>, then cuts through to the opposite corner.</div>',
+     65:'<div class="rule"><b>REAL BALL SCREEN:</b> UP is not a fake action. The screen is there to create a driving advantage for the slot.</div>',
+     66:'<div class="rule"><b>NON-NEGOTIABLE:</b> On UP, the slot <b>MUST DRIBBLE OFF THE SCREEN</b>.</div>',
+     67:'<div class="rule"><b>AFTER SCREENING:</b> Action Man continues through to the opposite deep corner while the slot attacks.</div>',
+     68:'<div class="rule"><b>CORNER READ #1:</b> Raise for a <b>DHO</b> from the original ballhandler.</div>',
+     69:'<div class="rule"><b>CORNER READ #2:</b> Hard backdoor cut to threaten the rim and <b>clear space for the drive</b>.</div>'
    };
    document.getElementById("lesson").innerHTML += (rules[step]||'');
  }
