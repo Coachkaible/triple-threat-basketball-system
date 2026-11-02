@@ -278,7 +278,7 @@ threeDownTwoMan:{1:[350,275],2:[72,220],3:[472,48],4:[135,172],5:[418,220]},
 // Slot MUST use the screen and dribble off it.
 threeUpSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
 threeUpScreen:{1:[350,275],2:[28,48],3:[150,250],4:[205,285],5:[472,48]},
-threeUpUseScreen:{1:[350,275],2:[28,48],3:[150,250],4:[140,205],5:[472,48]},
+threeUpUseScreen:{1:[350,275],2:[28,48],3:[150,250],4:[110,205],5:[472,48]},
 threeUpClear:{1:[350,275],2:[28,48],3:[472,48],4:[140,205],5:[418,220]},
 threeUpCornerDho:{1:[350,275],2:[100,185],3:[472,48],4:[135,205],5:[418,220]},
 threeUpCornerBackdoor:{1:[350,275],2:[250,105],3:[472,48],4:[125,185],5:[418,220]}
@@ -1175,11 +1175,11 @@ function drawAnnotations(){
   }
   else if(step===66){
     addScreen(g,150,250,62);
-    addDribble(g,205,285,170,240,140,205);
-    addLabel(g,235,235,"MUST USE SCREEN",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    addDribble(g,205,285,150,238,110,205);
+    addLabel(g,215,225,"USE OUTSIDE — LEFT OF SCREENER",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
-      {title:"SLOT MUST USE IT", lines:["On UP, the slot dribbles off the Action Man's ball screen."], accent:true},
-      {title:"Why", lines:["If the ballhandler does not use the screen, the action makes no sense."]},
+      {title:"SLOT MUST USE IT", lines:["On UP, the slot dribbles off the OUTSIDE of the Action Man's ball screen."], accent:true},
+      {title:"Direction", lines:["Ballhandler goes to the screener's LEFT — not to the right."]},
       {title:"Attack", lines:["Turn the corner with intent and begin the drive."]}
     ]);
   }
@@ -1293,7 +1293,7 @@ function render(){
      63:'<div class="rule"><b>2 MAN STAYS THE SAME:</b> After the catch, all original options remain: <b>own score → roller → weak side.</b></div>',
      64:'<div class="rule"><b>UP:</b> Action Man screens UP for the slot as a <b>ball screen</b>, then cuts through to the opposite corner.</div>',
      65:'<div class="rule"><b>REAL BALL SCREEN:</b> UP is not a fake action. The screen is there to create a driving advantage for the slot.</div>',
-     66:'<div class="rule"><b>NON-NEGOTIABLE:</b> On UP, the slot <b>MUST DRIBBLE OFF THE SCREEN</b>.</div>',
+     66:'<div class="rule"><b>NON-NEGOTIABLE:</b> On UP, the slot <b>MUST DRIBBLE OFF THE OUTSIDE OF THE SCREEN — TO THE SCREENER\'S LEFT</b>.</div>',
      67:'<div class="rule"><b>AFTER SCREENING:</b> Action Man continues through to the opposite deep corner while the slot attacks.</div>',
      68:'<div class="rule"><b>CORNER READ #1:</b> Raise for a <b>DHO</b> from the original ballhandler.</div>',
      69:'<div class="rule"><b>CORNER READ #2:</b> Hard backdoor cut to threaten the rim and <b>clear space for the drive</b>.</div>'
