@@ -379,7 +379,7 @@ const steps=[
 ["3 Man Action #3 — PUNCH","PUNCH starts by looking exactly like the Action Man's normal cut through. The Action Man sells the usual movement toward the far corner so the defense relaxes and turns its attention away from the rim.","threePunchSetup",4],
 ["PUNCH — Sell the Normal Cut","The Action Man begins the normal cut across the lane as if he is simply continuing through to the opposite deep corner. The key is to make the first part of the movement look completely normal.","threePunchSellCut",4],
 ["PUNCH — Reach the Opposite Block / 4 Passes to 2","Instead of finishing all the way to the far corner, the Action Man reaches the opposite block. At the same time, the original corner man raises to the wing and 4 passes the ball to 2. Now 2 is in position to make the short post entry when the Action Man punches back.","threePunchOppBlock",2],
-["PUNCH — Sprint Back to the Original Side","Once the Action Man reaches the opposite block, he immediately changes direction and sprints back across toward the original side of the basket. This keeps the post entry short and realistic while still selling the normal cut through first.","threePunchReturn",4],
+["PUNCH — Sprint Back to the Original Side","Once the Action Man reaches the opposite block, he immediately changes direction and sprints back across toward the original side of the basket. At this point, 2 already has the ball on the wing from the 4 → 2 pass and is waiting to make the short post entry.","threePunchReturn",2],
 ["PUNCH — Short Wing Entry to the Low Post","The corner man, now raised to the wing, makes a short entry pass to the Action Man after he punches back to the original side of the basket. The goal is a quick layup first. If the layup is not there, the Action Man can finish with a quick post move before the defense recovers.","threePunchEntry",3]
 ];
 let step=0,mode="watch",chosen=null;
@@ -1264,10 +1264,11 @@ function drawAnnotations(){
   else if(step===73){
     addCurveMove(g,355,110,285,90,205,105);
     addLabel(g,286,70,"PUNCH BACK TO ORIGINAL SIDE",{anchor:"middle",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    addLabel(g,82,252,"2 HAS THE BALL",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
-      {title:"SPRINT BACK TO THE ORIGINAL SIDE", lines:["At the opposite block, plant and explode back across toward the original side of the rim."], accent:true},
-      {title:"Shorter Entry", lines:["The return path brings the Action Man closer to the wing passer for a realistic post entry."]},
-      {title:"Be Ready to Catch", lines:["Show a target and expect the ball immediately."]}
+      {title:"2 HAS THE BALL", lines:["The 4 → 2 pass already happened on the previous step. 2 is now holding the ball on the wing."], accent:true},
+      {title:"SPRINT BACK TO THE ORIGINAL SIDE", lines:["At the opposite block, 3 plants and explodes back across toward the original side of the rim."]},
+      {title:"Next", lines:["2 is now in perfect position to make the short low-post entry."]}
     ]);
   }
   else if(step===74){
