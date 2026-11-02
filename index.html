@@ -289,8 +289,8 @@ threeUpCornerBackdoor:{1:[350,275],2:[250,105],3:[472,48],4:[125,185],5:[418,220
 threePunchSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
 threePunchSellCut:{1:[350,275],2:[28,48],3:[250,105],4:[205,285],5:[472,48]},
 threePunchOppBlock:{1:[350,275],2:[72,220],3:[355,110],4:[205,285],5:[418,220]},
-threePunchReturn:{1:[350,275],2:[72,220],3:[285,95],4:[205,285],5:[418,220]},
-threePunchEntry:{1:[350,275],2:[72,220],3:[285,95],4:[205,285],5:[418,220]}
+threePunchReturn:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
+threePunchEntry:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]}
 };
 const steps=[
 
@@ -379,8 +379,8 @@ const steps=[
 ["3 Man Action #3 — PUNCH","PUNCH starts by looking exactly like the Action Man's normal cut through. The Action Man sells the usual movement toward the far corner so the defense relaxes and turns its attention away from the rim.","threePunchSetup",4],
 ["PUNCH — Sell the Normal Cut","The Action Man begins the normal cut across the lane as if he is simply continuing through to the opposite deep corner. The key is to make the first part of the movement look completely normal.","threePunchSellCut",4],
 ["PUNCH — Reach the Opposite Block","Instead of finishing all the way to the far corner, the Action Man reaches the opposite block. At the same time, the original corner man raises up to the wing to become the passer.","threePunchOppBlock",4],
-["PUNCH — Sprint Back to the Basket","Once the Action Man reaches the opposite block, he immediately changes direction and sprints back toward the basket. This is the punch back: a sudden return to the rim after selling the normal cut through.","threePunchReturn",4],
-["PUNCH — Wing Entry to the Low Post","The corner man, now raised to the wing, makes the entry pass to the Action Man near the low post/rim. The goal is a quick layup first. If the layup is not there, the Action Man can finish with a quick post move before the defense recovers.","threePunchEntry",3]
+["PUNCH — Sprint Back to the Original Side","Once the Action Man reaches the opposite block, he immediately changes direction and sprints back across toward the original side of the basket. This keeps the post entry short and realistic while still selling the normal cut through first.","threePunchReturn",4],
+["PUNCH — Short Wing Entry to the Low Post","The corner man, now raised to the wing, makes a short entry pass to the Action Man after he punches back to the original side of the basket. The goal is a quick layup first. If the layup is not there, the Action Man can finish with a quick post move before the defense recovers.","threePunchEntry",3]
 ];
 let step=0,mode="watch",chosen=null;
 function move(id,xy){document.getElementById(id).setAttribute("transform",`translate(${xy[0]} ${xy[1]})`)}
@@ -1261,20 +1261,20 @@ function drawAnnotations(){
     ]);
   }
   else if(step===73){
-    addCurveMove(g,355,110,330,95,285,95);
-    addLabel(g,330,70,"PUNCH BACK",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    addCurveMove(g,355,110,285,90,205,105);
+    addLabel(g,286,70,"PUNCH BACK TO ORIGINAL SIDE",{anchor:"middle",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
-      {title:"SPRINT BACK TO THE RIM", lines:["At the opposite block, plant and explode back toward the basket."], accent:true},
-      {title:"Sudden Change", lines:["The value of PUNCH is the sharp change of direction after selling the clear-out."]},
+      {title:"SPRINT BACK TO THE ORIGINAL SIDE", lines:["At the opposite block, plant and explode back across toward the original side of the rim."], accent:true},
+      {title:"Shorter Entry", lines:["The return path brings the Action Man closer to the wing passer for a realistic post entry."]},
       {title:"Be Ready to Catch", lines:["Show a target and expect the ball immediately."]}
     ]);
   }
   else if(step===74){
-    addPass(g,72,220,285,95);
-    addLabel(g,165,175,"LOW-POST ENTRY",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
-    addBottomBox(g,145,382,335,"FINISH QUICKLY",["1) QUICK LAYUP  →  2) QUICK POST MOVE","Do not hold the ball and let the defense recover."],285,95,{titleSize:11,lineSize:9.5});
+    addPass(g,72,220,205,105);
+    addLabel(g,135,165,"SHORT LOW-POST ENTRY",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    addBottomBox(g,145,382,335,"FINISH QUICKLY",["1) QUICK LAYUP  →  2) QUICK POST MOVE","Punch back to the original side so the entry pass stays short."],205,105,{titleSize:11,lineSize:9.5});
     setSlideNotes([
-      {title:"WING ENTRY", lines:["The raised corner man makes the pass into the Action Man near the low post."], accent:true},
+      {title:"WING ENTRY", lines:["The raised corner man now has a short, realistic pass into the Action Man on the original side."], accent:true},
       {title:"First Look", lines:["Quick layup if the rim is available."]},
       {title:"Second Look", lines:["If not, go immediately to a simple post move before help recovers."]}
     ]);
@@ -1363,8 +1363,8 @@ function render(){
      70:'<div class="rule"><b>PUNCH:</b> Sell the normal Action Man cut through, reach the <b>opposite block</b>, then sprint back to the basket.</div>',
      71:'<div class="rule"><b>SELL THE CUT:</b> The first part of PUNCH should look exactly like the normal clear-through.</div>',
      72:'<div class="rule"><b>TIMING:</b> Action Man reaches the opposite block while the corner man <b>raises to the wing</b>.</div>',
-     73:'<div class="rule"><b>PUNCH BACK:</b> Plant at the opposite block and sprint back toward the rim.</div>',
-     74:'<div class="rule"><b>ENTRY:</b> Wing passer feeds the low post. Look for <b>quick layup first, quick post move second</b>.</div>'
+     73:'<div class="rule"><b>PUNCH BACK:</b> Plant at the opposite block and sprint back toward the <b>original side of the rim</b>.</div>',
+     74:'<div class="rule"><b>ENTRY:</b> Keep the wing-to-post pass short and realistic. Look for <b>quick layup first, quick post move second</b>.</div>'
    };
    document.getElementById("lesson").innerHTML += (rules[step]||'');
  }
