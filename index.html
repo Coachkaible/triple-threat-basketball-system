@@ -294,9 +294,9 @@ threePunchEntry:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
 
 // AUTOMATIC POST ENTRY — SPLIT ACTION
 splitSetup:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
-splitScreen:{1:[350,275],2:[115,205],3:[205,105],4:[205,285],5:[418,220]},
-splitCornerRelocate:{1:[350,275],2:[115,205],3:[205,105],4:[28,48],5:[418,220]},
-splitRimCut:{1:[350,275],2:[235,120],3:[205,105],4:[28,48],5:[418,220]},
+splitScreen:{1:[350,275],2:[165,245],3:[205,105],4:[205,285],5:[418,220]},
+splitCornerRelocate:{1:[350,275],2:[165,245],3:[205,105],4:[28,48],5:[418,220]},
+splitRimCut:{1:[350,275],2:[245,155],3:[205,105],4:[28,48],5:[418,220]},
 splitFarCorner:{1:[350,275],2:[472,48],3:[205,105],4:[28,48],5:[418,220]}
 };
 const steps=[
@@ -1303,33 +1303,33 @@ function drawAnnotations(){
     ]);
   }
   else if(step===76){
-    addMove(g,72,220,115,205);
-    addScreen(g,115,205,20);
-    addLabel(g,145,230,"PASSER SCREENS",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    addMove(g,72,220,165,245);
+    addScreen(g,165,245,45);
+    addLabel(g,188,220,"PASSER SCREENS 4",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
-      {title:"PASS → SCREEN", lines:["After entering the post, 2 immediately screens the closest perimeter player."], accent:true},
-      {title:"No Watching", lines:["The passer must move right away."]},
-      {title:"Purpose", lines:["Free the closest teammate to relocate for the corner shot."]}
+      {title:"PASS → SCREEN", lines:["After entering the post, 2 immediately closes the gap and screens for 4."], accent:true},
+      {title:"Get Close", lines:["2 must get close enough to 4 for this to be a real split screen."]},
+      {title:"Purpose", lines:["Free 4 to relocate to the corner for the shot."]}
     ]);
   }
   else if(step===77){
-    addScreen(g,115,205,20);
-    addCurveMove(g,205,285,100,150,28,48);
-    addLabel(g,84,92,"RELOCATE TO CORNER",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    addScreen(g,165,245,45);
+    addCurveMove(g,205,285,110,155,28,48);
+    addLabel(g,84,92,"4 RELOCATES TO CORNER",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
-      {title:"CORNER SHOT OPTION", lines:["The screened player relocates hard to the corner for a jumper/3."], accent:true},
-      {title:"Post Read", lines:["The post can hit the corner if the defense loses the shooter."]},
-      {title:"Spacing", lines:["The relocation also clears room for the passer's rim cut."]}
+      {title:"CORNER SHOT OPTION", lines:["4 comes off the split screen and relocates hard to the corner for the shot."], accent:true},
+      {title:"Real Screen", lines:["Because 2 got closer, the split action now looks realistic and useful."]},
+      {title:"Next", lines:["After screening, 2 will cut full speed to the rim from this tighter position."]}
     ]);
   }
   else if(step===78){
-    addCurveMove(g,115,205,175,150,235,120);
-    addPass(g,205,105,235,120);
-    addLabel(g,260,145,"FULL-SPEED RIM CUT",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    addCurveMove(g,165,245,205,200,245,155);
+    addPass(g,205,105,245,155);
+    addLabel(g,268,170,"FULL-SPEED RIM CUT",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
-      {title:"SCREEN → CUT", lines:["After screening, the passer cuts full speed to the rim."], accent:true},
+      {title:"SCREEN → CUT", lines:["After screening, 2 cuts full speed to the rim from the updated screen position."], accent:true},
       {title:"Post Reads", lines:["1) Corner shooter","2) Rim cutter"]},
-      {title:"Attack the Gap", lines:["The cutter must expect the ball and finish immediately."]}
+      {title:"Attack the Gap", lines:["Because 2 screened closer to 4, the rim cut now flows naturally from the split action."]}
     ]);
   }
   else if(step===79){
