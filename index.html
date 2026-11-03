@@ -290,7 +290,14 @@ threePunchSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
 threePunchSellCut:{1:[350,275],2:[28,48],3:[250,105],4:[205,285],5:[472,48]},
 threePunchOppBlock:{1:[350,275],2:[72,220],3:[355,110],4:[205,285],5:[418,220]},
 threePunchReturn:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
-threePunchEntry:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]}
+threePunchEntry:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
+
+// AUTOMATIC POST ENTRY — SPLIT ACTION
+splitSetup:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
+splitScreen:{1:[350,275],2:[115,205],3:[205,105],4:[205,285],5:[418,220]},
+splitCornerRelocate:{1:[350,275],2:[115,205],3:[205,105],4:[28,48],5:[418,220]},
+splitRimCut:{1:[350,275],2:[235,120],3:[205,105],4:[28,48],5:[418,220]},
+splitFarCorner:{1:[350,275],2:[472,48],3:[205,105],4:[28,48],5:[418,220]}
 };
 const steps=[
 
@@ -380,7 +387,13 @@ const steps=[
 ["PUNCH — Sell the Normal Cut","The Action Man begins the normal cut across the lane as if he is simply continuing through to the opposite deep corner. The key is to make the first part of the movement look completely normal.","threePunchSellCut",4],
 ["PUNCH — Reach the Opposite Block / 4 Passes to 2","Instead of finishing all the way to the far corner, the Action Man reaches the opposite block. At the same time, the original corner man raises to the wing and 4 passes the ball to 2. Now 2 is in position to make the short post entry when the Action Man punches back.","threePunchOppBlock",2],
 ["PUNCH — Sprint Back to the Original Side","Once the Action Man reaches the opposite block, he immediately changes direction and sprints back across toward the original side of the basket. At this point, 2 already has the ball on the wing from the 4 → 2 pass and is waiting to make the short post entry.","threePunchReturn",2],
-["PUNCH — Short Wing Entry to the Low Post","The corner man, now raised to the wing, makes a short entry pass to the Action Man after he punches back to the original side of the basket. The goal is a quick layup first. If the layup is not there, the Action Man can finish with a quick post move before the defense recovers.","threePunchEntry",3]
+["PUNCH — Short Wing Entry to the Low Post","The corner man, now raised to the wing, makes a short entry pass to the Action Man after he punches back to the original side of the basket. The goal is a quick layup first. If the layup is not there, the Action Man can finish with a quick post move before the defense recovers.","threePunchEntry",3],
+
+["AUTOMATIC POST RULE — SPLIT ACTION","Any time we make a post entry, we automatically enter SPLIT ACTION. The passer immediately screens for the closest perimeter player. The screened player relocates to the corner for a jumper/3, then the passer cuts full speed to the rim.","splitSetup",3],
+["SPLIT — Passer Screens the Closest Player","Immediately after the post entry, the passer does not stand and watch. He turns and sets a screen for the closest perimeter teammate.","splitScreen",3],
+["SPLIT — Closest Player Relocates to the Corner","The player receiving the split screen relocates hard to the corner for a catch-and-shoot jumper/3. This gives the post a perimeter scoring option and creates space for the next cut.","splitCornerRelocate",3],
+["SPLIT — Passer Cuts Full Speed to the Rim","After screening, the original passer cuts full speed to the basket. The post now reads the corner shooter and the rim cutter.","splitRimCut",3],
+["SPLIT — If No Pass, Continue to Far Corner","If the cutter does not receive the ball at the rim, he keeps moving and continues through to the far corner. This restores spacing and keeps the offense flowing.","splitFarCorner",3]
 ];
 let step=0,mode="watch",chosen=null;
 function move(id,xy){document.getElementById(id).setAttribute("transform",`translate(${xy[0]} ${xy[1]})`)}
@@ -1281,6 +1294,53 @@ function drawAnnotations(){
       {title:"Second Look", lines:["If not, go immediately to a simple post move before help recovers."]}
     ]);
   }
+  else if(step===75){
+    addLabel(g,250,360,"POST ENTRY = AUTOMATIC SPLIT ACTION",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
+    setSlideNotes([
+      {title:"AUTOMATIC RULE", lines:["Every post entry immediately triggers SPLIT ACTION."], accent:true},
+      {title:"Passer", lines:["Screen the closest perimeter player immediately."]},
+      {title:"Then", lines:["Screened player relocates to corner; passer cuts full speed to rim."]}
+    ]);
+  }
+  else if(step===76){
+    addMove(g,72,220,115,205);
+    addScreen(g,115,205,20);
+    addLabel(g,145,230,"PASSER SCREENS",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"PASS → SCREEN", lines:["After entering the post, 2 immediately screens the closest perimeter player."], accent:true},
+      {title:"No Watching", lines:["The passer must move right away."]},
+      {title:"Purpose", lines:["Free the closest teammate to relocate for the corner shot."]}
+    ]);
+  }
+  else if(step===77){
+    addScreen(g,115,205,20);
+    addCurveMove(g,205,285,100,150,28,48);
+    addLabel(g,84,92,"RELOCATE TO CORNER",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"CORNER SHOT OPTION", lines:["The screened player relocates hard to the corner for a jumper/3."], accent:true},
+      {title:"Post Read", lines:["The post can hit the corner if the defense loses the shooter."]},
+      {title:"Spacing", lines:["The relocation also clears room for the passer's rim cut."]}
+    ]);
+  }
+  else if(step===78){
+    addCurveMove(g,115,205,175,150,235,120);
+    addPass(g,205,105,235,120);
+    addLabel(g,260,145,"FULL-SPEED RIM CUT",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"SCREEN → CUT", lines:["After screening, the passer cuts full speed to the rim."], accent:true},
+      {title:"Post Reads", lines:["1) Corner shooter","2) Rim cutter"]},
+      {title:"Attack the Gap", lines:["The cutter must expect the ball and finish immediately."]}
+    ]);
+  }
+  else if(step===79){
+    addCurveMove(g,235,120,355,90,472,48);
+    addLabel(g,355,82,"IF NO PASS → FAR CORNER",{anchor:"middle",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"NO PASS? KEEP MOVING", lines:["If the cutter does not get the ball, continue through to the far corner."], accent:true},
+      {title:"Do Not Stop in the Lane", lines:["Finish the cut and restore spacing."]},
+      {title:"Automatic Flow", lines:["POST ENTRY → SCREEN → CORNER RELOCATE → RIM CUT → FAR CORNER."]}
+    ]);
+  }
 }
 function render(){
  const s=steps[step], P=pos[s[2]];
@@ -1366,7 +1426,12 @@ function render(){
      71:'<div class="rule"><b>SELL THE CUT:</b> The first part of PUNCH should look exactly like the normal clear-through.</div>',
      72:'<div class="rule"><b>TIMING:</b> Action Man reaches the opposite block while the corner man <b>raises to the wing and receives the pass from 4</b>.</div>',
      73:'<div class="rule"><b>PUNCH BACK:</b> Plant at the opposite block and sprint back toward the <b>original side of the rim</b>.</div>',
-     74:'<div class="rule"><b>ENTRY:</b> Keep the wing-to-post pass short and realistic. Look for <b>quick layup first, quick post move second</b>.</div>'
+     74:'<div class="rule"><b>ENTRY:</b> Keep the wing-to-post pass short and realistic. Look for <b>quick layup first, quick post move second</b>.</div>',
+     75:'<div class="rule"><b>AUTOMATIC RULE:</b> <b>POST ENTRY = SPLIT ACTION.</b></div>',
+     76:'<div class="rule"><b>PASSER:</b> Immediately screen the <b>closest perimeter player</b>.</div>',
+     77:'<div class="rule"><b>SCREENED PLAYER:</b> Relocate to the corner for a <b>jumper / 3</b>.</div>',
+     78:'<div class="rule"><b>PASSER:</b> After screening, <b>cut full speed to the rim</b> for a pass from the post.</div>',
+     79:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>'
    };
    document.getElementById("lesson").innerHTML += (rules[step]||'');
  }
