@@ -36,6 +36,38 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 .legend svg{flex:0 0 auto}
 #playBtn,#pauseBtn,#restartPlayBtn{white-space:nowrap}
 #speedSelect{cursor:pointer}
+.action-menu{position:relative;display:inline-block}
+.action-menu-btn{white-space:nowrap}
+.action-dropdown{
+  display:none;
+  position:absolute;
+  top:calc(100% + 6px);
+  left:0;
+  min-width:190px;
+  z-index:50;
+  background:#111820;
+  border:1px solid #394754;
+  border-radius:10px;
+  padding:6px;
+  box-shadow:0 10px 28px #0008;
+}
+.action-dropdown.open{display:grid;gap:4px}
+.action-dropdown button{
+  width:100%;
+  text-align:left;
+  white-space:nowrap;
+  padding:8px 10px;
+  font-size:11px;
+  border-radius:7px;
+  background:#202a34;
+  color:#fff;
+}
+.action-dropdown button:hover{background:#2f3c48}
+@media(max-width:820px){
+  .action-menu{flex:1}
+  .action-menu-btn{width:100%}
+  .action-dropdown{position:fixed;left:10px;right:10px;top:auto;bottom:12px;min-width:0;max-height:60vh;overflow:auto}
+}
 @media(max-width:820px){.wrap{grid-template-columns:1fr}}
 </style>
 <!-- DEFENSE V61 STYLES START -->
@@ -123,8 +155,27 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 <button class="primary" onclick="next()">NEXT STEP ▶</button>
 <button onclick="resetAll()">Reset</button>
 <button class="primary" onclick="jumpToGameUpdate()">10/30 UPDATE</button>
-<button onclick="jumpToTwoMan()">2 MAN</button>
-<button onclick="jumpToThreeMan()">3 MAN</button>
+<div class="action-menu">
+  <button class="action-menu-btn" onclick="toggleActionMenu('twoManMenu',event)">2 MAN ▾</button>
+  <div id="twoManMenu" class="action-dropdown">
+    <button onclick="jumpToTwoMan();closeActionMenus()">2 MAN OVERVIEW</button>
+    <button onclick="jumpToStep(31);closeActionMenus()">RIGHT-SIDE ENTRY</button>
+    <button onclick="jumpToStep(32);closeActionMenus()">LEFT-SIDE ENTRY</button>
+    <button onclick="jumpToStep(33);closeActionMenus()">GET</button>
+    <button onclick="jumpToStep(39);closeActionMenus()">DHO</button>
+    <button onclick="jumpToStep(42);closeActionMenus()">PICK &amp; ROLL</button>
+  </div>
+</div>
+<div class="action-menu">
+  <button class="action-menu-btn" onclick="toggleActionMenu('threeManMenu',event)">3 MAN ▾</button>
+  <div id="threeManMenu" class="action-dropdown">
+    <button onclick="jumpToThreeMan();closeActionMenus()">3 MAN OVERVIEW</button>
+    <button onclick="jumpToStep(59);closeActionMenus()">DOWN</button>
+    <button onclick="jumpToStep(65);closeActionMenus()">UP</button>
+    <button onclick="jumpToStep(71);closeActionMenus()">PUNCH</button>
+    <button onclick="jumpToStep(76);closeActionMenus()">SPLIT ACTION</button>
+  </div>
+</div>
 <button id="playBtn" onclick="playSlides()">▶ Play Sequence</button>
 <button id="pauseBtn" onclick="pauseSlides()" disabled>⏸ Pause</button>
 <button id="restartPlayBtn" onclick="restartAndPlay()">↺ Restart + Play</button>
@@ -1587,9 +1638,21 @@ function restartAndPlay(){
 
 function next(){pauseSlides(false);step=Math.min(steps.length-1,step+1);render()}
 function prev(){pauseSlides(false);step=Math.max(0,step-1);render()}
-function jumpToTwoMan(){pauseSlides(false);if(mode!=="watch") setMode("watch");step=29;render()}
-function jumpToThreeMan(){pauseSlides(false);if(mode!=="watch") setMode("watch");step=55;render()}
-function jumpToGameUpdate(){pauseSlides(false);if(mode!=="watch") setMode("watch");step=45;render()}
+function jumpToStep(displayStep){pauseSlides(false);if(mode!=="watch") setMode("watch");step=Math.max(0,Math.min(steps.length-1,displayStep-1));render()}
+function jumpToTwoMan(){jumpToStep(30)}
+function jumpToThreeMan(){jumpToStep(56)}
+function jumpToGameUpdate(){jumpToStep(46)}
+function closeActionMenus(){
+  document.querySelectorAll(".action-dropdown.open").forEach(el=>el.classList.remove("open"));
+}
+function toggleActionMenu(id,e){
+  if(e) e.stopPropagation();
+  const target=document.getElementById(id);
+  const willOpen=!target.classList.contains("open");
+  closeActionMenus();
+  if(willOpen) target.classList.add("open");
+}
+document.addEventListener("click",closeActionMenus);
 function resetAll(){pauseSlides(false);step=0;render()}
 function setMode(m){pauseSlides(false);mode=m;["watch","job","quiz"].forEach(x=>document.getElementById(x+"Tab").classList.toggle("active",x==m));document.getElementById("jobPicker").style.display=m=="job"?"block":"none";document.getElementById("quiz").style.display=m=="quiz"?"block":"none";document.getElementById("twoManChoice").style.display="none";if(m=="quiz"&&!quizOrder.length) makeQuiz(true);highlight();updatePlayUI(false)}
 function pickPlayer(n){chosen=n;const jobs={
