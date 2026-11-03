@@ -297,7 +297,14 @@ splitSetup:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
 splitScreen:{1:[350,275],2:[165,245],3:[205,105],4:[205,285],5:[418,220]},
 splitCornerRelocate:{1:[350,275],2:[165,245],3:[205,105],4:[28,48],5:[418,220]},
 splitRimCut:{1:[350,275],2:[245,155],3:[205,105],4:[28,48],5:[418,220]},
-splitFarCorner:{1:[350,275],2:[472,48],3:[205,105],4:[28,48],5:[418,220]}
+splitFarCorner:{1:[350,275],2:[472,48],3:[205,105],4:[28,48],5:[418,220]},
+
+// SPLIT CONTINUATION — NOTHING OPEN
+// Pass out to the corner, flow into pick-and-roll, then return to normal motion.
+splitPassOutCorner:{1:[350,275],2:[472,48],3:[205,105],4:[28,48],5:[418,220]},
+splitCornerPnrSetup:{1:[350,275],2:[472,48],3:[205,105],4:[72,220],5:[418,220]},
+splitCornerPnr:{1:[350,275],2:[472,48],3:[205,105],4:[72,220],5:[135,172]},
+splitBackToMotion:{1:[350,275],2:[472,48],3:[205,105],4:[250,150],5:[192,110]}
 };
 const steps=[
 
@@ -393,7 +400,12 @@ const steps=[
 ["SPLIT — Passer Screens the Closest Player","Immediately after the post entry, the passer does not stand and watch. He turns and sets a screen for the closest perimeter teammate.","splitScreen",3],
 ["SPLIT — Closest Player Uses the Screen and Relocates","The player receiving the split screen must first come off the screen and stay outside of it to create separation. Only after using the screen does he continue to the corner for a catch-and-shoot jumper/3.","splitCornerRelocate",3],
 ["SPLIT — Passer Cuts Full Speed to the Rim","After screening, the original passer cuts full speed to the basket. The post now reads the corner shooter and the rim cutter.","splitRimCut",3],
-["SPLIT — If No Pass, Continue to Far Corner","If the cutter does not receive the ball at the rim, he keeps moving and continues through to the far corner. This restores spacing and keeps the offense flowing.","splitFarCorner",3]
+["SPLIT — If No Pass, Continue to Far Corner","If the cutter does not receive the ball at the rim, he keeps moving and continues through to the far corner. This restores spacing and keeps the offense flowing.","splitFarCorner",3],
+
+["SPLIT — Nothing Open? Pass Out to the Corner","If the corner shot and rim cut are both covered, the post does not hold the ball. Pass the ball back out to the corner/perimeter and keep the action moving.","splitPassOutCorner",4],
+["SPLIT — Corner Flows Into Pick & Roll","After the pass-out, the corner player raises to the wing and the nearest teammate flows into the same low-angle pick-and-roll we already use in our regular offense.","splitCornerPnrSetup",4],
+["SPLIT — Pick & Roll","Run the normal 2 Man reads: 1) own score, 2) LOOK BACK TO THE ROLLER, 3) weak side. Nothing new is added here — Split simply flows back into our existing pick-and-roll rules.","splitCornerPnr",4],
+["SPLIT — Back Into Regular Motion","Once the pick-and-roll begins, we are fully back in regular motion. Ballhandler attacks, roller completes the roll, pass out if needed, handler returns to slot, roller replaces to corner, and the normal rotation continues.","splitBackToMotion",4]
 ];
 let step=0,mode="watch",chosen=null;
 function move(id,xy){document.getElementById(id).setAttribute("transform",`translate(${xy[0]} ${xy[1]})`)}
@@ -1343,6 +1355,45 @@ function drawAnnotations(){
       {title:"Automatic Flow", lines:["POST ENTRY → SCREEN → CORNER RELOCATE → RIM CUT → FAR CORNER."]}
     ]);
   }
+  else if(step===80){
+    addPass(g,205,105,28,48);
+    addLabel(g,110,92,"PASS OUT — KEEP PLAYING",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"NOTHING OPEN?", lines:["If the corner shot and rim cut are covered, the post passes back out."], accent:true},
+      {title:"No Holding", lines:["Do not let the offense stop with the ball in the post."]},
+      {title:"Next", lines:["We flow immediately into our normal pick-and-roll."]}
+    ]);
+  }
+  else if(step===81){
+    addMove(g,28,48,72,220);
+    addMove(g,418,220,135,172);
+    addScreen(g,135,172,58);
+    addLabel(g,92,252,"CORNER RAISES TO WING",{anchor:"middle",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"RAISE + SCREEN", lines:["The corner player raises to the true wing."], accent:true},
+      {title:"Nearest Teammate", lines:["Flows into the same low-angle screen we already teach."]},
+      {title:"Nothing New", lines:["This is our regular 2 Man spacing again."]}
+    ]);
+  }
+  else if(step===82){
+    addScreen(g,135,172,58);
+    addDribble(g,72,220,160,185,250,150);
+    addCurveMove(g,135,172,150,135,192,110);
+    setSlideNotes([
+      {title:"NORMAL PICK & ROLL", lines:["Ballhandler attacks middle / far paint."], accent:true},
+      {title:"Read Order", lines:["1) Own score","2) LOOK BACK TO ROLLER","3) Weak side"]},
+      {title:"Same Rules", lines:["Split has now flowed directly back into our regular offense."]}
+    ]);
+  }
+  else if(step===83){
+    addLabel(g,250,360,"BACK INTO REGULAR MOTION",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
+    addBottomBox(g,145,382,335,"RESET THE NORMAL FLOW",["Attack → Roller → Pass Out → Handler to Slot → Roller to Corner","Then continue the next normal rotation."],250,150,{titleSize:11,lineSize:9.5});
+    setSlideNotes([
+      {title:"REGULAR MOTION", lines:["From here, all normal Base Motion rules are back in effect."], accent:true},
+      {title:"Ballhandler", lines:["Attack, read roller, pass out if necessary, then relocate to slot."]},
+      {title:"Roller", lines:["Complete the roll, then replace to the corner and continue the rotation."]}
+    ]);
+  }
 }
 function render(){
  const s=steps[step], P=pos[s[2]];
@@ -1433,7 +1484,11 @@ function render(){
      76:'<div class="rule"><b>PASSER:</b> Immediately screen the <b>closest perimeter player</b>.</div>',
      77:'<div class="rule"><b>SCREENED PLAYER:</b> <b>Use the screen first, stay outside</b>, then relocate to the corner for a jumper / 3.</div>',
      78:'<div class="rule"><b>PASSER:</b> After screening, <b>cut full speed to the rim</b> for a pass from the post.</div>',
-     79:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>'
+     79:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>',
+     80:'<div class="rule"><b>IF NOTHING IS OPEN:</b> Post passes the ball <b>back out to the corner/perimeter</b>.</div>',
+     81:'<div class="rule"><b>NEXT ACTION:</b> Corner raises to the wing and we flow directly into our <b>normal low-angle pick-and-roll</b>.</div>',
+     82:'<div class="rule"><b>NORMAL READS:</b> <b>Own score → roller → weak side.</b></div>',
+     83:'<div class="rule"><b>BACK TO MOTION:</b> After the pick-and-roll, resume all normal handler/roller replacement and rotation rules.</div>'
    };
    document.getElementById("lesson").innerHTML += (rules[step]||'');
  }
