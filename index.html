@@ -183,7 +183,6 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
   </div>
 </div>
 
-<button onclick="jumpToGameUpdate()">10/30 GAME FLOW</button>
 <div class="action-menu">
   <button class="action-menu-btn" onclick="toggleActionMenu('twoManMenu',event)">2 MAN ▾</button>
   <div id="twoManMenu" class="action-dropdown">
@@ -201,11 +200,11 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 <div class="action-menu">
   <button class="action-menu-btn" onclick="toggleActionMenu('threeManMenu',event)">3 MAN ▾</button>
   <div id="threeManMenu" class="action-dropdown">
-    <button onclick="jumpToStep(56);closeActionMenus()">3 MAN OVERVIEW</button>
-    <button onclick="jumpToStep(59);closeActionMenus()">DOWN</button>
-    <button onclick="jumpToStep(65);closeActionMenus()">UP</button>
-    <button onclick="jumpToStep(71);closeActionMenus()">PUNCH</button>
-    <button onclick="jumpToStep(76);closeActionMenus()">SPLIT ACTION</button>
+    <button onclick="jumpToStep(46);closeActionMenus()">3 MAN OVERVIEW</button>
+    <button onclick="jumpToStep(49);closeActionMenus()">DOWN</button>
+    <button onclick="jumpToStep(55);closeActionMenus()">UP</button>
+    <button onclick="jumpToStep(61);closeActionMenus()">PUNCH</button>
+    <button onclick="jumpToStep(66);closeActionMenus()">SPLIT ACTION</button>
   </div>
 </div>
 <button id="playBtn" onclick="playSlides()">▶ Play Sequence</button>
@@ -326,22 +325,6 @@ twoDhoHandoff:{1:[350,275],2:[72,220],3:[472,48],4:[102,212],5:[418,220]},
 twoDhoCurl:{1:[350,275],2:[185,120],3:[472,48],4:[92,220],5:[418,220]},
 twoReset:{1:[330,275],2:[205,285],3:[472,48],4:[28,48],5:[418,220]},
 
-// SECTION 4 — UPDATE FOR GAMES ON 10/30 AND BEYOND
-// Before the first left-slot entry, run one complete Wheel cycle to create movement.
-gameUpdateStart:{1:[350,335],2:[28,48],3:[82,220],4:[205,300],5:[472,48]},
-gameUpdateWheelCut:{1:[350,335],2:[28,48],3:[82,220],4:[250,125],5:[472,48]},
-gameUpdateWheelFill:{1:[350,335],2:[82,220],3:[205,285],4:[28,48],5:[472,48]},
-gameUpdateSlotEntry:{1:[350,335],2:[82,220],3:[205,285],4:[28,48],5:[472,48]},
-
-// After the Wheel-first start, complete the first rotation on the LEFT.
-// If no advantage is created, flow directly into a GET on the RIGHT.
-gameUpdateLeftRotationSetup:{1:[350,275],2:[472,48],3:[205,285],4:[72,220],5:[418,220]},
-gameUpdateLeftPnr:{1:[350,275],2:[472,48],3:[135,172],4:[72,220],5:[418,220]},
-gameUpdateRightGetSetup:{1:[330,275],2:[472,48],3:[82,220],4:[205,285],5:[28,48]},
-gameUpdateRightGetCatch:{1:[330,275],2:[350,185],3:[82,220],4:[205,285],5:[28,48]},
-gameUpdateRightGetReturn:{1:[395,205],2:[350,185],3:[82,220],4:[205,285],5:[28,48]},
-gameUpdateRightGetAttack:{1:[310,120],2:[350,185],3:[82,220],4:[205,285],5:[28,48]},
-
 // SECTION 4 — 3 MAN ACTIONS
 // Base 3-man side: ball-side slot + Action Man on the wing + corner man.
 threeManSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
@@ -442,18 +425,6 @@ const steps=[
 ["DHO — Bump the Defender / Handoff on the Outside","The exchange stays on the TRUE WING OUTSIDE the 3-point line. As the slot player comes from the slot, he should try to BUMP the defender of the raising corner man to help create an advantage. The handoff is always on the OUTSIDE of the receiver so the ball is shielded from the defenders.","twoDhoHandoff",4],
 ["DHO — Curl Into It and Attack the Basket","The player receiving the DHO should get his momentum going TOWARD THE BASKET before he receives the ball — almost curling into it. He should not catch the ball with his momentum taking him toward the sideline. Catch it downhill so you can attack immediately.","twoDhoCurl",2],
 ["Finish the 2 Man Action — Reset the Spacing","After the action, we return to our normal spacing rules. The ball handler relocates back to the slot after passing out. The roller goes to the block first and then replaces to the deep ball-side corner. From there, Base Motion can continue.","twoReset",1],
-
-["UPDATE FOR GAMES ON 10/30 AND BEYOND","Before we make our first pass to the left slot, we are now going to run ONE FULL CYCLE OF WHEEL. The purpose is simple: get everybody moving immediately and make the first slot entry easier instead of trying to force a stationary pass to start the offense.","gameUpdateStart",1],
-["WHEEL FIRST — 4 Basket Cuts","The ball stays with 1. Before 1 tries to enter the ball to the left slot, 4 makes the hard Wheel basket cut. We are using the same Wheel movement we already know — but now we are using it proactively as our normal start, not only as a pressure release.","gameUpdateWheelCut",1],
-["Complete the Wheel — 3 and 2 Fill Behind","If 4 does not receive the ball, 4 continues all the way through to the deep left corner. 3 fills behind into the LEFT SLOT and 2 fills behind into the LEFT WING. We have now completed one cycle of Wheel before making the first slot pass.","gameUpdateWheelFill",1],
-["Now Enter the Ball to the New Left Slot","After the Wheel cycle is complete, 1 makes the easier entry pass to 3 in the new left slot. From here we begin Base Motion with the new roles: 3 is the slot player, 2 is the Action Man, and 4 is in the deep corner. This is our new starting sequence for games on 10/30 and beyond.","gameUpdateSlotEntry",3],
-
-["First Rotation — Run It on the Left","After 3 catches in the new left slot, we run our first normal rotation on the LEFT. 2 is the Action Man and cuts through to the opposite deep corner. 5 raises on the right side, 4 lifts from the deep left corner to the left wing, and 3 is ready to play the two-man action with 4.","gameUpdateLeftRotationSetup",3],
-["Left-Side Two-Man Action","3 passes to 4 on the left wing and gets lower to set the low-angle screen. 4 attacks the middle and reads the same order we always teach: score first, look back to the roller second, then weak side. We are looking to create an advantage on this first left-side rotation.","gameUpdateLeftPnr",4],
-["If Nothing Is Open — Flow to a Right-Side GET","If the first rotation on the left does not create a shot, layup, roller, or open weak-side pass, we do NOT stop. The ball comes out to 1 in the right slot. 5 cuts through and 3 lifts on the weak side, leaving 1 in the right slot and 2 in the deep right corner. That gives us our 2 Man spacing for a GET on the right side.","gameUpdateRightGetSetup",1],
-["Right-Side GET — 1 Passes to 2 Raising","2 raises from the deep right corner and catches slightly inside the 3-point line, about two steps inside the arc near the right elbow. 1 passes to 2 and immediately prepares to sprint to the OUTSIDE of him.","gameUpdateRightGetCatch",2],
-["Right-Side GET — 1 Sprints Outside and Gets It Back","Immediately after the pass, 1 sprints outside of 2 toward the right sideline. 2 gives the ball right back. The exchange happens near the elbow so 1 can turn the corner with the best downhill angle.","gameUpdateRightGetReturn",1],
-["Right-Side GET — Attack the 45","After getting the ball back, 1 turns the corner and attacks the basket on a 45-degree angle. This is our next automatic action if the first rotation on the left does not create an advantage: LEFT ROTATION → RIGHT-SIDE GET.","gameUpdateRightGetAttack",1],
 
 ["3 MAN ACTIONS — Overview","This section introduces our 3 Man actions. Every 3 Man action starts with the same three-player structure on the ball side: the BALL-SIDE SLOT has the ball, the ACTION MAN starts on the wing, and the CORNER MAN is spaced in the deep corner. The other two players stay spaced on the weak side.","threeManSetup",4],
 ["3 Man — Know the Three Roles","The three players involved are defined by their spots, not by their jersey numbers. In this example: 4 is the BALL-SIDE SLOT, 3 is the ACTION MAN on the wing, and 2 is the CORNER MAN. Because our spots are interchangeable, any three players can become these three roles during the possession.","threeManRoles",4],
@@ -1098,110 +1069,6 @@ function drawAnnotations(){
     ]);
   }
   else if(step===45){
-    addBottomBox(g,20,382,315,"NEW START — 10/30 AND BEYOND",["Before the first left-slot pass: ONE FULL WHEEL.","Movement first → easier entry pass."],210,292,{titleSize:12,lineSize:10});
-    setSlideNotes([
-      {title:"NEW GAME UPDATE", lines:["For games on 10/30 and beyond, we will run one full Wheel cycle BEFORE the ball gets to the left slot."], accent:true},
-      {title:"Why", lines:["We want everybody moving immediately and we want to make the first slot entry easier."]},
-      {title:"Important", lines:["Do not force the stationary pass to the original slot. WHEEL FIRST."]}
-    ]);
-  }
-  else if(step===46){
-    addCurveMove(g,205,300,220,190,250,125);
-    addLabel(g,252,154,"WHEEL CUT",{fontSize:11,bg:"#fde68a",padX:6,padY:4});
-    addBottomBox(g,20,382,285,"BALL STAYS WITH 1",["4 basket cuts before the first slot entry."],210,292,{titleSize:12,lineSize:10});
-    setSlideNotes([
-      {title:"STEP 1 — 4 CUTS", lines:["1 keeps the ball. 4 makes the hard Wheel basket cut before we attempt the slot pass."], accent:true},
-      {title:"Same Wheel", lines:["This is the same movement we already teach in Pressure Release — now it is our planned opening action."]},
-      {title:"No Forced Pass", lines:["The ball does NOT go to the left slot yet."]}
-    ]);
-  }
-  else if(step===47){
-    addCurveMove(g,250,125,135,82,28,48);
-    addMove(g,82,220,205,285);
-    addMove(g,28,48,82,220);
-    addLabel(g,205,257,"3 FILLS SLOT",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
-    addLabel(g,92,245,"2 FILLS WING",{anchor:"middle",fontSize:11,bg:"#ffffff",padX:6,padY:4});
-    setSlideNotes([
-      {title:"STEP 2 — COMPLETE THE WHEEL", lines:["4 continues to the deep corner. 3 fills the left slot. 2 fills the left wing."], accent:true},
-      {title:"Everybody Moves", lines:["The opening movement changes the picture for the defense before we ever make the entry pass."]},
-      {title:"New Roles", lines:["3 is now the slot player. 2 becomes the Action Man. 4 is in the deep corner."]}
-    ]);
-  }
-  else if(step===48){
-    addPass(g,350,335,205,285);
-    addLabel(g,218,252,"NEW LEFT SLOT",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
-    addBottomBox(g,20,382,305,"NOW START BASE MOTION",["1 enters to 3 after the Wheel is complete.","3 = Slot • 2 = Action Man • 4 = Deep Corner"],215,285,{titleSize:12,lineSize:10});
-    setSlideNotes([
-      {title:"STEP 3 — EASY SLOT ENTRY", lines:["After the Wheel cycle, 1 enters the ball to 3 in the new left slot."], accent:true},
-      {title:"Base Motion Starts Here", lines:["Once 3 catches, we are back into our normal reads and spacing rules."]},
-      {title:"Our New Opening", lines:["WHEEL FIRST → then get the ball to the left slot."]}
-    ]);
-  }
-  else if(step===49){
-    addCurveMove(g,82,220,250,115,472,48);
-    addMove(g,472,48,418,220);
-    addMove(g,28,48,72,220);
-    addLabel(g,250,112,"2 CUTS THROUGH",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
-    setSlideNotes([
-      {title:"FIRST ROTATION — LEFT", lines:["After the new slot catch, run the first rotation on the LEFT side."], accent:true},
-      {title:"2 = Action Man", lines:["2 cuts through to the opposite deep corner if the backdoor is not open."]},
-      {title:"Fill the Spaces", lines:["5 raises on the right. 4 lifts from the left corner to the left wing."]}
-    ]);
-  }
-  else if(step===50){
-    addPass(g,205,285,72,220);
-    addCurveMove(g,205,285,165,225,135,172);
-    addScreen(g,135,172,58);
-    addDribble(g,72,220,145,190,210,150);
-    setSlideNotes([
-      {title:"LEFT TWO-MAN ACTION", lines:["3 passes to 4 on the left wing and sets the low-angle screen."], accent:true},
-      {title:"Read It Normally", lines:["4 reads: score → LOOK BACK TO ROLLER → weak side."]},
-      {title:"If We Get Nothing", lines:["Do not reset. Our next automatic action is a GET on the RIGHT."]}
-    ]);
-  }
-  else if(step===51){
-    addPass(g,250,150,330,275);
-    addCurveMove(g,418,220,300,120,28,48);
-    addMove(g,28,48,82,220);
-    addLabel(g,340,247,"1 = RIGHT SLOT",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
-    addLabel(g,426,76,"2 = DEEP CORNER",{anchor:"middle",fontSize:11,bg:"#ffffff",padX:6,padY:4});
-    setSlideNotes([
-      {title:"NOTHING OPEN? KEEP FLOWING", lines:["The ball comes out to 1 in the right slot."], accent:true},
-      {title:"Clear the Right Side", lines:["5 cuts through and 3 lifts on the weak side."]},
-      {title:"2 Man Created", lines:["Now the right side is 1 in the slot + 2 in the deep corner. That is our GET setup."]}
-    ]);
-  }
-  else if(step===52){
-    addMove(g,472,48,350,185);
-    addPass(g,330,275,350,185);
-    addLabel(g,350,156,"2 STEPS INSIDE ARC",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
-    setSlideNotes([
-      {title:"RIGHT-SIDE GET", lines:["2 raises from the deep right corner and catches about two steps inside the arc near the right elbow."], accent:true},
-      {title:"1 Passes", lines:["1 delivers the pass as 2 raises."]},
-      {title:"Next", lines:["As soon as the ball leaves 1's hands, 1 is sprinting OUTSIDE of 2."]}
-    ]);
-  }
-  else if(step===53){
-    addCurveMove(g,330,275,372,245,395,205);
-    addPass(g,350,185,395,205);
-    addLabel(g,394,238,"SPRINT OUTSIDE",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
-    setSlideNotes([
-      {title:"PASS → SPRINT OUTSIDE", lines:["1 sprints to the outside of 2, toward the right sideline."], accent:true},
-      {title:"Give It Back", lines:["2 gives the ball right back to 1 without stopping the action."]},
-      {title:"Why Here", lines:["The elbow-area exchange gives 1 room to turn the corner downhill."]}
-    ]);
-  }
-  else if(step===54){
-    addDribble(g,395,205,350,160,310,120);
-    addLabel(g,342,146,"45° ATTACK",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:6,padY:4});
-    addBottomBox(g,20,382,315,"NEW OPENING FLOW",["WHEEL FIRST → LEFT ROTATION → RIGHT-SIDE GET","If nothing is open, keep attacking without stopping."],310,120,{titleSize:12,lineSize:10});
-    setSlideNotes([
-      {title:"ATTACK THE 45", lines:["1 turns the corner and attacks the basket on a 45-degree angle."], accent:true},
-      {title:"Automatic Next Action", lines:["If the first left rotation creates nothing, we flow directly into this right-side GET."]},
-      {title:"Our New Flow", lines:["WHEEL FIRST → LEFT ROTATION → RIGHT-SIDE GET."]}
-    ]);
-  }
-  else if(step===55){
     addLabel(g,205,250,"BALL-SIDE SLOT",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
     addLabel(g,82,252,"ACTION MAN",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
     addLabel(g,55,82,"CORNER MAN",{anchor:"middle",fontSize:11,bg:"#ffffff",padX:7,padY:4});
@@ -1212,7 +1079,7 @@ function drawAnnotations(){
       {title:"Action Man + Corner", lines:["Action Man starts on the wing. Corner man stays deep in the corner."]}
     ]);
   }
-  else if(step===56){
+  else if(step===46){
     addLeader(g,205,255,205,285);
     addLabel(g,205,245,"SLOT",{anchor:"middle",fontSize:12,bg:"#fde68a",padX:8,padY:5});
     addLeader(g,115,245,82,220);
@@ -1225,7 +1092,7 @@ function drawAnnotations(){
       {title:"Interchangeable", lines:["As the offense rotates, different players will occupy these roles."]}
     ]);
   }
-  else if(step===57){
+  else if(step===47){
     addPass(g,350,275,205,285);
     addLabel(g,20,188,"ACTION MAN = TRIGGER",{anchor:"start",fontSize:11,bg:"#fde68a",padX:7,padY:4});
     addLeader(g,120,193,82,220);
@@ -1236,7 +1103,7 @@ function drawAnnotations(){
       {title:"Weak Side", lines:["The other two players maintain spacing while the 3 Man action develops."]}
     ]);
   }
-  else if(step===58){
+  else if(step===48){
     addLabel(g,118,248,"DOWN",{anchor:"middle",fontSize:13,bg:"#fde68a",padX:9,padY:5});
     addBottomBox(g,145,382,335,"3 MAN ACTION #1 — DOWN",["Action Man screens DOWN for the corner man first.","Then the Action Man continues through like normal."],82,220,{titleSize:12,lineSize:10});
     setSlideNotes([
@@ -1245,7 +1112,7 @@ function drawAnnotations(){
       {title:"After the Screen", lines:["The Action Man still continues through to the opposite deep corner."]}
     ]);
   }
-  else if(step===59){
+  else if(step===49){
     addMove(g,82,220,50,105);
     addScreen(g,50,105,0);
     addLabel(g,100,130,"SCREEN DOWN",{anchor:"start",fontSize:11,bg:"#fde68a",padX:7,padY:4});
@@ -1255,7 +1122,7 @@ function drawAnnotations(){
       {title:"Do Not Drift", lines:["Set the screen with purpose, then immediately continue the action."]}
     ]);
   }
-  else if(step===60){
+  else if(step===50){
     addScreen(g,50,105,0);
     addCurveMove(g,28,48,42,130,72,220);
     addLabel(g,98,184,"COME OFF TIGHT",{anchor:"start",fontSize:11,bg:"#fde68a",padX:7,padY:4});
@@ -1265,7 +1132,7 @@ function drawAnnotations(){
       {title:"Catch Ready", lines:["Arrive on the wing balanced and ready to attack immediately."]}
     ]);
   }
-  else if(step===61){
+  else if(step===51){
     addScreen(g,50,105,0);
     addCurveMove(g,50,105,250,85,472,48);
     addMove(g,472,48,418,220);
@@ -1276,7 +1143,7 @@ function drawAnnotations(){
       {title:"Weak Side Fills", lines:["The weak-side corner raises to keep the floor balanced."]}
     ]);
   }
-  else if(step===62){
+  else if(step===52){
     addPass(g,205,285,72,220);
     addLabel(g,82,252,"CATCH WITH ADVANTAGE",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
@@ -1285,7 +1152,7 @@ function drawAnnotations(){
       {title:"Attack the Advantage", lines:["Catch ready to shoot, drive, or flow immediately into 2 Man."]}
     ]);
   }
-  else if(step===63){
+  else if(step===53){
     addPass(g,205,285,72,220);
     addCurveMove(g,205,285,165,225,135,172);
     addScreen(g,135,172,58);
@@ -1297,7 +1164,7 @@ function drawAnnotations(){
       {title:"What Changed?", lines:["Only the setup: DOWN creates separation before the catch. Everything after that stays the same."]}
     ]);
   }
-  else if(step===64){
+  else if(step===54){
     addLabel(g,118,248,"UP",{anchor:"middle",fontSize:13,bg:"#fde68a",padX:9,padY:5});
     addBottomBox(g,145,382,335,"3 MAN ACTION #2 — UP",["Action Man screens UP for the slot as a BALL SCREEN.","The slot MUST use the screen and dribble off it."],205,285,{titleSize:12,lineSize:10});
     setSlideNotes([
@@ -1306,7 +1173,7 @@ function drawAnnotations(){
       {title:"Next Layer", lines:["After the drive begins, the corner reacts: DHO raise or hard backdoor."]}
     ]);
   }
-  else if(step===65){
+  else if(step===55){
     addMove(g,82,220,150,250);
     addScreen(g,150,250,62);
     addLabel(g,108,286,"BALL SCREEN UP",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
@@ -1316,7 +1183,7 @@ function drawAnnotations(){
       {title:"Slot's Responsibility", lines:["Be ready to use it — UP requires the dribble off the screen."]}
     ]);
   }
-  else if(step===66){
+  else if(step===56){
     addScreen(g,150,250,62);
     addDribble(g,205,285,132,282,78,225);
     addLabel(g,205,210,"OUTSIDE — AWAY FROM BASKET",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
@@ -1326,7 +1193,7 @@ function drawAnnotations(){
       {title:"Visual Cue", lines:["The first move should clearly widen outside before the ballhandler turns the corner."]}
     ]);
   }
-  else if(step===67){
+  else if(step===57){
     addCurveMove(g,150,250,285,120,472,48);
     addMove(g,472,48,418,220);
     addDribble(g,205,285,165,230,140,205);
@@ -1337,7 +1204,7 @@ function drawAnnotations(){
       {title:"Weak Side", lines:["The weak-side player raises to keep the floor spaced."]}
     ]);
   }
-  else if(step===68){
+  else if(step===58){
     addDribble(g,205,285,170,235,135,205);
     addMove(g,28,48,100,185);
     addDHO(g,112,190);
@@ -1348,7 +1215,7 @@ function drawAnnotations(){
       {title:"Original Ballhandler", lines:["Deliver the handoff cleanly and keep spacing after the exchange."]}
     ]);
   }
-  else if(step===69){
+  else if(step===59){
     addDribble(g,205,285,165,225,125,185);
     addCurveMove(g,28,48,135,105,250,105);
     addLabel(g,250,135,"HARD BACKDOOR",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
@@ -1359,7 +1226,7 @@ function drawAnnotations(){
       {title:"Commit to the Cut", lines:["This must be a hard cut — not a slow drift through the lane."]}
     ]);
   }
-  else if(step===70){
+  else if(step===60){
     addLabel(g,118,248,"PUNCH",{anchor:"middle",fontSize:13,bg:"#fde68a",padX:9,padY:5});
     addBottomBox(g,145,382,335,"3 MAN ACTION #3 — PUNCH",["Sell the normal cut through first.","Opposite block → sprint back to the rim."],82,220,{titleSize:12,lineSize:10});
     setSlideNotes([
@@ -1368,7 +1235,7 @@ function drawAnnotations(){
       {title:"The Finish", lines:["Reach the opposite block, then explode back to the basket."]}
     ]);
   }
-  else if(step===71){
+  else if(step===61){
     addCurveMove(g,82,220,160,130,250,105);
     addLabel(g,145,122,"SELL NORMAL CUT",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
@@ -1377,7 +1244,7 @@ function drawAnnotations(){
       {title:"Goal", lines:["Make the defender believe you are clearing to the far corner."]}
     ]);
   }
-  else if(step===72){
+  else if(step===62){
     addCurveMove(g,250,105,315,100,355,110);
     addMove(g,28,48,72,220);
     addPass(g,205,285,72,220);
@@ -1389,7 +1256,7 @@ function drawAnnotations(){
       {title:"Now 2 Is the Entry Passer", lines:["This sets up the next slides: 3 punches back to the original side and 2 feeds the low post."]}
     ]);
   }
-  else if(step===73){
+  else if(step===63){
     addCurveMove(g,355,110,285,90,205,105);
     addLabel(g,286,70,"PUNCH BACK TO ORIGINAL SIDE",{anchor:"middle",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     addLabel(g,82,252,"2 HAS THE BALL",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
@@ -1399,7 +1266,7 @@ function drawAnnotations(){
       {title:"Next", lines:["2 is now in perfect position to make the short low-post entry."]}
     ]);
   }
-  else if(step===74){
+  else if(step===64){
     addPass(g,72,220,205,105);
     addLabel(g,135,165,"SHORT LOW-POST ENTRY",{anchor:"middle",fontSize:10,bg:"#fde68a",padX:6,padY:4});
     addBottomBox(g,145,382,335,"FINISH QUICKLY",["1) QUICK LAYUP  →  2) QUICK POST MOVE","Punch back to the original side so the entry pass stays short."],205,105,{titleSize:11,lineSize:9.5});
@@ -1409,7 +1276,7 @@ function drawAnnotations(){
       {title:"Second Look", lines:["If not, go immediately to a simple post move before help recovers."]}
     ]);
   }
-  else if(step===75){
+  else if(step===65){
     addLabel(g,250,360,"POST ENTRY = AUTOMATIC SPLIT ACTION",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
     setSlideNotes([
       {title:"AUTOMATIC RULE", lines:["Every post entry immediately triggers SPLIT ACTION."], accent:true},
@@ -1417,7 +1284,7 @@ function drawAnnotations(){
       {title:"Then", lines:["Screened player relocates to corner; passer cuts full speed to rim."]}
     ]);
   }
-  else if(step===76){
+  else if(step===66){
     addMove(g,72,220,165,245);
     addScreen(g,165,245,45);
     addLabel(g,188,220,"PASSER SCREENS 4",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
@@ -1427,7 +1294,7 @@ function drawAnnotations(){
       {title:"Purpose", lines:["Free 4 to relocate to the corner for the shot."]}
     ]);
   }
-  else if(step===77){
+  else if(step===67){
     addScreen(g,165,245,45);
     addCurveMove(g,205,285,190,255,135,230);
     addCurveMove(g,135,230,85,160,28,48);
@@ -1439,7 +1306,7 @@ function drawAnnotations(){
       {title:"Then Relocate", lines:["After using the screen, continue out to the corner for the jumper / 3."]}
     ]);
   }
-  else if(step===78){
+  else if(step===68){
     addCurveMove(g,165,245,205,200,245,155);
     addPass(g,205,105,245,155);
     addLabel(g,268,170,"FULL-SPEED RIM CUT",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
@@ -1449,7 +1316,7 @@ function drawAnnotations(){
       {title:"Attack the Gap", lines:["Because 2 screened closer to 4, the rim cut now flows naturally from the split action."]}
     ]);
   }
-  else if(step===79){
+  else if(step===69){
     addCurveMove(g,235,120,355,90,472,48);
     addLabel(g,355,82,"IF NO PASS → FAR CORNER",{anchor:"middle",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
@@ -1458,7 +1325,7 @@ function drawAnnotations(){
       {title:"Automatic Flow", lines:["POST ENTRY → SCREEN → CORNER RELOCATE → RIM CUT → FAR CORNER."]}
     ]);
   }
-  else if(step===80){
+  else if(step===70){
     addPass(g,205,105,28,48);
     addLabel(g,110,92,"PASS OUT — KEEP PLAYING",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
@@ -1467,7 +1334,7 @@ function drawAnnotations(){
       {title:"Next", lines:["We flow immediately into our normal pick-and-roll."]}
     ]);
   }
-  else if(step===81){
+  else if(step===71){
     addMove(g,28,48,72,220);
     addMove(g,205,105,135,172);
     addScreen(g,135,172,58);
@@ -1478,7 +1345,7 @@ function drawAnnotations(){
       {title:"Nothing New", lines:["From here we are back in the same 2 Man rules we already teach."]}
     ]);
   }
-  else if(step===82){
+  else if(step===72){
     addScreen(g,135,172,58);
     addDribble(g,72,220,160,185,250,150);
     addCurveMove(g,135,172,150,135,192,110);
@@ -1488,7 +1355,7 @@ function drawAnnotations(){
       {title:"Same Rules", lines:["Split has now flowed directly back into our regular offense."]}
     ]);
   }
-  else if(step===83){
+  else if(step===73){
     addLabel(g,250,360,"BACK INTO REGULAR MOTION",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
     addBottomBox(g,145,382,335,"RESET THE NORMAL FLOW",["Attack → Roller → Pass Out → Handler to Slot → Roller to Corner","Then continue the next normal rotation."],250,150,{titleSize:11,lineSize:9.5});
     setSlideNotes([
@@ -1506,7 +1373,7 @@ function render(){
  document.getElementById("ball").setAttribute("cx",b[0]+18);
  document.getElementById("ball").setAttribute("cy",b[1]-14);
  document.getElementById("title").textContent=s[0];
- document.getElementById("sectionName").textContent = step <= 19 ? "MOTION OVERVIEW · NATURAL FLOW" : (step <= 28 ? "PRESSURE RELEASES" : (step <= 44 ? "2 MAN OPTIONS" : (step <= 54 ? "10/30 GAME FLOW" : "3 MAN ACTIONS")));
+ document.getElementById("sectionName").textContent = step <= 19 ? "MOTION OVERVIEW · NATURAL FLOW" : (step <= 28 ? "PRESSURE RELEASES" : (step <= 44 ? "2 MAN OPTIONS" : "3 MAN ACTIONS"));
  document.getElementById("lesson").innerHTML=s[1]+
    (step==0?'<div class="rule"><b>STARTING SPACING:</b> All five players begin outside the 3-point line. Corner players are deep in the corners.</div>':
     step==1?'<div class="rule"><b>RULE #1:</b> Get the ball to the slot.</div>':
@@ -1553,45 +1420,35 @@ function render(){
      42:'<div class="rule"><b>DHO DETAIL:</b> Stay on the <b>wing outside the arc</b>, try to <b>bump the defender</b> of the raising corner man, and make the handoff on the <b>outside</b> to protect the ball.</div>',
      43:'<div class="rule"><b>DHO ATTACK:</b> Receive the handoff on the <b>wing outside the arc</b>, <b>curl into it</b>, and catch with momentum heading <b>toward the basket</b>, not the sideline.</div>',
      44:'<div class="rule"><b>RESET:</b> Handler back to slot. Roller block first, then deep corner. Resume Base Motion.</div>',
-     45:'<div class="rule"><b>10/30 UPDATE:</b> Before the first left-slot entry, run <b>ONE FULL CYCLE OF WHEEL</b> to get everyone moving and make the pass easier.</div>',
-     46:'<div class="rule"><b>WHEEL FIRST:</b> 1 keeps the ball while 4 makes the hard basket cut. <b>Do not enter the slot yet.</b></div>',
-     47:'<div class="rule"><b>FILL BEHIND:</b> 4 fills the corner, <b>3 fills the left slot</b>, and <b>2 fills the left wing</b>.</div>',
-     48:'<div class="rule"><b>NOW START:</b> 1 enters to 3 in the new left slot. <b>3 = Slot · 2 = Action Man · 4 = Deep Corner.</b></div>',
-     49:'<div class="rule"><b>FIRST ROTATION:</b> Run the normal first rotation on the <b>LEFT</b>. 2 cuts through, 4 lifts, and 3 owns the slot.</div>',
-     50:'<div class="rule"><b>LEFT TWO-MAN:</b> 3 and 4 run the normal wing action. If we create an advantage, take it. If not, keep flowing.</div>',
-     51:'<div class="rule"><b>NEXT AUTOMATIC ACTION:</b> If nothing is open after the first left rotation, get the ball to 1 in the right slot, clear the side, and prepare a <b>RIGHT-SIDE GET</b>.</div>',
-     52:'<div class="rule"><b>RIGHT-SIDE GET:</b> 2 raises from the deep corner and catches <b>about two steps inside the arc near the right elbow</b>.</div>',
-     53:'<div class="rule"><b>GET TIMING:</b> 1 passes, then <b>SPRINTS OUTSIDE</b> of 2 and gets the ball right back.</div>',
-     54:'<div class="rule"><b>FINISH:</b> 1 attacks on a <b>45° angle</b>. New flow: <b>WHEEL FIRST → LEFT ROTATION → RIGHT-SIDE GET.</b></div>',
-     55:'<div class="rule"><b>3 MAN SPACING:</b> <b>Ball-side Slot + Action Man on the Wing + Deep Corner.</b> The other two players stay spaced weak side.</div>',
-     56:'<div class="rule"><b>THREE ROLES:</b> The roles belong to the <b>spots</b>, not specific players. Any player can become Slot, Action Man, or Corner Man.</div>',
-     57:'<div class="rule"><b>TRIGGER:</b> Once the ball reaches the ball-side slot, the <b>Action Man on the wing triggers the 3 Man action.</b></div>',
-     58:'<div class="rule"><b>DOWN:</b> Action Man screens down for the corner man <b>before</b> continuing through to the opposite corner.</div>',
-     59:'<div class="rule"><b>SCREEN FIRST:</b> On DOWN, the Action Man becomes the screener before beginning the normal cut-through.</div>',
-     60:'<div class="rule"><b>CORNER MAN:</b> Come off the screen tight and raise to the <b>true wing outside the 3-point line</b>.</div>',
-     61:'<div class="rule"><b>KEEP FLOWING:</b> After the screen, the Action Man continues through to the opposite deep corner just like normal.</div>',
-     62:'<div class="rule"><b>THE ADVANTAGE:</b> The corner man should catch on the wing with separation already created by the down screen.</div>',
-     63:'<div class="rule"><b>2 MAN STAYS THE SAME:</b> After the catch, all original options remain: <b>own score → roller → weak side.</b></div>',
-     64:'<div class="rule"><b>UP:</b> Action Man screens UP for the slot as a <b>ball screen</b>, then cuts through to the opposite corner.</div>',
-     65:'<div class="rule"><b>REAL BALL SCREEN:</b> UP is not a fake action. The screen is there to create a driving advantage for the slot.</div>',
-     66:'<div class="rule"><b>NON-NEGOTIABLE:</b> On UP, the slot <b>MUST DRIBBLE OFF THE OUTSIDE OF THE SCREEN — TO THE SCREENER\'S LEFT</b>.</div>',
-     67:'<div class="rule"><b>AFTER SCREENING:</b> Action Man continues through to the opposite deep corner while the slot attacks.</div>',
-     68:'<div class="rule"><b>CORNER READ #1:</b> Raise for a <b>DHO</b> from the original ballhandler.</div>',
-     69:'<div class="rule"><b>CORNER READ #2:</b> Hard backdoor cut to threaten the rim and <b>clear space for the drive</b>.</div>',
-     70:'<div class="rule"><b>PUNCH:</b> Sell the normal Action Man cut through, reach the <b>opposite block</b>, then sprint back to the basket.</div>',
-     71:'<div class="rule"><b>SELL THE CUT:</b> The first part of PUNCH should look exactly like the normal clear-through.</div>',
-     72:'<div class="rule"><b>TIMING:</b> Action Man reaches the opposite block while the corner man <b>raises to the wing and receives the pass from 4</b>.</div>',
-     73:'<div class="rule"><b>PUNCH BACK:</b> Plant at the opposite block and sprint back toward the <b>original side of the rim</b>.</div>',
-     74:'<div class="rule"><b>ENTRY:</b> Keep the wing-to-post pass short and realistic. Look for <b>quick layup first, quick post move second</b>.</div>',
-     75:'<div class="rule"><b>AUTOMATIC RULE:</b> <b>POST ENTRY = SPLIT ACTION.</b></div>',
-     76:'<div class="rule"><b>PASSER:</b> Immediately screen the <b>closest perimeter player</b>.</div>',
-     77:'<div class="rule"><b>SCREENED PLAYER:</b> <b>Use the screen first, stay outside</b>, then relocate to the corner for a jumper / 3.</div>',
-     78:'<div class="rule"><b>PASSER:</b> After screening, <b>cut full speed to the rim</b> for a pass from the post.</div>',
-     79:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>',
-     80:'<div class="rule"><b>IF NOTHING IS OPEN:</b> Post passes the ball <b>back out to the corner/perimeter</b>.</div>',
-     81:'<div class="rule"><b>NEXT ACTION:</b> Corner raises to the wing and the <b>post player on the strong side</b> becomes the low-angle screener.</div>',
-     82:'<div class="rule"><b>NORMAL READS:</b> <b>Own score → roller → weak side.</b></div>',
-     83:'<div class="rule"><b>BACK TO MOTION:</b> After the pick-and-roll, resume all normal handler/roller replacement and rotation rules.</div>'
+     45:'<div class="rule"><b>3 MAN SPACING:</b> <b>Ball-side Slot + Action Man on the Wing + Deep Corner.</b> The other two players stay spaced weak side.</div>',
+     46:'<div class="rule"><b>THREE ROLES:</b> The roles belong to the <b>spots</b>, not specific players. Any player can become Slot, Action Man, or Corner Man.</div>',
+     47:'<div class="rule"><b>TRIGGER:</b> Once the ball reaches the ball-side slot, the <b>Action Man on the wing triggers the 3 Man action.</b></div>',
+     48:'<div class="rule"><b>DOWN:</b> Action Man screens down for the corner man <b>before</b> continuing through to the opposite corner.</div>',
+     49:'<div class="rule"><b>SCREEN FIRST:</b> On DOWN, the Action Man becomes the screener before beginning the normal cut-through.</div>',
+     50:'<div class="rule"><b>CORNER MAN:</b> Come off the screen tight and raise to the <b>true wing outside the 3-point line</b>.</div>',
+     51:'<div class="rule"><b>KEEP FLOWING:</b> After the screen, the Action Man continues through to the opposite deep corner just like normal.</div>',
+     52:'<div class="rule"><b>THE ADVANTAGE:</b> The corner man should catch on the wing with separation already created by the down screen.</div>',
+     53:'<div class="rule"><b>2 MAN STAYS THE SAME:</b> After the catch, all original options remain: <b>own score → roller → weak side.</b></div>',
+     54:'<div class="rule"><b>UP:</b> Action Man screens UP for the slot as a <b>ball screen</b>, then cuts through to the opposite corner.</div>',
+     55:'<div class="rule"><b>REAL BALL SCREEN:</b> UP is not a fake action. The screen is there to create a driving advantage for the slot.</div>',
+     56:'<div class="rule"><b>NON-NEGOTIABLE:</b> On UP, the slot <b>MUST DRIBBLE OFF THE OUTSIDE OF THE SCREEN — TO THE SCREENER\'S LEFT</b>.</div>',
+     57:'<div class="rule"><b>AFTER SCREENING:</b> Action Man continues through to the opposite deep corner while the slot attacks.</div>',
+     58:'<div class="rule"><b>CORNER READ #1:</b> Raise for a <b>DHO</b> from the original ballhandler.</div>',
+     59:'<div class="rule"><b>CORNER READ #2:</b> Hard backdoor cut to threaten the rim and <b>clear space for the drive</b>.</div>',
+     60:'<div class="rule"><b>PUNCH:</b> Sell the normal Action Man cut through, reach the <b>opposite block</b>, then sprint back to the basket.</div>',
+     61:'<div class="rule"><b>SELL THE CUT:</b> The first part of PUNCH should look exactly like the normal clear-through.</div>',
+     62:'<div class="rule"><b>TIMING:</b> Action Man reaches the opposite block while the corner man <b>raises to the wing and receives the pass from 4</b>.</div>',
+     63:'<div class="rule"><b>PUNCH BACK:</b> Plant at the opposite block and sprint back toward the <b>original side of the rim</b>.</div>',
+     64:'<div class="rule"><b>ENTRY:</b> Keep the wing-to-post pass short and realistic. Look for <b>quick layup first, quick post move second</b>.</div>',
+     65:'<div class="rule"><b>AUTOMATIC RULE:</b> <b>POST ENTRY = SPLIT ACTION.</b></div>',
+     66:'<div class="rule"><b>PASSER:</b> Immediately screen the <b>closest perimeter player</b>.</div>',
+     67:'<div class="rule"><b>SCREENED PLAYER:</b> <b>Use the screen first, stay outside</b>, then relocate to the corner for a jumper / 3.</div>',
+     68:'<div class="rule"><b>PASSER:</b> After screening, <b>cut full speed to the rim</b> for a pass from the post.</div>',
+     69:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>',
+     70:'<div class="rule"><b>IF NOTHING IS OPEN:</b> Post passes the ball <b>back out to the corner/perimeter</b>.</div>',
+     71:'<div class="rule"><b>NEXT ACTION:</b> Corner raises to the wing and the <b>post player on the strong side</b> becomes the low-angle screener.</div>',
+     72:'<div class="rule"><b>NORMAL READS:</b> <b>Own score → roller → weak side.</b></div>',
+     73:'<div class="rule"><b>BACK TO MOTION:</b> After the pick-and-roll, resume all normal handler/roller replacement and rotation rules.</div>'
    };
    document.getElementById("lesson").innerHTML += (rules[step]||'');
  }
@@ -1672,8 +1529,7 @@ function next(){pauseSlides(false);step=Math.min(steps.length-1,step+1);render()
 function prev(){pauseSlides(false);step=Math.max(0,step-1);render()}
 function jumpToStep(displayStep){pauseSlides(false);if(mode!=="watch") setMode("watch");step=Math.max(0,Math.min(steps.length-1,displayStep-1));render()}
 function jumpToTwoMan(){jumpToStep(30)}
-function jumpToThreeMan(){jumpToStep(56)}
-function jumpToGameUpdate(){jumpToStep(46)}
+function jumpToThreeMan(){jumpToStep(46)}
 function closeActionMenus(){
   document.querySelectorAll(".action-dropdown.open").forEach(el=>el.classList.remove("open"));
 }
