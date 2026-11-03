@@ -332,11 +332,11 @@ twoReset:{1:[330,275],2:[205,285],3:[472,48],4:[28,48],5:[418,220]},
 // Weak-side players lift/fill away from the cut to keep the paint open.
 twoGiveSetup:{1:[350,275],2:[72,220],3:[472,48],4:[205,285],5:[418,220]},
 twoGivePassCut:{1:[350,275],2:[72,220],3:[472,48],4:[185,155],5:[418,220]},
-twoGiveAttack:{1:[205,285],2:[155,170],3:[82,220],4:[472,48],5:[28,48]},
-twoGiveHit:{1:[205,285],2:[155,170],3:[82,220],4:[472,48],5:[28,48]},
-twoGiveThrough:{1:[205,285],2:[185,145],3:[82,220],4:[472,48],5:[28,48]},
-twoGiveFill:{1:[205,285],2:[185,145],3:[82,220],4:[472,48],5:[28,48]},
-twoGiveReset:{1:[205,285],2:[250,150],3:[82,220],4:[472,48],5:[28,48]},
+twoGiveAttack:{1:[350,275],2:[155,170],3:[472,48],4:[210,105],5:[418,220]},
+twoGiveHit:{1:[350,275],2:[155,170],3:[472,48],4:[210,105],5:[418,220]},
+twoGiveThrough:{1:[285,285],2:[185,145],3:[418,220],4:[472,48],5:[350,275]},
+twoGiveFill:{1:[205,285],2:[185,145],3:[418,220],4:[472,48],5:[350,275]},
+twoGiveReset:{1:[205,285],2:[250,150],3:[418,220],4:[472,48],5:[350,275]},
 
 // SECTION 4 — 3 MAN ACTIONS
 // Base 3-man side: ball-side slot + Action Man on the wing + corner man.
@@ -441,8 +441,8 @@ const steps=[
 
 ["Option 7 — GIVE & GO","GIVE & GO is another 2 Man option. The slot passes to the wing and immediately basket cuts FULL SPEED. The receiver becomes the ballhandler and attacks the paint. The first read is the cutter at the rim.","twoGiveSetup",4],
 ["GIVE & GO — Pass and Cut Full Speed","4 passes from the slot to 2 on the wing and immediately cuts hard to the basket. This cannot be a jog or a fake cut — the purpose is to force the defense to react to the rim.","twoGivePassCut",2],
-["GIVE & GO — Ballhandler Attacks / Floor Fills Left","As 2 attacks the paint, 4 has already cleared through to the right corner. The rest of the offense fills to the left side, with 1 becoming the next left slot. This keeps the lane open and preserves our natural motion spacing.","twoGiveAttack",2],
-["GIVE & GO — Read the Cutter Early","2 must read 4 during the hard cut. If 4 is open before clearing through, make the pass for the layup. If not, 4 continues all the way to the right corner and the offense keeps flowing left.","twoGiveHit",4],
+["GIVE & GO — Ballhandler Attacks the Paint","As 4 cuts, 2 attacks the paint. The ballhandler must be aggressive enough to occupy help and create the passing window for the cutter. Catching and standing kills the action.","twoGiveAttack",2],
+["GIVE & GO — Read the Cutter First","If 4 is open at the rim, 2 hits the cutter for the layup. The cutter should expect the ball and finish immediately.","twoGiveHit",4],
 ["GIVE & GO — If No Pass, Fill Opposite Corner","If 4 does not receive the ball, 4 does NOT stop in the lane. Continue through at full speed and fill all the way to the opposite deep corner.","twoGiveThrough",2],
 ["GIVE & GO — Everyone Else Fills Away","While the cutter clears through, the other three players fill open perimeter spots AWAY from the cutter. Their job is to keep the lane empty and give the ballhandler room to attack.","twoGiveFill",2],
 ["GIVE & GO — Back Into Regular Motion","Once the cutter reaches the opposite corner and the other players have filled, spacing is restored. We are immediately back in regular Motion and can flow into the next action.","twoGiveReset",2],
@@ -1108,24 +1108,19 @@ function drawAnnotations(){
     ]);
   }
   else if(step===47){
+    addCurveMove(g,185,155,195,125,210,105);
     addDribble(g,72,220,115,195,155,170);
-    addCurveMove(g,210,105,330,78,472,48);
-    addMove(g,350,275,205,285);
-    addMove(g,472,48,82,220);
-    addMove(g,418,220,28,48);
     setSlideNotes([
-      {title:"2 ATTACKS THE PAINT", lines:["2 attacks downhill while 4 has already cleared through to the RIGHT CORNER."], accent:true},
-      {title:"FILL LEFT", lines:["Everyone else fills to the LEFT side to make room for the cutter and drive."]},
-      {title:"NEXT SLOT", lines:["1 becomes the next LEFT SLOT in the motion."]}
+      {title:"2 ATTACKS THE PAINT", lines:["The receiver becomes the ballhandler and attacks downhill."], accent:true},
+      {title:"Why", lines:["Paint pressure occupies help and opens the passing window to 4."]},
+      {title:"No Standing", lines:["Catch-and-hold defeats the purpose of Give & Go."]}
     ]);
   }
   else if(step===48){
-    addPass(g,155,170,220,112);
-    addSafeLabel(g,24,86,"READ CUTTER EARLY",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    addPass(g,155,170,210,105);
     setSlideNotes([
-      {title:"READ THE CUTTER EARLY", lines:["2 must look for 4 during the cut before 4 clears all the way to the right corner."], accent:true},
-      {title:"If Not Open", lines:["Once 4 clears through, keep the spacing — do not pull 4 back into the lane."]},
-      {title:"Flow", lines:["1 is already becoming the next left slot."]}
+      {title:"READ #1 — CUTTER", lines:["If 4 is open at the rim, 2 delivers the pass for the layup."], accent:true},
+      {title:"Cutter", lines:["Expect the ball and finish immediately."]}
     ]);
   }
   else if(step===49){
