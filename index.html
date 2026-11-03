@@ -158,18 +158,21 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 <div class="action-menu">
   <button class="action-menu-btn" onclick="toggleActionMenu('twoManMenu',event)">2 MAN ▾</button>
   <div id="twoManMenu" class="action-dropdown">
-    <button onclick="jumpToTwoMan();closeActionMenus()">2 MAN OVERVIEW</button>
+    <button onclick="jumpToStep(30);closeActionMenus()">2 MAN OVERVIEW</button>
     <button onclick="jumpToStep(31);closeActionMenus()">RIGHT-SIDE ENTRY</button>
     <button onclick="jumpToStep(32);closeActionMenus()">LEFT-SIDE ENTRY</button>
-    <button onclick="jumpToStep(33);closeActionMenus()">GET</button>
-    <button onclick="jumpToStep(39);closeActionMenus()">DHO</button>
-    <button onclick="jumpToStep(42);closeActionMenus()">PICK &amp; ROLL</button>
+    <button onclick="jumpToStep(34);closeActionMenus()">PICK &amp; ROLL</button>
+    <button onclick="jumpToStep(36);closeActionMenus()">REJECT</button>
+    <button onclick="jumpToStep(37);closeActionMenus()">SLIP</button>
+    <button onclick="jumpToStep(38);closeActionMenus()">RE-SCREEN</button>
+    <button onclick="jumpToStep(39);closeActionMenus()">GET</button>
+    <button onclick="jumpToStep(42);closeActionMenus()">DHO</button>
   </div>
 </div>
 <div class="action-menu">
   <button class="action-menu-btn" onclick="toggleActionMenu('threeManMenu',event)">3 MAN ▾</button>
   <div id="threeManMenu" class="action-dropdown">
-    <button onclick="jumpToThreeMan();closeActionMenus()">3 MAN OVERVIEW</button>
+    <button onclick="jumpToStep(56);closeActionMenus()">3 MAN OVERVIEW</button>
     <button onclick="jumpToStep(59);closeActionMenus()">DOWN</button>
     <button onclick="jumpToStep(65);closeActionMenus()">UP</button>
     <button onclick="jumpToStep(71);closeActionMenus()">PUNCH</button>
