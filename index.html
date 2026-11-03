@@ -302,9 +302,9 @@ splitFarCorner:{1:[350,275],2:[472,48],3:[205,105],4:[28,48],5:[418,220]},
 // SPLIT CONTINUATION — NOTHING OPEN
 // Pass out to the corner, flow into pick-and-roll, then return to normal motion.
 splitPassOutCorner:{1:[350,275],2:[472,48],3:[205,105],4:[28,48],5:[418,220]},
-splitCornerPnrSetup:{1:[350,275],2:[472,48],3:[205,105],4:[72,220],5:[418,220]},
-splitCornerPnr:{1:[350,275],2:[472,48],3:[205,105],4:[72,220],5:[135,172]},
-splitBackToMotion:{1:[350,275],2:[472,48],3:[205,105],4:[250,150],5:[192,110]}
+splitCornerPnrSetup:{1:[350,275],2:[472,48],3:[135,172],4:[72,220],5:[418,220]},
+splitCornerPnr:{1:[350,275],2:[472,48],3:[135,172],4:[72,220],5:[418,220]},
+splitBackToMotion:{1:[350,275],2:[472,48],3:[192,110],4:[250,150],5:[418,220]}
 };
 const steps=[
 
@@ -403,7 +403,7 @@ const steps=[
 ["SPLIT — If No Pass, Continue to Far Corner","If the cutter does not receive the ball at the rim, he keeps moving and continues through to the far corner. This restores spacing and keeps the offense flowing.","splitFarCorner",3],
 
 ["SPLIT — Nothing Open? Pass Out to the Corner","If the corner shot and rim cut are both covered, the post does not hold the ball. Pass the ball back out to the corner/perimeter and keep the action moving.","splitPassOutCorner",4],
-["SPLIT — Corner Flows Into Pick & Roll","After the pass-out, the corner player raises to the wing and the nearest teammate flows into the same low-angle pick-and-roll we already use in our regular offense.","splitCornerPnrSetup",4],
+["SPLIT — Corner Flows Into Pick & Roll","After the pass-out, the corner player raises to the wing and the POST PLAYER on the strong side flows directly into the same low-angle pick-and-roll we already use in our regular offense.","splitCornerPnrSetup",4],
 ["SPLIT — Pick & Roll","Run the normal 2 Man reads: 1) own score, 2) LOOK BACK TO THE ROLLER, 3) weak side. Nothing new is added here — Split simply flows back into our existing pick-and-roll rules.","splitCornerPnr",4],
 ["SPLIT — Back Into Regular Motion","Once the pick-and-roll begins, we are fully back in regular motion. Ballhandler attacks, roller completes the roll, pass out if needed, handler returns to slot, roller replaces to corner, and the normal rotation continues.","splitBackToMotion",4]
 ];
@@ -480,6 +480,21 @@ function addLabel(g,x,y,text,opts={}){
   return group;
 }
 
+function addSafeLabel(g,x,y,text,opts={}){
+  // Diagram text rule: keep labels in perimeter safe zones, never through live action.
+  // If a label is placed inside the central action corridor, automatically lift it
+  // toward the nearest safe edge unless explicitly overridden.
+  const safe={...opts};
+  if(!safe.allowTraffic){
+    const inCentralX = x>95 && x<405;
+    const inCentralY = y>95 && y<335;
+    if(inCentralX && inCentralY){
+      if(y<215) y=72;
+      else y=352;
+    }
+  }
+  return addLabel(g,x,y,text,safe);
+}
 function addLeader(g,x1,y1,x2,y2){
   const p=makeSvg("path",{
     d:`M ${x1} ${y1} Q ${(x1+x2)/2} ${Math.min(y1,y2)-18} ${x2} ${y2}`,
@@ -562,6 +577,11 @@ function setSlideNotes(items){
   }).join("");
 }
 function drawAnnotations(){
+  // PERMANENT DIAGRAM RULES:
+  // 1) No teaching text may overlap a player, pass line, dribble line, cut line, screen, or ball.
+  // 2) Use side note bubbles first; use addSafeLabel only in court-edge safe zones.
+  // 3) When action is busy, move explanation to setSlideNotes or addBottomBox instead of the traffic area.
+  // 4) Any new slide must preserve a clear central action corridor.
   const g=document.getElementById("annotations");
   g.innerHTML="";
   setSlideNotes([]);
@@ -1366,13 +1386,13 @@ function drawAnnotations(){
   }
   else if(step===81){
     addMove(g,28,48,72,220);
-    addMove(g,418,220,135,172);
+    addMove(g,205,105,135,172);
     addScreen(g,135,172,58);
-    addLabel(g,92,252,"CORNER RAISES TO WING",{anchor:"middle",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    addSafeLabel(g,26,86,"4 RAISES TO WING",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
-      {title:"RAISE + SCREEN", lines:["The corner player raises to the true wing."], accent:true},
-      {title:"Nearest Teammate", lines:["Flows into the same low-angle screen we already teach."]},
-      {title:"Nothing New", lines:["This is our regular 2 Man spacing again."]}
+      {title:"RAISE + SCREEN", lines:["4 raises from the corner to the true wing."], accent:true},
+      {title:"POST PLAYER SCREENS", lines:["3, the post player already on the strong side, flows into the low-angle ball screen."]},
+      {title:"Nothing New", lines:["From here we are back in the same 2 Man rules we already teach."]}
     ]);
   }
   else if(step===82){
@@ -1380,8 +1400,8 @@ function drawAnnotations(){
     addDribble(g,72,220,160,185,250,150);
     addCurveMove(g,135,172,150,135,192,110);
     setSlideNotes([
-      {title:"NORMAL PICK & ROLL", lines:["Ballhandler attacks middle / far paint."], accent:true},
-      {title:"Read Order", lines:["1) Own score","2) LOOK BACK TO ROLLER","3) Weak side"]},
+      {title:"NORMAL PICK & ROLL", lines:["4 attacks middle / far paint off 3's screen."], accent:true},
+      {title:"Read Order", lines:["1) Own score","2) LOOK BACK TO 3 ROLLING","3) Weak side"]},
       {title:"Same Rules", lines:["Split has now flowed directly back into our regular offense."]}
     ]);
   }
@@ -1486,7 +1506,7 @@ function render(){
      78:'<div class="rule"><b>PASSER:</b> After screening, <b>cut full speed to the rim</b> for a pass from the post.</div>',
      79:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>',
      80:'<div class="rule"><b>IF NOTHING IS OPEN:</b> Post passes the ball <b>back out to the corner/perimeter</b>.</div>',
-     81:'<div class="rule"><b>NEXT ACTION:</b> Corner raises to the wing and we flow directly into our <b>normal low-angle pick-and-roll</b>.</div>',
+     81:'<div class="rule"><b>NEXT ACTION:</b> Corner raises to the wing and the <b>post player on the strong side</b> becomes the low-angle screener.</div>',
      82:'<div class="rule"><b>NORMAL READS:</b> <b>Own score → roller → weak side.</b></div>',
      83:'<div class="rule"><b>BACK TO MOTION:</b> After the pick-and-roll, resume all normal handler/roller replacement and rotation rules.</div>'
    };
