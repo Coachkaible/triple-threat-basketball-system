@@ -391,7 +391,7 @@ const steps=[
 
 ["AUTOMATIC POST RULE — SPLIT ACTION","Any time we make a post entry, we automatically enter SPLIT ACTION. The passer immediately screens for the closest perimeter player. The screened player relocates to the corner for a jumper/3, then the passer cuts full speed to the rim.","splitSetup",3],
 ["SPLIT — Passer Screens the Closest Player","Immediately after the post entry, the passer does not stand and watch. He turns and sets a screen for the closest perimeter teammate.","splitScreen",3],
-["SPLIT — Closest Player Relocates to the Corner","The player receiving the split screen relocates hard to the corner for a catch-and-shoot jumper/3. This gives the post a perimeter scoring option and creates space for the next cut.","splitCornerRelocate",3],
+["SPLIT — Closest Player Uses the Screen and Relocates","The player receiving the split screen must first come off the screen and stay outside of it to create separation. Only after using the screen does he continue to the corner for a catch-and-shoot jumper/3.","splitCornerRelocate",3],
 ["SPLIT — Passer Cuts Full Speed to the Rim","After screening, the original passer cuts full speed to the basket. The post now reads the corner shooter and the rim cutter.","splitRimCut",3],
 ["SPLIT — If No Pass, Continue to Far Corner","If the cutter does not receive the ball at the rim, he keeps moving and continues through to the far corner. This restores spacing and keeps the offense flowing.","splitFarCorner",3]
 ];
@@ -1314,12 +1314,14 @@ function drawAnnotations(){
   }
   else if(step===77){
     addScreen(g,165,245,45);
-    addCurveMove(g,205,285,110,155,28,48);
-    addLabel(g,84,92,"4 RELOCATES TO CORNER",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    addCurveMove(g,205,285,190,255,135,230);
+    addCurveMove(g,135,230,85,160,28,48);
+    addLabel(g,128,206,"USE SCREEN — STAY OUTSIDE",{anchor:"middle",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
+    addLabel(g,70,88,"THEN RELOCATE TO CORNER",{anchor:"start",fontSize:9.2,bg:"#ffffff",padX:6,padY:4});
     setSlideNotes([
-      {title:"CORNER SHOT OPTION", lines:["4 comes off the split screen and relocates hard to the corner for the shot."], accent:true},
-      {title:"Real Screen", lines:["Because 2 got closer, the split action now looks realistic and useful."]},
-      {title:"Next", lines:["After screening, 2 will cut full speed to the rim from this tighter position."]}
+      {title:"USE THE SPLIT SCREEN", lines:["4 must actually come off 2's screen first — do not just run straight to the corner."], accent:true},
+      {title:"Stay Outside", lines:["4 stays on the outside of the screen, creating separation before relocating."]},
+      {title:"Then Relocate", lines:["After using the screen, continue out to the corner for the jumper / 3."]}
     ]);
   }
   else if(step===78){
@@ -1429,7 +1431,7 @@ function render(){
      74:'<div class="rule"><b>ENTRY:</b> Keep the wing-to-post pass short and realistic. Look for <b>quick layup first, quick post move second</b>.</div>',
      75:'<div class="rule"><b>AUTOMATIC RULE:</b> <b>POST ENTRY = SPLIT ACTION.</b></div>',
      76:'<div class="rule"><b>PASSER:</b> Immediately screen the <b>closest perimeter player</b>.</div>',
-     77:'<div class="rule"><b>SCREENED PLAYER:</b> Relocate to the corner for a <b>jumper / 3</b>.</div>',
+     77:'<div class="rule"><b>SCREENED PLAYER:</b> <b>Use the screen first, stay outside</b>, then relocate to the corner for a jumper / 3.</div>',
      78:'<div class="rule"><b>PASSER:</b> After screening, <b>cut full speed to the rim</b> for a pass from the post.</div>',
      79:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>'
    };
