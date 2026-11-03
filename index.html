@@ -154,7 +154,36 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 <button onclick="prev()">◀ Previous</button>
 <button class="primary" onclick="next()">NEXT STEP ▶</button>
 <button onclick="resetAll()">Reset</button>
-<button class="primary" onclick="jumpToGameUpdate()">10/30 UPDATE</button>
+
+<div class="action-menu">
+  <button class="action-menu-btn primary" onclick="toggleActionMenu('motionMenu',event)">MOTION OVERVIEW ▾</button>
+  <div id="motionMenu" class="action-dropdown">
+    <button onclick="jumpToStep(1);closeActionMenus()">START MOTION OVERVIEW</button>
+    <button onclick="jumpToStep(2);closeActionMenus()">SLOT ENTRY</button>
+    <button onclick="jumpToStep(3);closeActionMenus()">ACTION MAN BACKDOOR</button>
+    <button onclick="jumpToStep(5);closeActionMenus()">FIRST PICK &amp; ROLL</button>
+    <button onclick="jumpToStep(9);closeActionMenus()">NEXT ROTATION</button>
+    <button onclick="jumpToStep(11);closeActionMenus()">SECOND PICK &amp; ROLL</button>
+    <button onclick="jumpToStep(15);closeActionMenus()">THIRD ROTATION</button>
+    <button onclick="jumpToStep(20);closeActionMenus()">3 ROTATIONS / 10 SECONDS</button>
+  </div>
+</div>
+
+<div class="action-menu">
+  <button class="action-menu-btn" onclick="toggleActionMenu('pressureMenu',event)">PRESSURE RELEASES ▾</button>
+  <div id="pressureMenu" class="action-dropdown">
+    <button onclick="jumpToStep(21);closeActionMenus()">PRESSURE RELEASE OVERVIEW</button>
+    <button onclick="jumpToStep(22);closeActionMenus()">CUT &amp; FILL RULE</button>
+    <button onclick="jumpToStep(23);closeActionMenus()">WHEEL</button>
+    <button onclick="jumpToStep(25);closeActionMenus()">IF UNSURE — CUT</button>
+    <button onclick="jumpToStep(26);closeActionMenus()">WHEEL — NEW ROLES</button>
+    <button onclick="jumpToStep(27);closeActionMenus()">V</button>
+    <button onclick="jumpToStep(28);closeActionMenus()">WHEEL &amp; V</button>
+    <button onclick="jumpToStep(29);closeActionMenus()">FLAT PASS WARNING</button>
+  </div>
+</div>
+
+<button onclick="jumpToGameUpdate()">10/30 GAME FLOW</button>
 <div class="action-menu">
   <button class="action-menu-btn" onclick="toggleActionMenu('twoManMenu',event)">2 MAN ▾</button>
   <div id="twoManMenu" class="action-dropdown">
@@ -367,7 +396,7 @@ const steps=[
 
 
 
-["Starting Alignment","Every player begins outside the 3-point line. 2 and 5 are deep in the corners, 3 is outside the line on the left wing, 4 trails outside the line toward the slot, and 1 brings the ball up outside the arc.","start",1],
+["Motion Overview — Starting Alignment","The first 20 slides show our natural offensive progression with no modifiers. We use Pick & Roll as the standard 2 Man action so players can learn the base flow first. Every player begins outside the 3-point line. 2 and 5 are deep in the corners, 3 is outside the line on the left wing, 4 trails outside the line toward the slot, and 1 brings the ball up outside the arc.","start",1],
 ["Get the Ball to the Slot","1 makes the slot entry to 4. This triggers the first three-man action.","slot",4],
 ["Read #1 — Action Man Backdoor","When 4 catches, the middle player on the 3-man side (3 in this example) is the ACTION MAN. The Action Man backdoor is ALWAYS the first option we are looking for. For now, the Action Man always backdoor cuts hard looking for the ball, but we only throw the bounce pass if there is a clear path for a layup. Do not force it, especially on the first cut of the offense.","backdoor3",4],
 ["3 Clears Through / 5 Raises","If 3 does not receive the backdoor pass, 3 continues all the way through to the opposite deep corner while 5 raises from the deep right corner to the right wing at foul-line extended at the same time.","clear3Raise5",4],
@@ -387,7 +416,7 @@ const steps=[
 ["Pass Out / Handler Back to Slot","After attacking, 5 passes out to 3 as the outlet and then relocates back out to the slot.","rot25PassOut",3],
 ["2 Replaces to the Corner","After rolling to the block, 2 replaces back out to the deep corner to complete the next rotation.","rot25RollerCorner",3],
 ["3 Rotations in ~10 Seconds","Our goal is to get through three full rotations of Base Motion in approximately 10 seconds. The offense should be run at full speed with decisive cuts, hard fills, quick passes, and aggressive two-man actions. When we execute three rotations correctly and with pace, we expect a very high-quality scoring opportunity to present itself.","rot25RollerCorner",3],
-["SECTION 2 — Pressure Release","Section 2 teaches how we handle common problems when trying to run the offense. The first common problem is defensive pressure: defenders crowd us, take away catches, and make passes difficult to complete. We will teach this from our original starting setup.","pressureIntro",1],
+["PRESSURE RELEASES — Overview","Pressure Releases are the options we use when defensive pressure disrupts our normal Motion Overview. Instead of forcing passes, we use automatic movement — Cut & Fill / Wheel or V — to safely create a new passing angle and keep the offense flowing.","pressureIntro",1],
 ["NUMBER 1 RULE — 4 Basket Cuts from the Slot","Using our original setup, if 4 is being pressured in the slot and the defender is anywhere close to above the 3-point line, 4 MUST full-speed basket cut. This is our NUMBER 1 RULE against pressure.","pr4slotCut",1],
 ["3 and 2 Fill Behind","If 4 is not open on the cut, 4 continues through and fills the left corner. At the same time, 3 FILLS behind to the slot and 2 FILLS behind to the wing so the offense keeps flowing.","pr4slotFill",1],
 ["Why It Works","That basket cut may create a direct layup for 4. If it does not, the offense still continues because 3 and 2 have filled the open spots behind the cut.","pr4slotFlow",1],
@@ -397,7 +426,7 @@ const steps=[
 ["Wheel & V — Moving the Ball Side to Side","Both Wheel and V are pressure-release tools used when we are trying to move the ball from one side of the court to the other and defensive pressure makes the direct pass too difficult. Instead of forcing the pass, we create movement to change the spacing and get the ball safely to the other side.","pressureIntro",1],
 ["Danger of the Flat Pass","If we do not use Wheel or V against aggressive pressure and instead throw a flat pass, we put the offense in danger. A flat pass is a straight-line pass from slot to slot. If an aggressive defender steals that pass, we not only lose the ball, but we likely give up a wide open layup because nobody is back to defend.","pressureIntro",1],
 
-["SECTION 3 — 2 Man","2 Man is what we call the action when we have only two offensive players on the strong side: one player in the slot and one player in the deep corner. The other three players stay spaced away so the two-man side has room to create an advantage.","twoIntro",4],
+["2 MAN OPTIONS — Overview","2 Man is what we call the action when we have only two offensive players on the strong side: one player in the slot and one player in the deep corner. The other three players stay spaced away so the two-man side has room to create an advantage.","twoIntro",4],
 ["How We Can Get to 2 Man — Push Directly Right","We can get to 2 Man immediately if the guard pushing the action goes directly to the player on the right wing. We do not have to force the normal three-man entry first. If the strong side naturally gives us a slot player and a corner player, we can flow directly into 2 Man.","twoPushRight",1],
 ["How We Can Get to 2 Man — Action Man Cuts Through","We can also get to 2 Man during Base Motion. When the ball gets to the left side and the Action Man makes the hard cut through, that side is reduced to the slot player and the corner player. That immediately creates our 2 Man spacing.","clear3Raise5",4],
 ["2 Man Alignment — Slot + Corner","The basic picture is simple: one player is in the slot and one player is in the deep corner on the strong side. In this example, 4 is the slot and 2 is the corner. The three weak-side players stay out of the action and keep the floor spaced.","twoPairLeft",4],
@@ -426,7 +455,7 @@ const steps=[
 ["Right-Side GET — 1 Sprints Outside and Gets It Back","Immediately after the pass, 1 sprints outside of 2 toward the right sideline. 2 gives the ball right back. The exchange happens near the elbow so 1 can turn the corner with the best downhill angle.","gameUpdateRightGetReturn",1],
 ["Right-Side GET — Attack the 45","After getting the ball back, 1 turns the corner and attacks the basket on a 45-degree angle. This is our next automatic action if the first rotation on the left does not create an advantage: LEFT ROTATION → RIGHT-SIDE GET.","gameUpdateRightGetAttack",1],
 
-["SECTION 4 — 3 Man Actions","This section introduces our 3 Man actions. Every 3 Man action starts with the same three-player structure on the ball side: the BALL-SIDE SLOT has the ball, the ACTION MAN starts on the wing, and the CORNER MAN is spaced in the deep corner. The other two players stay spaced on the weak side.","threeManSetup",4],
+["3 MAN ACTIONS — Overview","This section introduces our 3 Man actions. Every 3 Man action starts with the same three-player structure on the ball side: the BALL-SIDE SLOT has the ball, the ACTION MAN starts on the wing, and the CORNER MAN is spaced in the deep corner. The other two players stay spaced on the weak side.","threeManSetup",4],
 ["3 Man — Know the Three Roles","The three players involved are defined by their spots, not by their jersey numbers. In this example: 4 is the BALL-SIDE SLOT, 3 is the ACTION MAN on the wing, and 2 is the CORNER MAN. Because our spots are interchangeable, any three players can become these three roles during the possession.","threeManRoles",4],
 ["3 Man — Action Man Is the Trigger","The Action Man is the key to the 3 Man package. Once the ball reaches the ball-side slot, the Action Man on the wing becomes the trigger for the action. The slot, Action Man, and corner man will work together while the two weak-side players maintain spacing. We will build the individual 3 Man actions from this exact picture.","threeManTrigger",4],
 
@@ -1477,7 +1506,7 @@ function render(){
  document.getElementById("ball").setAttribute("cx",b[0]+18);
  document.getElementById("ball").setAttribute("cy",b[1]-14);
  document.getElementById("title").textContent=s[0];
- document.getElementById("sectionName").textContent = step <= 19 ? "SECTION 1 · BASE MOTION" : (step <= 28 ? "SECTION 2 · PRESSURE RELEASE" : (step <= 44 ? "SECTION 3 · 2 MAN" : (step <= 54 ? "UPDATE FOR GAMES ON 10/30 AND BEYOND" : "SECTION 4 · 3 MAN ACTIONS")));
+ document.getElementById("sectionName").textContent = step <= 19 ? "MOTION OVERVIEW · NATURAL FLOW" : (step <= 28 ? "PRESSURE RELEASES" : (step <= 44 ? "2 MAN OPTIONS" : (step <= 54 ? "10/30 GAME FLOW" : "3 MAN ACTIONS")));
  document.getElementById("lesson").innerHTML=s[1]+
    (step==0?'<div class="rule"><b>STARTING SPACING:</b> All five players begin outside the 3-point line. Corner players are deep in the corners.</div>':
     step==1?'<div class="rule"><b>RULE #1:</b> Get the ball to the slot.</div>':
