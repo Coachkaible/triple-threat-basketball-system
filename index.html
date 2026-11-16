@@ -376,11 +376,11 @@ threePunchEntry:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
 // Action Man starts the normal cut, stops at the ball-side block,
 // then back screens the slot as the slot-to-wing pass is in the air.
 threeUtahSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
-threeUtahCut:{1:[350,275],2:[28,48],3:[145,135],4:[205,285],5:[472,48]},
-threeUtahBlock:{1:[350,275],2:[72,220],3:[145,110],4:[205,285],5:[472,48]},
-threeUtahPass:{1:[350,275],2:[72,220],3:[165,175],4:[205,285],5:[472,48]},
-threeUtahSlotCut:{1:[350,275],2:[72,220],3:[165,175],4:[205,120],5:[472,48]},
-threeUtahFinish:{1:[350,275],2:[72,220],3:[165,175],4:[205,105],5:[472,48]},
+threeUtahCut:{1:[350,275],2:[28,48],3:[165,125],4:[205,285],5:[472,48]},
+threeUtahBlock:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[472,48]},
+threeUtahPass:{1:[350,275],2:[72,220],3:[205,225],4:[205,285],5:[472,48]},
+threeUtahSlotCut:{1:[350,275],2:[72,220],3:[205,225],4:[205,135],5:[472,48]},
+threeUtahFinish:{1:[350,275],2:[72,220],3:[205,225],4:[205,110],5:[472,48]},
 
 // AUTOMATIC POST ENTRY — SPLIT ACTION
 splitSetup:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
@@ -1365,45 +1365,47 @@ function drawAnnotations(){
     ]);
   }
   else if(step===71){
-    addCurveMove(g,82,220,110,165,145,135);
+    addCurveMove(g,82,220,120,160,165,125);
     setSlideNotes([
       {title:"SELL THE NORMAL CUT", lines:["The Action Man starts hard toward the rim exactly like regular Motion."], accent:true},
+      {title:"Keep Going", lines:["Do not stop early — get all the way toward the ball-side block."]},
       {title:"No Early Tell", lines:["Make the defense believe the normal cut-through is coming."]}
     ]);
   }
   else if(step===72){
-    addCurveMove(g,145,135,148,120,145,110);
+    addCurveMove(g,165,125,188,112,205,105);
     addMove(g,28,48,72,220);
     setSlideNotes([
-      {title:"STOP AT BALL-SIDE BLOCK", lines:["The Action Man stops at the ball-side block instead of clearing through."], accent:true},
-      {title:"CORNER RAISES", lines:["At the same time, the corner man rises to the true wing like normal."]}
+      {title:"GET TO THE BALL-SIDE BLOCK", lines:["3 must actually finish the cut all the way to the ball-side block before screening."], accent:true},
+      {title:"CORNER RAISES", lines:["At the same time, 2 rises to the true wing like normal."]},
+      {title:"Do Not Stop Short", lines:["The block touch is what makes Utah look like the normal cut first."]}
     ]);
   }
   else if(step===73){
     addPass(g,205,285,72,220);
-    addCurveMove(g,145,110,155,145,165,175);
-    addScreen(g,165,175,35);
+    addCurveMove(g,205,105,205,165,205,225);
+    addScreen(g,205,225,0);
     setSlideNotes([
       {title:"PASS IS IN THE AIR", lines:["4 passes to 2 rising on the wing."], accent:true},
-      {title:"BACK SCREEN NOW", lines:["While the pass is traveling, 3 steps into the back screen for 4."]},
-      {title:"Timing", lines:["Do not wait for the wing to catch before setting the screen."]}
+      {title:"3 COMES UP TO SCREEN 4", lines:["As the pass travels, 3 comes up from the block and gets close enough to 4 to set a real back screen."], accent:true},
+      {title:"Timing", lines:["The screen should be in place as 4 is ready to cut — not two steps away."]}
     ]);
   }
   else if(step===74){
-    addScreen(g,165,175,35);
-    addCurveMove(g,205,285,185,205,205,120);
+    addScreen(g,205,225,0);
+    addCurveMove(g,205,285,190,220,205,135);
     setSlideNotes([
-      {title:"SLOT USES THE BACK SCREEN", lines:["4 cuts tight off 3's back screen toward the block/rim."], accent:true},
-      {title:"Full Speed", lines:["Pass and cut immediately — do not hesitate after the wing entry."]},
-      {title:"Expect It", lines:["4 should expect the layup pass."]}
+      {title:"SLOT USES THE BACK SCREEN", lines:["4 comes tight off 3's back screen and cuts directly toward the block/rim."], accent:true},
+      {title:"Tight Cut", lines:["4 should brush the screen — there should not be a big gap between cutter and screener."]},
+      {title:"Full Speed", lines:["Pass and cut immediately."]}
     ]);
   }
   else if(step===75){
-    addPass(g,72,220,205,105);
+    addPass(g,72,220,205,110);
     setSlideNotes([
-      {title:"WING READ #1 — LAYUP", lines:["2's first look is 4 coming off the back screen."], accent:true},
-      {title:"Deliver It Early", lines:["If 4 is open at the block/rim, make the pass immediately."]},
-      {title:"UTAH", lines:["Normal cut look → stop at block → pass to wing → back screen → layup cut."]}
+      {title:"WING READ #1 — LAYUP", lines:["2's first look is 4 coming tight off the back screen to the block/rim."], accent:true},
+      {title:"Deliver It Early", lines:["If 4 is open, make the pass immediately."]},
+      {title:"UTAH", lines:["Normal cut → touch ball-side block → come up to screen slot → slot cuts for layup."]}
     ]);
   }
   else if(step===76){
