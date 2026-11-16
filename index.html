@@ -205,7 +205,8 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
     <button onclick="jumpToStep(54);closeActionMenus()">DOWN</button>
     <button onclick="jumpToStep(60);closeActionMenus()">UP</button>
     <button onclick="jumpToStep(66);closeActionMenus()">PUNCH</button>
-    <button onclick="jumpToStep(71);closeActionMenus()">SPLIT ACTION</button>
+    <button onclick="jumpToStep(71);closeActionMenus()">UTAH</button>
+    <button onclick="jumpToStep(77);closeActionMenus()">SPLIT ACTION</button>
   </div>
 </div>
 <button id="playBtn" onclick="playSlides()">▶ Play Sequence</button>
@@ -371,6 +372,16 @@ threePunchOppBlock:{1:[350,275],2:[72,220],3:[355,110],4:[205,285],5:[418,220]},
 threePunchReturn:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
 threePunchEntry:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
 
+// 3 MAN ACTION #4 — UTAH
+// Action Man starts the normal cut, stops at the ball-side block,
+// then back screens the slot as the slot-to-wing pass is in the air.
+threeUtahSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
+threeUtahCut:{1:[350,275],2:[28,48],3:[145,135],4:[205,285],5:[472,48]},
+threeUtahBlock:{1:[350,275],2:[72,220],3:[145,110],4:[205,285],5:[472,48]},
+threeUtahPass:{1:[350,275],2:[72,220],3:[165,175],4:[205,285],5:[472,48]},
+threeUtahSlotCut:{1:[350,275],2:[72,220],3:[165,175],4:[205,120],5:[472,48]},
+threeUtahFinish:{1:[350,275],2:[72,220],3:[165,175],4:[205,105],5:[472,48]},
+
 // AUTOMATIC POST ENTRY — SPLIT ACTION
 splitSetup:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
 splitScreen:{1:[350,275],2:[165,245],3:[205,105],4:[205,285],5:[418,220]},
@@ -468,6 +479,13 @@ const steps=[
 ["PUNCH — Reach the Opposite Block / 4 Passes to 2","Instead of finishing all the way to the far corner, the Action Man reaches the opposite block. At the same time, the original corner man raises to the wing and 4 passes the ball to 2. Now 2 is in position to make the short post entry when the Action Man punches back.","threePunchOppBlock",2],
 ["PUNCH — Sprint Back to the Original Side","Once the Action Man reaches the opposite block, he immediately changes direction and sprints back across toward the original side of the basket. At this point, 2 already has the ball on the wing from the 4 → 2 pass and is waiting to make the short post entry.","threePunchReturn",2],
 ["PUNCH — Short Wing Entry to the Low Post","The corner man, now raised to the wing, makes a short entry pass to the Action Man after he punches back to the original side of the basket. The goal is a quick layup first. If the layup is not there, the Action Man can finish with a quick post move before the defense recovers.","threePunchEntry",3],
+
+["3 Man Action #4 — UTAH","UTAH begins like our normal Action Man cut. The Action Man starts toward the rim, but instead of cutting all the way through to the opposite corner, stops at the ball-side block. That stop becomes the setup for a back screen on the slot.","threeUtahSetup",4],
+["UTAH — Sell the Normal Cut","The Action Man starts the same hard cut toward the rim that the defense has already seen in our regular Motion. The first part must look normal so the defense reacts to the cut instead of anticipating the screen.","threeUtahCut",4],
+["UTAH — Stop at the Ball-Side Block","Instead of continuing through to the opposite corner, the Action Man stops at the BALL-SIDE BLOCK. At the same time, the corner man rises to the true wing, just like our normal flow.","threeUtahBlock",4],
+["UTAH — Pass to the Rising Wing / Back Screen in the Air","The slot passes to the corner man rising to the wing. AS THE PASS IS IN THE AIR, the Action Man steps into a back screen for the ball-side slot. The timing matters: the screen should arrive while the defense is shifting its attention to the wing catch.","threeUtahPass",2],
+["UTAH — Slot Cuts Off the Back Screen","Immediately after making the pass, the slot cuts hard off the Action Man's back screen toward the block/rim. The slot must come tight off the screen and expect the ball for a layup.","threeUtahSlotCut",2],
+["UTAH — Wing Looks Inside for the Layup","The new wing ballhandler's first read is the slot coming off the back screen. If the cutter is open at the block/rim, deliver the pass immediately for the layup.","threeUtahFinish",4],
 
 ["AUTOMATIC POST RULE — SPLIT ACTION","Any time we make a post entry, we automatically enter SPLIT ACTION. The passer immediately screens for the closest perimeter player. The screened player relocates to the corner for a jumper/3, then the passer cuts full speed to the rim.","splitSetup",3],
 ["SPLIT — Passer Screens the Closest Player","Immediately after the post entry, the passer does not stand and watch. He turns and sets a screen for the closest perimeter teammate.","splitScreen",3],
@@ -1339,6 +1357,56 @@ function drawAnnotations(){
     ]);
   }
   else if(step===70){
+    addSafeLabel(g,24,86,"3 MAN ACTION #4 — UTAH",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"UTAH", lines:["Start the normal Action Man cut, but stop at the ball-side block."], accent:true},
+      {title:"What Changes", lines:["The stop at the block becomes a back screen for the slot."]},
+      {title:"Timing", lines:["The back screen happens as the slot-to-wing pass is in the air."]}
+    ]);
+  }
+  else if(step===71){
+    addCurveMove(g,82,220,110,165,145,135);
+    setSlideNotes([
+      {title:"SELL THE NORMAL CUT", lines:["The Action Man starts hard toward the rim exactly like regular Motion."], accent:true},
+      {title:"No Early Tell", lines:["Make the defense believe the normal cut-through is coming."]}
+    ]);
+  }
+  else if(step===72){
+    addCurveMove(g,145,135,148,120,145,110);
+    addMove(g,28,48,72,220);
+    setSlideNotes([
+      {title:"STOP AT BALL-SIDE BLOCK", lines:["The Action Man stops at the ball-side block instead of clearing through."], accent:true},
+      {title:"CORNER RAISES", lines:["At the same time, the corner man rises to the true wing like normal."]}
+    ]);
+  }
+  else if(step===73){
+    addPass(g,205,285,72,220);
+    addCurveMove(g,145,110,155,145,165,175);
+    addScreen(g,165,175,35);
+    setSlideNotes([
+      {title:"PASS IS IN THE AIR", lines:["4 passes to 2 rising on the wing."], accent:true},
+      {title:"BACK SCREEN NOW", lines:["While the pass is traveling, 3 steps into the back screen for 4."]},
+      {title:"Timing", lines:["Do not wait for the wing to catch before setting the screen."]}
+    ]);
+  }
+  else if(step===74){
+    addScreen(g,165,175,35);
+    addCurveMove(g,205,285,185,205,205,120);
+    setSlideNotes([
+      {title:"SLOT USES THE BACK SCREEN", lines:["4 cuts tight off 3's back screen toward the block/rim."], accent:true},
+      {title:"Full Speed", lines:["Pass and cut immediately — do not hesitate after the wing entry."]},
+      {title:"Expect It", lines:["4 should expect the layup pass."]}
+    ]);
+  }
+  else if(step===75){
+    addPass(g,72,220,205,105);
+    setSlideNotes([
+      {title:"WING READ #1 — LAYUP", lines:["2's first look is 4 coming off the back screen."], accent:true},
+      {title:"Deliver It Early", lines:["If 4 is open at the block/rim, make the pass immediately."]},
+      {title:"UTAH", lines:["Normal cut look → stop at block → pass to wing → back screen → layup cut."]}
+    ]);
+  }
+  else if(step===76){
     addLabel(g,250,360,"POST ENTRY = AUTOMATIC SPLIT ACTION",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
     setSlideNotes([
       {title:"AUTOMATIC RULE", lines:["Every post entry immediately triggers SPLIT ACTION."], accent:true},
@@ -1346,7 +1414,7 @@ function drawAnnotations(){
       {title:"Then", lines:["Screened player relocates to corner; passer cuts full speed to rim."]}
     ]);
   }
-  else if(step===71){
+  else if(step===77){
     addMove(g,72,220,165,245);
     addScreen(g,165,245,45);
     addLabel(g,188,220,"PASSER SCREENS 4",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
@@ -1356,7 +1424,7 @@ function drawAnnotations(){
       {title:"Purpose", lines:["Free 4 to relocate to the corner for the shot."]}
     ]);
   }
-  else if(step===72){
+  else if(step===78){
     addScreen(g,165,245,45);
     addCurveMove(g,205,285,190,255,135,230);
     addCurveMove(g,135,230,85,160,28,48);
@@ -1368,7 +1436,7 @@ function drawAnnotations(){
       {title:"Then Relocate", lines:["After using the screen, continue out to the corner for the jumper / 3."]}
     ]);
   }
-  else if(step===73){
+  else if(step===79){
     addCurveMove(g,165,245,205,200,245,155);
     addPass(g,205,105,245,155);
     addLabel(g,268,170,"FULL-SPEED RIM CUT",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
@@ -1378,7 +1446,7 @@ function drawAnnotations(){
       {title:"Attack the Gap", lines:["Because 2 screened closer to 4, the rim cut now flows naturally from the split action."]}
     ]);
   }
-  else if(step===74){
+  else if(step===80){
     addCurveMove(g,235,120,355,90,472,48);
     addLabel(g,355,82,"IF NO PASS → FAR CORNER",{anchor:"middle",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
@@ -1387,7 +1455,7 @@ function drawAnnotations(){
       {title:"Automatic Flow", lines:["POST ENTRY → SCREEN → CORNER RELOCATE → RIM CUT → FAR CORNER."]}
     ]);
   }
-  else if(step===75){
+  else if(step===81){
     addPass(g,205,105,28,48);
     addLabel(g,110,92,"PASS OUT — KEEP PLAYING",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
@@ -1396,7 +1464,7 @@ function drawAnnotations(){
       {title:"Next", lines:["We flow immediately into our normal pick-and-roll."]}
     ]);
   }
-  else if(step===76){
+  else if(step===82){
     addMove(g,28,48,72,220);
     addMove(g,205,105,135,172);
     addScreen(g,135,172,58);
@@ -1407,7 +1475,7 @@ function drawAnnotations(){
       {title:"Nothing New", lines:["From here we are back in the same 2 Man rules we already teach."]}
     ]);
   }
-  else if(step===77){
+  else if(step===83){
     addScreen(g,135,172,58);
     addDribble(g,72,220,160,185,250,150);
     addCurveMove(g,135,172,150,135,192,110);
@@ -1417,7 +1485,7 @@ function drawAnnotations(){
       {title:"Same Rules", lines:["Split has now flowed directly back into our regular offense."]}
     ]);
   }
-  else if(step===78){
+  else if(step===84){
     addLabel(g,250,360,"BACK INTO REGULAR MOTION",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
     addBottomBox(g,145,382,335,"RESET THE NORMAL FLOW",["Attack → Roller → Pass Out → Handler to Slot → Roller to Corner","Then continue the next normal rotation."],250,150,{titleSize:11,lineSize:9.5});
     setSlideNotes([
@@ -1482,35 +1550,41 @@ function render(){
      42:'<div class="rule"><b>DHO DETAIL:</b> Stay on the <b>wing outside the arc</b>, try to <b>bump the defender</b> of the raising corner man, and make the handoff on the <b>outside</b> to protect the ball.</div>',
      43:'<div class="rule"><b>DHO ATTACK:</b> Receive the handoff on the <b>wing outside the arc</b>, <b>curl into it</b>, and catch with momentum heading <b>toward the basket</b>, not the sideline.</div>',
      44:'<div class="rule"><b>RESET:</b> Handler back to slot. Roller block first, then deep corner. Resume Base Motion.</div>',
-     52:'<div class="rule"><b>3 MAN SPACING:</b> <b>Ball-side Slot + Action Man on the Wing + Deep Corner.</b> The other two players stay spaced weak side.</div>',
-     53:'<div class="rule"><b>THREE ROLES:</b> The roles belong to the <b>spots</b>, not specific players. Any player can become Slot, Action Man, or Corner Man.</div>',
-     54:'<div class="rule"><b>TRIGGER:</b> Once the ball reaches the ball-side slot, the <b>Action Man on the wing triggers the 3 Man action.</b></div>',
-     55:'<div class="rule"><b>DOWN:</b> Action Man screens down for the corner man <b>before</b> continuing through to the opposite corner.</div>',
-     56:'<div class="rule"><b>SCREEN FIRST:</b> On DOWN, the Action Man becomes the screener before beginning the normal cut-through.</div>',
-     57:'<div class="rule"><b>CORNER MAN:</b> Come off the screen tight and raise to the <b>true wing outside the 3-point line</b>.</div>',
-     58:'<div class="rule"><b>KEEP FLOWING:</b> After the screen, the Action Man continues through to the opposite deep corner just like normal.</div>',
-     59:'<div class="rule"><b>THE ADVANTAGE:</b> The corner man should catch on the wing with separation already created by the down screen.</div>',
-     60:'<div class="rule"><b>2 MAN STAYS THE SAME:</b> After the catch, all original options remain: <b>own score → roller → weak side.</b></div>',
-     61:'<div class="rule"><b>UP:</b> Action Man screens UP for the slot as a <b>ball screen</b>, then cuts through to the opposite corner.</div>',
-     62:'<div class="rule"><b>REAL BALL SCREEN:</b> UP is not a fake action. The screen is there to create a driving advantage for the slot.</div>',
-     63:'<div class="rule"><b>NON-NEGOTIABLE:</b> On UP, the slot <b>MUST DRIBBLE OFF THE OUTSIDE OF THE SCREEN — TO THE SCREENER\'S LEFT</b>.</div>',
-     64:'<div class="rule"><b>AFTER SCREENING:</b> Action Man continues through to the opposite deep corner while the slot attacks.</div>',
-     65:'<div class="rule"><b>CORNER READ #1:</b> Raise for a <b>DHO</b> from the original ballhandler.</div>',
-     66:'<div class="rule"><b>CORNER READ #2:</b> Hard backdoor cut to threaten the rim and <b>clear space for the drive</b>.</div>',
-     67:'<div class="rule"><b>PUNCH:</b> Sell the normal Action Man cut through, reach the <b>opposite block</b>, then sprint back to the basket.</div>',
-     68:'<div class="rule"><b>SELL THE CUT:</b> The first part of PUNCH should look exactly like the normal clear-through.</div>',
-     69:'<div class="rule"><b>TIMING:</b> Action Man reaches the opposite block while the corner man <b>raises to the wing and receives the pass from 4</b>.</div>',
-     70:'<div class="rule"><b>PUNCH BACK:</b> Plant at the opposite block and sprint back toward the <b>original side of the rim</b>.</div>',
-     71:'<div class="rule"><b>ENTRY:</b> Keep the wing-to-post pass short and realistic. Look for <b>quick layup first, quick post move second</b>.</div>',
-     72:'<div class="rule"><b>AUTOMATIC RULE:</b> <b>POST ENTRY = SPLIT ACTION.</b></div>',
-     73:'<div class="rule"><b>PASSER:</b> Immediately screen the <b>closest perimeter player</b>.</div>',
-     74:'<div class="rule"><b>SCREENED PLAYER:</b> <b>Use the screen first, stay outside</b>, then relocate to the corner for a jumper / 3.</div>',
-     75:'<div class="rule"><b>PASSER:</b> After screening, <b>cut full speed to the rim</b> for a pass from the post.</div>',
-     76:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>',
-     77:'<div class="rule"><b>IF NOTHING IS OPEN:</b> Post passes the ball <b>back out to the corner/perimeter</b>.</div>',
-     78:'<div class="rule"><b>NEXT ACTION:</b> Corner raises to the wing and the <b>post player on the strong side</b> becomes the low-angle screener.</div>',
-     79:'<div class="rule"><b>NORMAL READS:</b> <b>Own score → roller → weak side.</b></div>',
-     80:'<div class="rule"><b>BACK TO MOTION:</b> After the pick-and-roll, resume all normal handler/roller replacement and rotation rules.</div>',
+     50:'<div class="rule"><b>3 MAN SPACING:</b> <b>Ball-side Slot + Action Man on the Wing + Deep Corner.</b> The other two players stay spaced weak side.</div>',
+     51:'<div class="rule"><b>THREE ROLES:</b> The roles belong to the <b>spots</b>, not specific players. Any player can become Slot, Action Man, or Corner Man.</div>',
+     52:'<div class="rule"><b>TRIGGER:</b> Once the ball reaches the ball-side slot, the <b>Action Man on the wing triggers the 3 Man action.</b></div>',
+     53:'<div class="rule"><b>DOWN:</b> Action Man screens down for the corner man <b>before</b> continuing through to the opposite corner.</div>',
+     54:'<div class="rule"><b>SCREEN FIRST:</b> On DOWN, the Action Man becomes the screener before beginning the normal cut-through.</div>',
+     55:'<div class="rule"><b>CORNER MAN:</b> Come off the screen tight and raise to the <b>true wing outside the 3-point line</b>.</div>',
+     56:'<div class="rule"><b>KEEP FLOWING:</b> After the screen, the Action Man continues through to the opposite deep corner just like normal.</div>',
+     57:'<div class="rule"><b>THE ADVANTAGE:</b> The corner man should catch on the wing with separation already created by the down screen.</div>',
+     58:'<div class="rule"><b>2 MAN STAYS THE SAME:</b> After the catch, all original options remain: <b>own score → roller → weak side.</b></div>',
+     59:'<div class="rule"><b>UP:</b> Action Man screens UP for the slot as a <b>ball screen</b>, then cuts through to the opposite corner.</div>',
+     60:'<div class="rule"><b>REAL BALL SCREEN:</b> UP is not a fake action. The screen is there to create a driving advantage for the slot.</div>',
+     61:'<div class="rule"><b>NON-NEGOTIABLE:</b> On UP, the slot <b>MUST DRIBBLE OFF THE OUTSIDE OF THE SCREEN — TO THE SCREENER\'S LEFT</b>.</div>',
+     62:'<div class="rule"><b>AFTER SCREENING:</b> Action Man continues through to the opposite deep corner while the slot attacks.</div>',
+     63:'<div class="rule"><b>CORNER READ #1:</b> Raise for a <b>DHO</b> from the original ballhandler.</div>',
+     64:'<div class="rule"><b>CORNER READ #2:</b> Hard backdoor cut to threaten the rim and <b>clear space for the drive</b>.</div>',
+     65:'<div class="rule"><b>PUNCH:</b> Sell the normal Action Man cut through, reach the <b>opposite block</b>, then sprint back to the basket.</div>',
+     66:'<div class="rule"><b>SELL THE CUT:</b> The first part of PUNCH should look exactly like the normal clear-through.</div>',
+     67:'<div class="rule"><b>TIMING:</b> Action Man reaches the opposite block while the corner man <b>raises to the wing and receives the pass from 4</b>.</div>',
+     68:'<div class="rule"><b>PUNCH BACK:</b> Plant at the opposite block and sprint back toward the <b>original side of the rim</b>.</div>',
+     69:'<div class="rule"><b>ENTRY:</b> Keep the wing-to-post pass short and realistic. Look for <b>quick layup first, quick post move second</b>.</div>',
+     70:'<div class="rule"><b>UTAH:</b> Start the normal cut, stop at the <b>ball-side block</b>, then back screen for the slot.</div>',
+     71:'<div class="rule"><b>SELL IT:</b> The beginning of Utah must look exactly like the normal Action Man cut.</div>',
+     72:'<div class="rule"><b>STOP:</b> Action Man stops at the <b>ball-side block</b> while the corner man rises to the wing.</div>',
+     73:'<div class="rule"><b>TIMING:</b> As the slot-to-wing pass is <b>IN THE AIR</b>, the Action Man sets the back screen.</div>',
+     74:'<div class="rule"><b>SLOT:</b> Pass, then cut <b>tight and full speed</b> off the back screen toward the block/rim.</div>',
+     75:'<div class="rule"><b>WING READ #1:</b> Look inside immediately for the slot cutting to the layup.</div>',
+     76:'<div class="rule"><b>AUTOMATIC RULE:</b> <b>POST ENTRY = SPLIT ACTION.</b></div>',
+     77:'<div class="rule"><b>PASSER:</b> Immediately screen the <b>closest perimeter player</b>.</div>',
+     78:'<div class="rule"><b>SCREENED PLAYER:</b> <b>Use the screen first, stay outside</b>, then relocate to the corner for a jumper / 3.</div>',
+     79:'<div class="rule"><b>PASSER:</b> After screening, <b>cut full speed to the rim</b> for a pass from the post.</div>',
+     80:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>',
+     81:'<div class="rule"><b>IF NOTHING IS OPEN:</b> Post passes the ball <b>back out to the corner/perimeter</b>.</div>',
+     82:'<div class="rule"><b>NEXT ACTION:</b> Corner raises to the wing and the <b>post player on the strong side</b> becomes the low-angle screener.</div>',
+     83:'<div class="rule"><b>NORMAL READS:</b> <b>Own score → roller → weak side.</b></div>',
+     84:'<div class="rule"><b>BACK TO MOTION:</b> After the pick-and-roll, resume all normal handler/roller replacement and rotation rules.</div>',
      45:'<div class="rule"><b>GIVE & GO:</b> Slot passes, then <b>basket cuts full speed</b>.</div>',
      46:'<div class="rule"><b>PASS → CUT:</b> The passer immediately threatens the rim.</div>',
      47:'<div class="rule"><b>READ #1:</b> From the original wing catch spot, hit the cutter if open.</div>',
