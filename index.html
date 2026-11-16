@@ -382,8 +382,8 @@ threeUtahPass:{1:[350,275],2:[72,220],3:[205,225],4:[205,285],5:[472,48]},
 threeUtahSlotCut:{1:[350,275],2:[72,220],3:[205,225],4:[205,135],5:[472,48]},
 threeUtahFinish:{1:[350,275],2:[72,220],3:[205,225],4:[205,110],5:[472,48]},
 threeUtahClear:{1:[350,275],2:[72,220],3:[205,225],4:[472,48],5:[418,220]},
-threeUtahGetSetup:{1:[350,275],2:[72,220],3:[125,235],4:[472,48],5:[418,220]},
-threeUtahGetReturn:{1:[350,275],2:[72,220],3:[185,185],4:[472,48],5:[418,220]},
+threeUtahGetSetup:{1:[350,275],2:[72,220],3:[45,245],4:[472,48],5:[418,220]},
+threeUtahGetReturn:{1:[350,275],2:[72,220],3:[115,205],4:[472,48],5:[418,220]},
 
 // AUTOMATIC POST ENTRY — SPLIT ACTION
 splitSetup:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
@@ -490,8 +490,8 @@ const steps=[
 ["UTAH — Slot Cuts Off the Back Screen","Immediately after making the pass, the slot cuts hard off the Action Man's back screen toward the block/rim. The slot must come tight off the screen and expect the ball for a layup.","threeUtahSlotCut",2],
 ["UTAH — Wing Looks Inside for the Layup","The new wing ballhandler's first read is the slot coming off the back screen. If the cutter is open at the block/rim — or has a high-quality post-up opportunity — deliver the pass immediately.","threeUtahFinish",4],
 ["UTAH — Read #2: 4 Clears Through / 5 Lifts","If 4 is not open for a layup or a high-quality post-up, 4 clears all the way through to the RIGHT CORNER. As 4 clears, 5 lifts from the right corner to the RIGHT WING to keep spacing and open the lane.","threeUtahClear",4],
-["UTAH — 3 Flows Directly Into GET With 2","Immediately after 3 sets the back screen for 4, 3 does not stand. 2 stays in the same wing spot and keeps the ball while 3 comes over to start the GET.","threeUtahGetSetup",2],
-["UTAH — Back Into Normal 2 Man","2 stays in place while 3 comes around the outside, receives the ball back, and attacks the 45. At this point Utah has flowed directly back into our normal 2 Man action and all regular 2 Man reads and spacing rules apply.","threeUtahGetReturn",3],
+["UTAH — 3 Flows Directly Into GET With 2","Immediately after 3 sets the back screen for 4, 3 does not stand. The pass to 4 was not made, so 2 still has the ball on the wing while 3 comes all the way around 2 to initiate the GET.","threeUtahGetSetup",2],
+["UTAH — Back Into Normal 2 Man","3 comes all the way around the outside of 2, receives the GET back, and attacks the 45. At this point Utah has flowed directly back into our normal 2 Man action and all regular 2 Man reads and spacing rules apply.","threeUtahGetReturn",3],
 
 ["AUTOMATIC POST RULE — SPLIT ACTION","Any time we make a post entry, we automatically enter SPLIT ACTION. The passer immediately screens for the closest perimeter player. The screened player relocates to the corner for a jumper/3, then the passer cuts full speed to the rim.","splitSetup",3],
 ["SPLIT — Passer Screens the Closest Player","Immediately after the post entry, the passer does not stand and watch. He turns and sets a screen for the closest perimeter teammate.","splitScreen",3],
@@ -1424,22 +1424,21 @@ function drawAnnotations(){
     ]);
   }
   else if(step===77){
-    addCurveMove(g,205,225,165,238,125,235);
-    addSafeLabel(g,24,86,"2 KEEPS THE BALL",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    addCurveMove(g,205,225,150,255,95,255);
+    addCurveMove(g,95,255,65,250,45,245);
     setSlideNotes([
-      {title:"2 STILL HAS THE BALL", lines:["On this step, 2 does not move and still has the ball on the wing."], accent:true},
-      {title:"3 FLOWS INTO GET", lines:["Right after setting the back screen, 3 comes over toward 2 to start the GET."]},
-      {title:"No Pause", lines:["The back screen flows directly into the GET setup."]}
+      {title:"3 FLOWS INTO GET", lines:["After setting the back screen, 3 continues all the way around the outside of 2 to initiate the GET."], accent:true},
+      {title:"Continuous Action", lines:["There is no pause between the back screen and the GET."]}
     ]);
   }
   else if(step===78){
-    addCurveMove(g,125,235,115,215,105,205);
-    addPass(g,72,220,105,205);
-    addDribble(g,105,205,145,165,190,120);
+    addCurveMove(g,45,245,55,225,72,220);
+    addCurveMove(g,72,220,92,220,115,205);
+    addPass(g,72,220,115,205);
+    addDribble(g,115,205,150,165,190,120);
     setSlideNotes([
-      {title:"2 STAYS PUT", lines:["2 remains in the same wing spot from the previous slide."], accent:true},
-      {title:"3 COMES AROUND FOR THE GET", lines:["3 comes around the outside of 2, receives the ball back, and turns the corner."]},
-      {title:"BACK TO NORMAL 2 MAN", lines:["Once 3 has it back, all normal 2 Man reads and spacing rules resume."]}
+      {title:"3 COMES ALL THE WAY AROUND 2", lines:["3 wraps around the outside of 2, receives the ball back, and turns the corner."], accent:true},
+      {title:"BACK TO NORMAL 2 MAN", lines:["Once 3 receives the GET, all normal 2 Man reads and spacing rules resume."]}
     ]);
   }
   else if(step===79){
