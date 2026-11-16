@@ -128,23 +128,23 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 
   <g id="p1" class="player">
     <circle r="22" fill="#1d4ed8" stroke="white" stroke-width="3"/>
-    <text text-anchor="middle" y="7" fill="white" font-size="20" font-weight="700">1</text>
+    <text text-anchor="middle" y="7" fill="white" font-size="20" font-weight="700">D</text>
   </g>
   <g id="p2" class="player">
     <circle r="22" fill="#1d4ed8" stroke="white" stroke-width="3"/>
-    <text text-anchor="middle" y="7" fill="white" font-size="20" font-weight="700">2</text>
+    <text text-anchor="middle" y="7" fill="white" font-size="20" font-weight="700">A</text>
   </g>
   <g id="p3" class="player">
     <circle r="22" fill="#1d4ed8" stroke="white" stroke-width="3"/>
-    <text text-anchor="middle" y="7" fill="white" font-size="20" font-weight="700">3</text>
+    <text text-anchor="middle" y="7" fill="white" font-size="20" font-weight="700">B</text>
   </g>
   <g id="p4" class="player">
     <circle r="22" fill="#1d4ed8" stroke="white" stroke-width="3"/>
-    <text text-anchor="middle" y="7" fill="white" font-size="20" font-weight="700">4</text>
+    <text text-anchor="middle" y="7" fill="white" font-size="20" font-weight="700">C</text>
   </g>
   <g id="p5" class="player">
     <circle r="22" fill="#1d4ed8" stroke="white" stroke-width="3"/>
-    <text text-anchor="middle" y="7" fill="white" font-size="20" font-weight="700">5</text>
+    <text text-anchor="middle" y="7" fill="white" font-size="20" font-weight="700">E</text>
   </g>
 
   <circle id="ball" class="ball" r="9" fill="#c85b22" stroke="#4a2514" stroke-width="2"/>
@@ -227,12 +227,12 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
 <div id="lesson" class="lesson"></div>
 <div id="jobPicker" style="display:none">
 <p><b>Choose your player:</b></p><div class="players">
-<button onclick="pickPlayer(1)">1</button><button onclick="pickPlayer(2)">2</button><button onclick="pickPlayer(3)">3</button><button onclick="pickPlayer(4)">4</button><button onclick="pickPlayer(5)">5</button>
+<button onclick="pickPlayer(1)">D</button><button onclick="pickPlayer(2)">A</button><button onclick="pickPlayer(3)">B</button><button onclick="pickPlayer(4)">C</button><button onclick="pickPlayer(5)">E</button>
 </div><div id="jobText" class="rule"></div>
 </div>
 <div id="quiz" class="quiz" style="display:none"></div>
 <div id="twoManChoice" style="display:none;margin-top:12px">
-  <div class="rule"><b>2 MAN GAME OPTION</b><br>Choose how 1 and 3 attack:</div>
+  <div class="rule"><b>2 MAN GAME OPTION</b><br>Choose how D and B attack:</div>
   <div class="players">
     <button onclick="chooseTwoMan('dho')">DHO</button>
     <button onclick="chooseTwoMan('pnr')">PICK &amp; ROLL</button>
@@ -240,7 +240,7 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
   <div id="twoManText" class="small" style="margin-top:8px"></div>
 </div>
 <div class="legend">
-  <h3>DIAGRAM LEGEND</h3><div class="small" style="margin-bottom:8px">Court background still uses your supplied reference image, but the black court numbers have been removed so only the blue player markers remain.</div>
+  <h3>DIAGRAM LEGEND</h3><div class="small" style="margin-bottom:8px"><b>BOOK SPOTS:</b> A = left corner • B = Action Man / left wing • C = left slot • D = right slot • E = right-side wing/corner spot.<br><br>Court background still uses your supplied reference image, but the black court numbers have been removed so only the blue player markers remain.</div>
   <div class="legend-row">
     <svg width="70" height="14" viewBox="0 0 70 14"><line x1="4" y1="7" x2="64" y2="7" stroke="#fff" stroke-width="3" stroke-dasharray="7 6" marker-end="url(#arrowPass)"/></svg>
     <span>Dotted line = pass</span>
@@ -406,7 +406,7 @@ const steps=[
 
 
 
-["Motion Overview — Starting Alignment","The first 20 slides show our natural offensive progression with no modifiers. We use Pick & Roll as the standard 2 Man action so players can learn the base flow first. Every player begins outside the 3-point line. 2 and 5 are deep in the corners, 3 is outside the line on the left wing, 4 trails outside the line toward the slot, and 1 brings the ball up outside the arc.","start",1],
+["Motion Overview — Starting Alignment","The letters are BOOK SPOTS, not permanent positions: A = left corner, B = Action Man / left wing, C = left slot, D = right slot, and E = right-side wing/corner spot. The first 20 slides show our natural offensive progression with no modifiers. We use Pick & Roll as the standard 2 Man action so players can learn the base flow first. Every player begins outside the 3-point line. 2 and 5 are deep in the corners, 3 is outside the line on the left wing, 4 trails outside the line toward the slot, and 1 brings the ball up outside the arc.","start",1],
 ["Get the Ball to the Slot","1 makes the slot entry to 4. This triggers the first three-man action.","slot",4],
 ["Read #1 — Action Man Backdoor","When 4 catches, the middle player on the 3-man side (3 in this example) is the ACTION MAN. The Action Man backdoor is ALWAYS the first option we are looking for. For now, the Action Man always backdoor cuts hard looking for the ball, but we only throw the bounce pass if there is a clear path for a layup. Do not force it, especially on the first cut of the offense.","backdoor3",4],
 ["3 Clears Through / 5 Raises","If 3 does not receive the backdoor pass, 3 continues all the way through to the opposite deep corner while 5 raises from the deep right corner to the right wing at foul-line extended at the same time.","clear3Raise5",4],
@@ -507,6 +507,55 @@ const steps=[
 let step=0,mode="watch",chosen=null;
 function move(id,xy){document.getElementById(id).setAttribute("transform",`translate(${xy[0]} ${xy[1]})`)}
 
+// BOOK-SPOT DISPLAY LAYER
+// Internal player IDs remain 1-5 so movement, ball ownership, quizzes and defense logic do not break.
+// Visible offense labels translate as: 1=D, 2=A, 3=B, 4=C, 5=E.
+const BOOK_SPOTS={1:"D",2:"A",3:"B",4:"C",5:"E"};
+
+function bookifyOffenseText(input){
+  if(input===null || input===undefined) return input;
+  let s=String(input);
+  const keep=[];
+  const protect=(re)=>{ s=s.replace(re,m=>{const k="§§KEEP"+keep.length+"§§";keep.push(m);return k;}); };
+
+  // Protect numbers that describe concepts/counts rather than player identities.
+  protect(/\b(?:2|3)\s*MAN\b/gi);
+  protect(/\b(?:2|3)-MAN\b/gi);
+  protect(/\b(?:2|3)\s*Man\b/g);
+  protect(/\b3-man\b/gi);
+  protect(/\b3-player\b/gi);
+  protect(/\b[1-5]\s+players?\b/gi);
+  protect(/\b(?:READ|Read)\s*#?\s*[1-5]\b/g);
+  protect(/\b(?:OPTION|Option)\s*#?\s*[1-9]\b/g);
+  protect(/\b(?:STEP|Step)\s*[0-9]+\b/g);
+  protect(/\b[1-5]\)\s*/g);
+  protect(/\b3-point\b/gi);
+  protect(/\b1[–-]2\b/g);
+  protect(/\b3\s+rotations?\b/gi);
+  protect(/\b[1-5]\s+seconds?\b/gi);
+  protect(/\bNUMBER\s+1\s+RULE\b/gi);
+
+  // Player references.
+  s=s.replace(/\b1's\b/g,"D's").replace(/\b2's\b/g,"A's").replace(/\b3's\b/g,"B's").replace(/\b4's\b/g,"C's").replace(/\b5's\b/g,"E's");
+  s=s.replace(/\b1\b/g,"D").replace(/\b2\b/g,"A").replace(/\b3\b/g,"B").replace(/\b4\b/g,"C").replace(/\b5\b/g,"E");
+
+  keep.forEach((v,i)=>{s=s.replace("§§KEEP"+i+"§§",v);});
+  return s;
+}
+
+function bookifyTextNodes(root){
+  if(!root) return;
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+  const nodes=[];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n=>{ n.nodeValue=bookifyOffenseText(n.nodeValue); });
+}
+
+function applyBookSpotDisplay(){
+  if(typeof systemMode!=="undefined" && systemMode==="defense") return;
+  ["title","lesson","slideNotes","annotations","jobText","twoManText"].forEach(id=>bookifyTextNodes(document.getElementById(id)));
+}
+
 function makeSvg(tag, attrs){
   const el=document.createElementNS("http://www.w3.org/2000/svg", tag);
   Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
@@ -556,7 +605,7 @@ function addLabel(g,x,y,text,opts={}){
     "text-anchor": anchor,
     "dominant-baseline": "middle"
   });
-  t.textContent = text;
+  t.textContent = bookifyOffenseText(text);
   group.appendChild(t);
   g.appendChild(group);
 
@@ -635,7 +684,7 @@ function addBottomBox(g,x,y,w,title,lines,targetX=null,targetY=null,opts={}){
     "text-anchor":"middle",
     "dominant-baseline":"middle"
   });
-  titleText.textContent=title;
+  titleText.textContent=bookifyOffenseText(title);
   g.appendChild(titleText);
 
   lines.forEach((line,idx)=>{
@@ -648,7 +697,7 @@ function addBottomBox(g,x,y,w,title,lines,targetX=null,targetY=null,opts={}){
       "text-anchor":"middle",
       "dominant-baseline":"middle"
     });
-    t.textContent=line;
+    t.textContent=bookifyOffenseText(line);
     g.appendChild(t);
   });
   return rect;
@@ -669,8 +718,8 @@ function setSlideNotes(items){
   }
   el.innerHTML = items.map(item => {
     const klass = item.accent ? "note-bubble accent" : "note-bubble";
-    const lines = (item.lines || []).map(line => `<div class="note-line">${line}</div>`).join("");
-    return `<div class="${klass}"><div class="note-title">${item.title}</div>${lines}</div>`;
+    const lines = (item.lines || []).map(line => `<div class="note-line">${bookifyOffenseText(line)}</div>`).join("");
+    return `<div class="${klass}"><div class="note-title">${bookifyOffenseText(item.title)}</div>${lines}</div>`;
   }).join("");
 }
 function drawAnnotations(){
@@ -1634,6 +1683,7 @@ function render(){
  document.getElementById("status").textContent=`STEP ${step+1} OF ${steps.length}`;
  document.getElementById("twoManChoice").style.display="none";
  drawAnnotations();
+ applyBookSpotDisplay();
  highlight();
 }
 let playTimer=null;
@@ -1728,7 +1778,7 @@ function pickPlayer(n){chosen=n;const jobs={
 3:"3: Start on the true left wing as the ACTION MAN on the 3-man side. In this base layer, the Action Man backdoor is always the first option we are looking for, so cut backdoor hard looking for the ball. But the bounce pass should only be thrown if you have a clear path for a layup — do not force it, especially on the first cut of the offense. If you are not open, continue through into the opposite deep corner. Later sprint from that deep corner to the true right wing, catch the pass OUTSIDE the 3-point line, and use 1\'s low-angle screen. As the handler, attack deeper into the middle first, then pass out and relocate back to the slot. Pressure Release rule: if your defender is above the 3-point line, cut backdoor and then fill a corner.",
 4:"4: Raise or trail to the slot. Receive the first entry and read 3's backdoor. Pass to 2 catching outside the 3-point line on the left wing, then get lower toward the basket to set the low-angle ball screen. After screening, SEAL the defender outside first and give the handler a full one-count to look for the shot. Then complete the roll to the ball-side block. After the pass-out, because you were the roller, space out to the deep corner. Later, when 5 clears through, lift from the deep corner up to the wing while 2 stays in the slot. On the next cycle, 4 makes a real 45-degree backdoor scoring cut, then fills out to the opposite deep corner while 1 lifts to the wing. Pressure Release rule: if your defender is above the 3-point line, cut backdoor and then fill a corner.",
 5:"5: Start deep in the right corner. As 3 clears through, raise to the true right wing. Later make the 45 cut and, if you do not receive the ball, finish all the way into the far deep corner. In the next rotation, raise from the left deep corner to the true wing, catch the pass from 2 outside the 3-point line, use 2's low-angle screen as the ball handler, attack the middle, pass out to 3, and relocate back to the slot. Pressure Release rule: if your defender is above the 3-point line, cut backdoor and then fill a corner."
-};document.getElementById("jobText").textContent=jobs[n];highlight()}
+};document.getElementById("jobText").textContent=bookifyOffenseText(jobs[n]);highlight()}
 function highlight(){for(let i=1;i<=5;i++){document.getElementById("p"+i).style.opacity=(mode=="job"&&chosen&&i!=chosen)?.25:1}}
 
 function chooseTwoMan(type){
