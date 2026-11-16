@@ -206,7 +206,7 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
     <button onclick="jumpToStep(60);closeActionMenus()">UP</button>
     <button onclick="jumpToStep(66);closeActionMenus()">PUNCH</button>
     <button onclick="jumpToStep(71);closeActionMenus()">UTAH</button>
-    <button onclick="jumpToStep(77);closeActionMenus()">SPLIT ACTION</button>
+    <button onclick="jumpToStep(80);closeActionMenus()">SPLIT ACTION</button>
   </div>
 </div>
 <button id="playBtn" onclick="playSlides()">▶ Play Sequence</button>
@@ -381,6 +381,9 @@ threeUtahBlock:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[472,48]},
 threeUtahPass:{1:[350,275],2:[72,220],3:[205,225],4:[205,285],5:[472,48]},
 threeUtahSlotCut:{1:[350,275],2:[72,220],3:[205,225],4:[205,135],5:[472,48]},
 threeUtahFinish:{1:[350,275],2:[72,220],3:[205,225],4:[205,110],5:[472,48]},
+threeUtahClear:{1:[350,275],2:[72,220],3:[205,225],4:[472,48],5:[418,220]},
+threeUtahGetSetup:{1:[350,275],2:[150,185],3:[105,205],4:[472,48],5:[418,220]},
+threeUtahGetReturn:{1:[350,275],2:[150,185],3:[190,120],4:[472,48],5:[418,220]},
 
 // AUTOMATIC POST ENTRY — SPLIT ACTION
 splitSetup:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
@@ -485,7 +488,10 @@ const steps=[
 ["UTAH — Stop at the Ball-Side Block","Instead of continuing through to the opposite corner, the Action Man stops at the BALL-SIDE BLOCK. At the same time, the corner man rises to the true wing, just like our normal flow.","threeUtahBlock",4],
 ["UTAH — Pass to the Rising Wing / Back Screen in the Air","The slot passes to the corner man rising to the wing. AS THE PASS IS IN THE AIR, the Action Man steps into a back screen for the ball-side slot. The timing matters: the screen should arrive while the defense is shifting its attention to the wing catch.","threeUtahPass",2],
 ["UTAH — Slot Cuts Off the Back Screen","Immediately after making the pass, the slot cuts hard off the Action Man's back screen toward the block/rim. The slot must come tight off the screen and expect the ball for a layup.","threeUtahSlotCut",2],
-["UTAH — Wing Looks Inside for the Layup","The new wing ballhandler's first read is the slot coming off the back screen. If the cutter is open at the block/rim, deliver the pass immediately for the layup.","threeUtahFinish",4],
+["UTAH — Wing Looks Inside for the Layup","The new wing ballhandler's first read is the slot coming off the back screen. If the cutter is open at the block/rim — or has a high-quality post-up opportunity — deliver the pass immediately.","threeUtahFinish",4],
+["UTAH — Read #2: 4 Clears Through / 5 Lifts","If 4 is not open for a layup or a high-quality post-up, 4 clears all the way through to the RIGHT CORNER. As 4 clears, 5 lifts from the right corner to the RIGHT WING to keep spacing and open the lane.","threeUtahClear",4],
+["UTAH — 3 Flows Directly Into GET With 2","Immediately after 3 sets the back screen for 4, 3 does not stand. 3 comes over to 2 for a GET. 2 gives the ball back to 3 as 3 sprints outside, exactly like our normal GET rules.","threeUtahGetSetup",2],
+["UTAH — Back Into Normal 2 Man","3 gets the ball back and attacks the 45. At this point Utah has flowed directly back into our normal 2 Man action and all regular 2 Man reads and spacing rules apply.","threeUtahGetReturn",3],
 
 ["AUTOMATIC POST RULE — SPLIT ACTION","Any time we make a post entry, we automatically enter SPLIT ACTION. The passer immediately screens for the closest perimeter player. The screened player relocates to the corner for a jumper/3, then the passer cuts full speed to the rim.","splitSetup",3],
 ["SPLIT — Passer Screens the Closest Player","Immediately after the post entry, the passer does not stand and watch. He turns and sets a screen for the closest perimeter teammate.","splitScreen",3],
@@ -1409,6 +1415,33 @@ function drawAnnotations(){
     ]);
   }
   else if(step===76){
+    addCurveMove(g,205,110,330,78,472,48);
+    addMove(g,472,48,418,220);
+    setSlideNotes([
+      {title:"READ #2 — CLEAR THROUGH", lines:["If 4 is not open for a layup or a high-quality post-up, 4 continues all the way to the RIGHT CORNER."], accent:true},
+      {title:"5 LIFTS", lines:["As 4 clears, 5 lifts from the right corner to the right wing."]},
+      {title:"Spacing", lines:["Do not let 4 stop in the lane if the first read is not there."]}
+    ]);
+  }
+  else if(step===77){
+    addCurveMove(g,205,225,155,220,105,205);
+    addPass(g,72,220,150,185);
+    setSlideNotes([
+      {title:"3 FLOWS INTO GET", lines:["Right after setting the back screen, 3 comes over to 2 for a GET."], accent:true},
+      {title:"2 GIVES IT BACK", lines:["2 gives the ball back as 3 sprints to the outside."]},
+      {title:"No Pause", lines:["The back screen should flow directly into the GET."]}
+    ]);
+  }
+  else if(step===78){
+    addPass(g,150,185,105,205);
+    addDribble(g,105,205,145,165,190,120);
+    setSlideNotes([
+      {title:"BACK TO NORMAL 2 MAN", lines:["3 gets the ball back and attacks the 45."], accent:true},
+      {title:"Same Rules", lines:["From here, all normal 2 Man reads and spacing rules are back in effect."]},
+      {title:"Flow", lines:["UTAH → back screen → clear through → GET → normal 2 Man."]}
+    ]);
+  }
+  else if(step===79){
     addLabel(g,250,360,"POST ENTRY = AUTOMATIC SPLIT ACTION",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
     setSlideNotes([
       {title:"AUTOMATIC RULE", lines:["Every post entry immediately triggers SPLIT ACTION."], accent:true},
@@ -1416,7 +1449,7 @@ function drawAnnotations(){
       {title:"Then", lines:["Screened player relocates to corner; passer cuts full speed to rim."]}
     ]);
   }
-  else if(step===77){
+  else if(step===80){
     addMove(g,72,220,165,245);
     addScreen(g,165,245,45);
     addLabel(g,188,220,"PASSER SCREENS 4",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
@@ -1426,7 +1459,7 @@ function drawAnnotations(){
       {title:"Purpose", lines:["Free 4 to relocate to the corner for the shot."]}
     ]);
   }
-  else if(step===78){
+  else if(step===81){
     addScreen(g,165,245,45);
     addCurveMove(g,205,285,190,255,135,230);
     addCurveMove(g,135,230,85,160,28,48);
@@ -1438,7 +1471,7 @@ function drawAnnotations(){
       {title:"Then Relocate", lines:["After using the screen, continue out to the corner for the jumper / 3."]}
     ]);
   }
-  else if(step===79){
+  else if(step===82){
     addCurveMove(g,165,245,205,200,245,155);
     addPass(g,205,105,245,155);
     addLabel(g,268,170,"FULL-SPEED RIM CUT",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
@@ -1448,7 +1481,7 @@ function drawAnnotations(){
       {title:"Attack the Gap", lines:["Because 2 screened closer to 4, the rim cut now flows naturally from the split action."]}
     ]);
   }
-  else if(step===80){
+  else if(step===83){
     addCurveMove(g,235,120,355,90,472,48);
     addLabel(g,355,82,"IF NO PASS → FAR CORNER",{anchor:"middle",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
@@ -1457,7 +1490,7 @@ function drawAnnotations(){
       {title:"Automatic Flow", lines:["POST ENTRY → SCREEN → CORNER RELOCATE → RIM CUT → FAR CORNER."]}
     ]);
   }
-  else if(step===81){
+  else if(step===84){
     addPass(g,205,105,28,48);
     addLabel(g,110,92,"PASS OUT — KEEP PLAYING",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
@@ -1466,7 +1499,7 @@ function drawAnnotations(){
       {title:"Next", lines:["We flow immediately into our normal pick-and-roll."]}
     ]);
   }
-  else if(step===82){
+  else if(step===85){
     addMove(g,28,48,72,220);
     addMove(g,205,105,135,172);
     addScreen(g,135,172,58);
@@ -1477,7 +1510,7 @@ function drawAnnotations(){
       {title:"Nothing New", lines:["From here we are back in the same 2 Man rules we already teach."]}
     ]);
   }
-  else if(step===83){
+  else if(step===86){
     addScreen(g,135,172,58);
     addDribble(g,72,220,160,185,250,150);
     addCurveMove(g,135,172,150,135,192,110);
@@ -1487,7 +1520,7 @@ function drawAnnotations(){
       {title:"Same Rules", lines:["Split has now flowed directly back into our regular offense."]}
     ]);
   }
-  else if(step===84){
+  else if(step===87){
     addLabel(g,250,360,"BACK INTO REGULAR MOTION",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
     addBottomBox(g,145,382,335,"RESET THE NORMAL FLOW",["Attack → Roller → Pass Out → Handler to Slot → Roller to Corner","Then continue the next normal rotation."],250,150,{titleSize:11,lineSize:9.5});
     setSlideNotes([
@@ -1578,20 +1611,23 @@ function render(){
      73:'<div class="rule"><b>TIMING:</b> As the slot-to-wing pass is <b>IN THE AIR</b>, the Action Man sets the back screen.</div>',
      74:'<div class="rule"><b>SLOT:</b> Pass, then cut <b>tight and full speed</b> off the back screen toward the block/rim.</div>',
      75:'<div class="rule"><b>WING READ #1:</b> Look inside immediately for the slot cutting to the layup.</div>',
-     76:'<div class="rule"><b>AUTOMATIC RULE:</b> <b>POST ENTRY = SPLIT ACTION.</b></div>',
-     77:'<div class="rule"><b>PASSER:</b> Immediately screen the <b>closest perimeter player</b>.</div>',
-     78:'<div class="rule"><b>SCREENED PLAYER:</b> <b>Use the screen first, stay outside</b>, then relocate to the corner for a jumper / 3.</div>',
-     79:'<div class="rule"><b>PASSER:</b> After screening, <b>cut full speed to the rim</b> for a pass from the post.</div>',
-     80:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>',
-     81:'<div class="rule"><b>IF NOTHING IS OPEN:</b> Post passes the ball <b>back out to the corner/perimeter</b>.</div>',
-     82:'<div class="rule"><b>NEXT ACTION:</b> Corner raises to the wing and the <b>post player on the strong side</b> becomes the low-angle screener.</div>',
-     83:'<div class="rule"><b>NORMAL READS:</b> <b>Own score → roller → weak side.</b></div>',
-     84:'<div class="rule"><b>BACK TO MOTION:</b> After the pick-and-roll, resume all normal handler/roller replacement and rotation rules.</div>',
+     79:'<div class="rule"><b>AUTOMATIC RULE:</b> <b>POST ENTRY = SPLIT ACTION.</b></div>',
+     80:'<div class="rule"><b>PASSER:</b> Immediately screen the <b>closest perimeter player</b>.</div>',
+     81:'<div class="rule"><b>SCREENED PLAYER:</b> <b>Use the screen first, stay outside</b>, then relocate to the corner for a jumper / 3.</div>',
+     82:'<div class="rule"><b>PASSER:</b> After screening, <b>cut full speed to the rim</b> for a pass from the post.</div>',
+     83:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>',
+     84:'<div class="rule"><b>IF NOTHING IS OPEN:</b> Post passes the ball <b>back out to the corner/perimeter</b>.</div>',
+     85:'<div class="rule"><b>NEXT ACTION:</b> Corner raises to the wing and the <b>post player on the strong side</b> becomes the low-angle screener.</div>',
+     86:'<div class="rule"><b>NORMAL READS:</b> <b>Own score → roller → weak side.</b></div>',
+     87:'<div class="rule"><b>BACK TO MOTION:</b> After the pick-and-roll, resume all normal handler/roller replacement and rotation rules.</div>',
      45:'<div class="rule"><b>GIVE & GO:</b> Slot passes, then <b>basket cuts full speed</b>.</div>',
      46:'<div class="rule"><b>PASS → CUT:</b> The passer immediately threatens the rim.</div>',
      47:'<div class="rule"><b>READ #1:</b> From the original wing catch spot, hit the cutter if open.</div>',
      48:'<div class="rule"><b>OTHER PLAYERS:</b> Fill away and keep the cutter\'s lane clear.</div>',
-     49:'<div class="rule"><b>FLOW:</b> Once spacing is restored, we are back in regular Motion.</div>'
+     49:'<div class="rule"><b>FLOW:</b> Once spacing is restored, we are back in regular Motion.</div>',
+     76:'<div class="rule"><b>READ #2:</b> If 4 is not open for a layup or quality post-up, <b>clear through to the right corner</b> while 5 lifts to the right wing.</div>',
+     77:'<div class="rule"><b>NEXT ACTION:</b> After setting the back screen, 3 immediately flows into a <b>GET with 2</b>.</div>',
+     78:'<div class="rule"><b>BACK TO 2 MAN:</b> 3 gets it back, attacks the 45, and all normal 2 Man rules resume.</div>'
    };
    document.getElementById("lesson").innerHTML += (rules[step]||'');
  }
