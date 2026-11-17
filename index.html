@@ -207,7 +207,8 @@ h2{margin:0 0 10px;font-size:19px}.lesson{color:var(--muted);line-height:1.45;mi
     <button onclick="jumpToStep(66);closeActionMenus()">PUNCH</button>
     <button onclick="jumpToStep(71);closeActionMenus()">UTAH</button>
     <button onclick="jumpToStep(80);closeActionMenus()">EXIT</button>
-    <button onclick="jumpToStep(86);closeActionMenus()">SPLIT ACTION</button>
+    <button onclick="jumpToStep(86);closeActionMenus()">FLEX</button>
+    <button onclick="jumpToStep(92);closeActionMenus()">SPLIT ACTION</button>
   </div>
 </div>
 <button id="playBtn" onclick="playSlides()">▶ Play Sequence</button>
@@ -396,6 +397,16 @@ threeExitScreen:{1:[350,275],2:[175,120],3:[245,105],4:[205,285],5:[472,48]},
 threeExitOut:{1:[350,275],2:[175,120],3:[28,48],4:[205,285],5:[472,48]},
 threeExitCatch:{1:[350,275],2:[175,120],3:[28,48],4:[205,285],5:[472,48]},
 
+// 3 MAN ACTION #6 — FLEX
+// Same initial look as EXIT, but B becomes the screener and A becomes the cutter.
+// A sells the normal lift toward the wing before exploding backdoor.
+threeFlexSetup:{1:[350,275],2:[28,48],3:[82,220],4:[205,285],5:[472,48]},
+threeFlexCut:{1:[350,275],2:[28,48],3:[175,135],4:[205,285],5:[472,48]},
+threeFlexStop:{1:[350,275],2:[72,205],3:[245,105],4:[205,285],5:[472,48]},
+threeFlexScreen:{1:[350,275],2:[72,205],3:[125,165],4:[205,285],5:[472,48]},
+threeFlexBackdoor:{1:[350,275],2:[210,105],3:[125,165],4:[205,285],5:[472,48]},
+threeFlexFinish:{1:[350,275],2:[210,105],3:[125,165],4:[205,285],5:[472,48]},
+
 // AUTOMATIC POST ENTRY — SPLIT ACTION
 splitSetup:{1:[350,275],2:[72,220],3:[205,105],4:[205,285],5:[418,220]},
 splitScreen:{1:[350,275],2:[165,245],3:[205,105],4:[205,285],5:[418,220]},
@@ -510,6 +521,13 @@ const steps=[
 ["EXIT — A Sprints In to Set the Exit Screen","As B stops under the rim, A sprints in from the ball-side corner and sets the exit screen. The purpose is to screen B's defender and free B back out to the same side corner.","threeExitScreen",4],
 ["EXIT — B Comes Off the Screen to the Corner","B uses A's exit screen and sprints back out to the ball-side corner. B should come off the screen tight and arrive ready to shoot.","threeExitOut",4],
 ["EXIT — C Hits B for the Catch-and-Shoot / Keep Flowing","C passes to B as B exits to the corner. The first look is the catch-and-shoot. If the shot is not there, do not stop the offense — flow immediately into the next available Motion option.","threeExitCatch",3],
+
+["3 Man Action #6 — FLEX","FLEX starts exactly like EXIT: B begins the normal Action Man cut and stops underneath the basket. The difference is who screens whom. Instead of A screening B out, B turns and screens for A, who sells the normal lift toward the wing before cutting full speed backdoor.","threeFlexSetup",4],
+["FLEX — Sell the Same Exit Look","B begins the normal Action Man cut and gets underneath the basket, just like EXIT. A should also begin by looking like A is simply lifting from the corner toward the wing, so the defense believes normal Motion is continuing.","threeFlexCut",4],
+["FLEX — A Starts the Normal Lift","A starts coming up from the ball-side corner toward the wing like normal. This sell is important — A should make the defender believe the wing lift is actually happening before changing direction.","threeFlexStop",4],
+["FLEX — B Sets the Back Screen for A","Instead of receiving A's exit screen, B turns and sets a back screen for A. The screen should be positioned so A can plant off the fake lift and cut directly toward the basket.","threeFlexScreen",4],
+["FLEX — A Explodes Backdoor","After selling the lift, A changes direction and cuts FULL SPEED backdoor off B's screen. A should come tight off the screen looking immediately for the layup.","threeFlexBackdoor",4],
+["FLEX — C Reads the Backdoor Layup / Keep Flowing","C's first read is A coming off the back screen for the layup. If A is not open, keep the offense moving and flow directly into the next available Motion option.","threeFlexFinish",2],
 
 ["AUTOMATIC POST RULE — SPLIT ACTION","Any time we make a post entry, we automatically enter SPLIT ACTION. The passer immediately screens for the closest perimeter player. The screened player relocates to the corner for a jumper/3, then the passer cuts full speed to the rim.","splitSetup",3],
 ["SPLIT — Passer Screens the Closest Player","Immediately after the post entry, the passer does not stand and watch. He turns and sets a screen for the closest perimeter teammate.","splitScreen",3],
@@ -1556,6 +1574,56 @@ function drawAnnotations(){
     ]);
   }
   else if(step===85){
+    addSafeLabel(g,24,86,"3 MAN ACTION #6 — FLEX",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
+    setSlideNotes([
+      {title:"FLEX", lines:["Same initial look as EXIT, but the screening roles reverse."], accent:true},
+      {title:"B's Job", lines:["B stops under the basket and becomes the screener."]},
+      {title:"A's Job", lines:["Sell the normal lift, then explode backdoor."]}
+    ]);
+  }
+  else if(step===86){
+    addCurveMove(g,82,220,125,165,175,135);
+    setSlideNotes([
+      {title:"SELL THE SAME LOOK", lines:["B starts the normal Action Man cut just like EXIT."], accent:true},
+      {title:"A ALSO SELLS NORMAL", lines:["A begins to look like the normal corner-to-wing lift is coming."]}
+    ]);
+  }
+  else if(step===87){
+    addCurveMove(g,28,48,45,125,72,205);
+    addCurveMove(g,175,135,215,112,245,105);
+    setSlideNotes([
+      {title:"A STARTS THE LIFT", lines:["A comes up from the corner toward the wing like normal."], accent:true},
+      {title:"Make the Defender Believe It", lines:["The lift has to look real before A changes direction."]},
+      {title:"B STOPS UNDER THE RIM", lines:["B is now in position to become the screener."]}
+    ]);
+  }
+  else if(step===88){
+    addCurveMove(g,245,105,175,130,125,165);
+    addScreen(g,125,165,40);
+    setSlideNotes([
+      {title:"B SETS THE BACK SCREEN", lines:["B turns from underneath the basket and gets into screening position for A."], accent:true},
+      {title:"Screen Angle", lines:["Give A a direct path from the fake lift back toward the rim."]},
+      {title:"Timing", lines:["The screen arrives as A is ready to plant and change direction."]}
+    ]);
+  }
+  else if(step===89){
+    addScreen(g,125,165,40);
+    addCurveMove(g,72,205,125,150,210,105);
+    setSlideNotes([
+      {title:"A EXPLODES BACKDOOR", lines:["A plants from the fake lift and cuts FULL SPEED off B's screen."], accent:true},
+      {title:"Tight Cut", lines:["A should brush the screen and look immediately for the layup."]},
+      {title:"No Jogging", lines:["This has to be a scoring cut."]}
+    ]);
+  }
+  else if(step===90){
+    addPass(g,205,285,210,105);
+    setSlideNotes([
+      {title:"READ #1 — BACKDOOR LAYUP", lines:["C looks immediately for A coming off B's screen."], accent:true},
+      {title:"If Covered", lines:["Do not stop — flow directly into the next available Motion option."]},
+      {title:"FLEX", lines:["B normal cut → A sells lift → B screens A → A backdoor."]}
+    ]);
+  }
+  else if(step===91){
     addLabel(g,250,360,"POST ENTRY = AUTOMATIC SPLIT ACTION",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
     setSlideNotes([
       {title:"AUTOMATIC RULE", lines:["Every post entry immediately triggers SPLIT ACTION."], accent:true},
@@ -1563,7 +1631,7 @@ function drawAnnotations(){
       {title:"Then", lines:["Screened player relocates to corner; passer cuts full speed to rim."]}
     ]);
   }
-  else if(step===86){
+  else if(step===92){
     addMove(g,72,220,165,245);
     addScreen(g,165,245,45);
     addLabel(g,188,220,"PASSER SCREENS 4",{anchor:"start",fontSize:10,bg:"#fde68a",padX:6,padY:4});
@@ -1573,7 +1641,7 @@ function drawAnnotations(){
       {title:"Purpose", lines:["Free 4 to relocate to the corner for the shot."]}
     ]);
   }
-  else if(step===87){
+  else if(step===93){
     addScreen(g,165,245,45);
     addCurveMove(g,205,285,190,255,135,230);
     addCurveMove(g,135,230,85,160,28,48);
@@ -1585,7 +1653,7 @@ function drawAnnotations(){
       {title:"Then Relocate", lines:["After using the screen, continue out to the corner for the jumper / 3."]}
     ]);
   }
-  else if(step===88){
+  else if(step===94){
     addCurveMove(g,165,245,205,200,245,155);
     addPass(g,205,105,245,155);
     addLabel(g,268,170,"FULL-SPEED RIM CUT",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
@@ -1595,7 +1663,7 @@ function drawAnnotations(){
       {title:"Attack the Gap", lines:["Because 2 screened closer to 4, the rim cut now flows naturally from the split action."]}
     ]);
   }
-  else if(step===89){
+  else if(step===95){
     addCurveMove(g,235,120,355,90,472,48);
     addLabel(g,355,82,"IF NO PASS → FAR CORNER",{anchor:"middle",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
@@ -1604,7 +1672,7 @@ function drawAnnotations(){
       {title:"Automatic Flow", lines:["POST ENTRY → SCREEN → CORNER RELOCATE → RIM CUT → FAR CORNER."]}
     ]);
   }
-  else if(step===90){
+  else if(step===96){
     addPass(g,205,105,28,48);
     addLabel(g,110,92,"PASS OUT — KEEP PLAYING",{anchor:"start",fontSize:9.5,bg:"#fde68a",padX:6,padY:4});
     setSlideNotes([
@@ -1613,7 +1681,7 @@ function drawAnnotations(){
       {title:"Next", lines:["We flow immediately into our normal pick-and-roll."]}
     ]);
   }
-  else if(step===91){
+  else if(step===97){
     addMove(g,28,48,72,220);
     addMove(g,205,105,135,172);
     addScreen(g,135,172,58);
@@ -1624,7 +1692,7 @@ function drawAnnotations(){
       {title:"Nothing New", lines:["From here we are back in the same 2 Man rules we already teach."]}
     ]);
   }
-  else if(step===92){
+  else if(step===98){
     addScreen(g,135,172,58);
     addDribble(g,72,220,160,185,250,150);
     addCurveMove(g,135,172,150,135,192,110);
@@ -1634,7 +1702,7 @@ function drawAnnotations(){
       {title:"Same Rules", lines:["Split has now flowed directly back into our regular offense."]}
     ]);
   }
-  else if(step===93){
+  else if(step===99){
     addLabel(g,250,360,"BACK INTO REGULAR MOTION",{anchor:"middle",fontSize:11,bg:"#fde68a",padX:7,padY:4});
     addBottomBox(g,145,382,335,"RESET THE NORMAL FLOW",["Attack → Roller → Pass Out → Handler to Slot → Roller to Corner","Then continue the next normal rotation."],250,150,{titleSize:11,lineSize:9.5});
     setSlideNotes([
@@ -1725,15 +1793,15 @@ function render(){
      73:'<div class="rule"><b>TIMING:</b> As the slot-to-wing pass is <b>IN THE AIR</b>, the Action Man sets the back screen.</div>',
      74:'<div class="rule"><b>SLOT:</b> Pass, then cut <b>tight and full speed</b> off the back screen toward the block/rim.</div>',
      75:'<div class="rule"><b>WING READ #1:</b> Look inside immediately for the slot cutting to the layup.</div>',
-     85:'<div class="rule"><b>AUTOMATIC RULE:</b> <b>POST ENTRY = SPLIT ACTION.</b></div>',
-     86:'<div class="rule"><b>PASSER:</b> Immediately screen the <b>closest perimeter player</b>.</div>',
-     87:'<div class="rule"><b>SCREENED PLAYER:</b> <b>Use the screen first, stay outside</b>, then relocate to the corner for a jumper / 3.</div>',
-     88:'<div class="rule"><b>PASSER:</b> After screening, <b>cut full speed to the rim</b> for a pass from the post.</div>',
-     89:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>',
-     90:'<div class="rule"><b>IF NOTHING IS OPEN:</b> Post passes the ball <b>back out to the corner/perimeter</b>.</div>',
-     91:'<div class="rule"><b>NEXT ACTION:</b> Corner raises to the wing and the <b>post player on the strong side</b> becomes the low-angle screener.</div>',
-     92:'<div class="rule"><b>NORMAL READS:</b> <b>Own score → roller → weak side.</b></div>',
-     93:'<div class="rule"><b>BACK TO MOTION:</b> After the pick-and-roll, resume all normal handler/roller replacement and rotation rules.</div>',
+     91:'<div class="rule"><b>AUTOMATIC RULE:</b> <b>POST ENTRY = SPLIT ACTION.</b></div>',
+     92:'<div class="rule"><b>PASSER:</b> Immediately screen the <b>closest perimeter player</b>.</div>',
+     93:'<div class="rule"><b>SCREENED PLAYER:</b> <b>Use the screen first, stay outside</b>, then relocate to the corner for a jumper / 3.</div>',
+     94:'<div class="rule"><b>PASSER:</b> After screening, <b>cut full speed to the rim</b> for a pass from the post.</div>',
+     95:'<div class="rule"><b>IF NO PASS:</b> Continue through to the <b>far corner</b>.</div>',
+     96:'<div class="rule"><b>IF NOTHING IS OPEN:</b> Post passes the ball <b>back out to the corner/perimeter</b>.</div>',
+     97:'<div class="rule"><b>NEXT ACTION:</b> Corner raises to the wing and the <b>post player on the strong side</b> becomes the low-angle screener.</div>',
+     98:'<div class="rule"><b>NORMAL READS:</b> <b>Own score → roller → weak side.</b></div>',
+     99:'<div class="rule"><b>BACK TO MOTION:</b> After the pick-and-roll, resume all normal handler/roller replacement and rotation rules.</div>',
      45:'<div class="rule"><b>GIVE & GO:</b> Slot passes, then <b>basket cuts full speed</b>.</div>',
      46:'<div class="rule"><b>PASS → CUT:</b> The passer immediately threatens the rim.</div>',
      47:'<div class="rule"><b>READ #1:</b> From the original wing catch spot, hit the cutter if open.</div>',
@@ -1747,7 +1815,13 @@ function render(){
      81:'<div class="rule"><b>STOP:</b> B stops when his head gets <b>under the basket</b>.</div>',
      82:'<div class="rule"><b>A:</b> Sprint in from the ball-side corner and set the <b>exit screen</b>.</div>',
      83:'<div class="rule"><b>B:</b> Come tight off the exit screen and sprint back out to the ball-side corner.</div>',
-     84:'<div class="rule"><b>READ #1:</b> Catch-and-shoot. If it is not there, <b>flow immediately into the next Motion option</b>.</div>'
+     84:'<div class="rule"><b>READ #1:</b> Catch-and-shoot. If it is not there, <b>flow immediately into the next Motion option</b>.</div>',
+     85:'<div class="rule"><b>FLEX:</b> Same look as EXIT, but <b>B screens A</b> instead of A screening B.</div>',
+     86:'<div class="rule"><b>SELL THE LOOK:</b> B starts the normal cut and A starts the normal lift.</div>',
+     87:'<div class="rule"><b>A:</b> Sell the corner-to-wing lift before changing direction.</div>',
+     88:'<div class="rule"><b>B:</b> Turn and set the back screen so A has a direct lane to the rim.</div>',
+     89:'<div class="rule"><b>A:</b> Plant and cut <b>FULL SPEED BACKDOOR</b> off B\'s screen.</div>',
+     90:'<div class="rule"><b>READ #1:</b> C looks for the backdoor layup. If covered, keep flowing into Motion.</div>'
    };
    document.getElementById("lesson").innerHTML += (rules[step]||'');
  }
